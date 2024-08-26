@@ -1,0 +1,295 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Kegiatan;
+use App\Models\Identity;
+use App\Models\Notification;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+
+class KegiatanController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $user = auth()->user();;
+        $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
+                   $notification = Notification::orderBy('id', 'desc')->get();
+        $kegiatan = Kegiatan::paginate(5); // Mengambil 10 item per halaman
+        foreach ($kegiatan as $item) {
+            $item->tags = json_decode($item->tags);
+
+            $item->deskripsi = substr($item->deskripsi, 0, 26);
+        }
+        
+        foreach ($kegiatan as $item) {
+            $date = $item->terbit; // Replace with your actual date field name
+            if($date === null)
+            {
+                $item->month = '-'; // Full month name
+                $item->day = '-';   // Day of the month
+                $item->year = '-';   // Day of the month
+            }
+            else{
+                $carbonDate = Carbon::parse($date);
+            
+                $item->month = $carbonDate->format('F'); // Full month name
+                $item->day = $carbonDate->format('d');   // Day of the month
+                $item->year = $carbonDate->format('Y');   // Day of the month
+            }
+           
+        }
+     
+        return view ('kegiatan.index', compact('identity','user','notification','kegiatan'));
+
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create($id)
+    {
+        $identity = Identity::find($id);
+        $user = auth()->user();;
+                   $notification = Notification::orderBy('id', 'desc')->get();
+        return view('kegiatan.create', compact('identity', 'notification'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        
+            $input = $request->all();
+            
+            $tagsData = $request->input('tags'); 
+
+            $tags = collect(json_decode($tagsData, true))->pluck('value')->toArray();
+            $input['tags'] = json_encode($tags);
+
+    
+    
+            
+            $validasi = Validator::make($input, [
+                'judul' => 'required|min:5|max:128|string',
+                'deskripsi' => 'required',
+                
+            ]);
+
+
+
+            // Mengonversi string menjadi array
+
+            
+    
+            if ($validasi->fails()) 
+            {
+                return back()->withErrors($validasi)->withInput();
+            }
+    
+            if($request->hasFile('gambar_kegiatan'))
+            {
+                $folder = 'public/img/kegiatan';
+                $gambar = $request->file('gambar_kegiatan');
+                $nama_gambar = $gambar->getClientOriginalName();
+                $path = $request->file('gambar_kegiatan')->storeAs($folder, $nama_gambar);
+                $input['gambar_kegiatan'] = $nama_gambar;
+            }
+    
+
+            Kegiatan::create($input);
+         return redirect('/kegiatan');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Kegiatan $kegiatan)
+    {
+
+    }
+
+    
+    public function detail(Kegiatan $kegiatan, $id)
+    {
+
+        $user = auth()->user();
+        $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
+        $kegiatan = Kegiatan::find($id);
+        $notification =  Notification::orderBy('id', 'desc')->get();
+
+
+
+            $date = $kegiatan->terbit; // Replace with your actual date field name
+            if($date === null)
+            {
+                $kegiatan->month = '-'; // Full month name
+                $kegiatan->day = '-';   // Day of the month
+                $kegiatan->year = '-';   // Day of the month
+            }
+            else{
+                $carbonDate = Carbon::parse($date);
+            
+                $kegiatan->month = $carbonDate->format('F'); // Full month name
+                $kegiatan->day = $carbonDate->format('d');   // Day of the month
+                $kegiatan->year = $carbonDate->format('Y');   // Day of the month
+            }
+                     $deskripsi = $kegiatan->deskripsi;
+
+                 $parts = explode("\n", wordwrap($deskripsi, strlen($deskripsi) / 2, "\n"));
+
+                     $kegiatan->deskripsi1 = isset($parts[0]) ? $parts[0] : '';
+                   $kegiatan->deskripsi2 = isset($parts[1]) ? $parts[1] : '';            
+
+           
+
+        return view('kegiatan.detail', compact('kegiatan','identity','notification'));
+    }
+
+
+    public function filter($status)
+{
+    // Mengambil data berdasarkan status
+    $user = auth()->user();;
+    $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
+               $notification = Notification::orderBy('id', 'desc')->get();
+
+    $query = Kegiatan::query();
+
+    if ($status === 'semua') {
+        // No additional filtering needed
+    } elseif ($status === '1') {
+        $query->where('status', '1');
+    } elseif ($status === '0') {
+        $query->where('status', '0');
+    }
+    $kegiatan = $query->paginate(5);
+
+    foreach ($kegiatan as $item) {
+        $item->tags = json_decode($item->tags);
+
+        $item->deskripsi = substr($item->deskripsi, 0, 26);
+    }
+    
+    foreach ($kegiatan as $item) {
+        $date = $item->terbit; // Replace with your actual date field name
+        if($date === null)
+        {
+            $item->month = '-'; // Full month name
+            $item->day = '-';   // Day of the month
+            $item->year = '-';   // Day of the month
+        }
+        else{
+            $carbonDate = Carbon::parse($date);
+        
+            $item->month = $carbonDate->format('F'); // Full month name
+            $item->day = $carbonDate->format('d');   // Day of the month
+            $item->year = $carbonDate->format('Y');   // Day of the month
+        }
+       
+    }
+ 
+    return view ('kegiatan.index', compact('identity','user','notification','kegiatan'));
+}
+
+
+    /** 
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Kegiatan $kegiatan, $id)
+    {
+        $user = auth()->user();
+        $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
+        $kegiatan = Kegiatan::find($id);
+        $notification =  Notification::orderBy('id', 'desc')->get();
+
+
+
+            $date = $kegiatan->terbit; // Replace with your actual date field name
+            if($date === null)
+            {
+                $kegiatan->month = '-'; // Full month name
+                $kegiatan->day = '-';   // Day of the month
+                $kegiatan->year = '-';   // Day of the month
+            }
+            else{
+                $carbonDate = Carbon::parse($date);
+            
+                $kegiatan->month = $carbonDate->format('F'); // Full month name
+                $kegiatan->day = $carbonDate->format('d');   // Day of the month
+                $kegiatan->year = $carbonDate->format('Y');   // Day of the month
+            }
+                     $deskripsi = $kegiatan->deskripsi;
+
+                 $parts = explode("\n", wordwrap($deskripsi, strlen($deskripsi) / 2, "\n"));
+
+                     $kegiatan->deskripsi1 = isset($parts[0]) ? $parts[0] : '';
+                   $kegiatan->deskripsi2 = isset($parts[1]) ? $parts[1] : '';            
+
+
+           
+
+        return view('kegiatan.change', compact('kegiatan','identity','notification'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        $input = $request->all();
+        $data = Kegiatan::find($id);
+        $tagsData = $request->input('tags'); 
+
+        $tags = collect(json_decode($tagsData, true))->pluck('value')->toArray();
+        $input['tags'] = json_encode($tags);
+
+
+
+        
+        $validasi = Validator::make($input, [
+            'judul' => 'required|min:5|max:128|string',
+            'deskripsi' => 'required',
+            
+        ]);
+
+
+
+        // Mengonversi string menjadi array
+
+        
+
+        if ($validasi->fails()) 
+        {
+            return back()->withErrors($validasi)->withInput();
+        }
+
+        if($request->hasFile('gambar_kegiatan'))
+        {
+            $folder = 'public/img/kegiatan';
+            $gambar = $request->file('gambar_kegiatan');
+            $nama_gambar = $gambar->getClientOriginalName();
+            $path = $request->file('gambar_kegiatan')->storeAs($folder, $nama_gambar);
+            $input['gambar_kegiatan'] = $nama_gambar;
+        }
+
+
+        $data->update($input);
+
+     return redirect('/kegiatan');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Kegiatan $kegiatan)
+    {
+        //
+    }
+}

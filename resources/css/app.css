@@ -1,0 +1,33 @@
+@import "@fontsource/inter/index.css"; /* Untuk versi variabel */
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.pagination-links {
+    flex-shrink: 0;
+}
+
+.pagination-info {
+    flex-shrink: 0;
+}
+
+.active-button {
+    background-color: #2C5586; /* Replace with your active color */
+    color: white;
+}
+
+
+
+
+    
