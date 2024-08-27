@@ -56,13 +56,14 @@ class NotificationController extends Controller
     {
          // Retrieve the status from the request directly
          $status = $request->input('terlihat');
+         $statusAdmin = $request->input('terlihat_admin');
 
          // Update all notifications for the specified user
          $user = auth()->user();;
         if ($user->level === 'admin')
         {
-            $updated = Notification::where('access', 'admin')
-             ->update(['terlihat' => $status]);
+            $updated = Notification::query()
+            ->update(['terlihat_admin' => $statusAdmin]);        
         }else
         {
             $updated = Notification::where('id_user', $id)

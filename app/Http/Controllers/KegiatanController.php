@@ -57,6 +57,7 @@ class KegiatanController extends Controller
         $identity = Identity::find($id);
         $user = auth()->user();;
                    $notification = Notification::orderBy('id', 'desc')->get();
+                   $notification->where('id_user', Auth::id());
         return view('kegiatan.create', compact('identity', 'notification'));
     }
 
@@ -65,7 +66,7 @@ class KegiatanController extends Controller
      */
     public function store(Request $request)
     {
-        
+
             $input = $request->all();
             
             $tagsData = $request->input('tags'); 
@@ -79,8 +80,15 @@ class KegiatanController extends Controller
             $validasi = Validator::make($input, [
                 'judul' => 'required|min:5|max:128|string',
                 'deskripsi' => 'required',
+                'gambar_kegiatan' => 'required',
                 
             ]);
+
+            if($request->input('status') == 1)
+            {
+                $date = date('Y-m-d');
+                $input['terbit'] = $date;
+            }
 
 
 
@@ -250,12 +258,20 @@ class KegiatanController extends Controller
         $tags = collect(json_decode($tagsData, true))->pluck('value')->toArray();
         $input['tags'] = json_encode($tags);
 
+        if($request->input('status') == 1)
+        {
+            $date = date('Y-m-d');
+            $input['terbit'] = $date;
+        }
+
+
 
 
         
         $validasi = Validator::make($input, [
             'judul' => 'required|min:5|max:128|string',
             'deskripsi' => 'required',
+            'gambar_kegiatan' => 'required',
             
         ]);
 

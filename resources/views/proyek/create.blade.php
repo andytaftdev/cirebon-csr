@@ -61,13 +61,14 @@
                         Lokasi Kecamatan <span class="text-AccentRed900">*</span>
                     </label>
                     <select name="kecamatan" id="lokasi-kecamatan" class="w-full px-4 py-2 border border-Neutral200 rounded-lg text-Neutral500">
-                        <option value="Arjawinangun">Arjawinangun</option>
+                        <option value="Waled">Waled</option>
                         <option value="Ciledug">Ciledug</option>
-                        <option value="Ciwaringin">Ciwaringin</option>
-                        <option value="Gunungjati">Gunungjati</option>
-                        <option value="Sedong">Sedong</option>
-                        <option value="Pabuaran">Pabuaran</option>
-                        <option value="Pangenan">Pangenan</option>
+                        <option value="Pasaleman">Pasaleman</option>
+                        <option value="Losari">Losari</option>
+                        <option value="Gebang">Gebang</option>
+                        <option value="Karangsembung">Karangsembung</option>
+                        <option value="Karangwareng">Karangwareng</option>
+                        <option value="Lainnya">Lainnya</option>
                     </select>
                 </div>
                 <div>
@@ -108,6 +109,24 @@
                     </label>
                 </div>
             </div>
+                        @if ($errors->any())
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+    <strong class="font-bold"><i class="fas fa-ban"></i> Please fill the data as you should!</strong>
+    <span class="block sm:inline">There are some errors:</span>
+    <ul class="mt-2">
+        @foreach ($errors->all() as $item)
+        <li>{{ $item }}</li>
+        @endforeach
+    </ul>
+    <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" data-dismiss="alert" aria-hidden="true">
+        <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20">
+            <title>Close</title>
+            <path d="M14.348 14.849a1 1 0 0 1-1.414 0L10 11.415l-2.934 2.934a1 1 0 1 1-1.414-1.414l2.934-2.934-2.934-2.934a1 1 0 0 1 1.414-1.414L10 8.585l2.934-2.934a1 1 0 0 1 1.414 1.414l-2.934 2.934 2.934 2.934a1 1 0 0 1 0 1.414z" />
+        </svg>
+    </button>
+</div>
+@endif
         </div>
 
         <!-- Buttons -->

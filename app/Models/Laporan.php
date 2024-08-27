@@ -11,4 +11,17 @@ class Laporan extends Model
 
     protected $table = 'laporans';
     protected $guarded = [];
+
+    public function proyek()
+    {
+        return $this->belongsTo(Proyek::class, 'id_proyek');
+    }
+    public function program()
+    {
+        return $this->belongsTo(Program::class, 'id_program');
+    }
+
+
+
+
 }

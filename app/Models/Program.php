@@ -15,4 +15,6 @@ class Program extends Model
     {
         return $this->belongsTo(Sektor::class, 'id_sektor');
     }
+
+
 }

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Identity;
 use App\Models\Program;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -90,12 +91,19 @@ class SektorController extends Controller
 
        $input = $request->all();
 
-   $request->validate([
-    'nama_sektor' => 'required|string|max:255',
-    'deskripsi_sektor' => 'nullable|string',
-    'nama_program' => 'required|max:255',
-    'deskripsi' => 'required',
-]);
+    $validasi = Validator::make($input, [
+        'nama_sektor' => 'required|string|max:255',
+        'gambar_sektor' => 'required',
+        'deskripsi_sektor' => 'required',
+    ]);
+
+
+
+if ($validasi->fails()) 
+{
+    return back()->withErrors($validasi)->withInput();
+}
+
 
 // Simpan data sektor
 
@@ -137,6 +145,7 @@ $sektor->save();
 // Simpan program-program yang diinputkan
 foreach ($input['nama_program'] as $index => $namaProgram) {
     $program = new Program;
+
     
     // Set atribut program
     $program->id_sektor = $sektor->id; // Hubungkan dengan sektor yang baru saja dibuat
@@ -184,14 +193,19 @@ return redirect()->route('sektor.index');
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nama_sektor' => 'required|string',
-            'deskripsi_sektor' => 'required|string',
-            'nama_program' => 'required',
-            'deskripsi' => 'required',
-        ]);
-    
         $input = $request->all();
+
+        $validasi = Validator::make($input, [
+            'nama_sektor' => 'required|string|max:255',
+            'gambar_sektor' => 'required',
+            'deskripsi_sektor' => 'required',
+        ]);
+        
+        if ($validasi->fails()) 
+        {
+            return back()->withErrors($validasi)->withInput();
+        }
+    
     
         // Handling the image upload if a new image is provided
         if($request->hasFile('gambar_sektor')) {
@@ -201,6 +215,11 @@ return redirect()->route('sektor.index');
             $path = $gambar->storeAs($folder, $nama_gambar);
             $input['gambar_sektor'] = $nama_gambar;
         }
+
+        if ($validasi->fails()) 
+{
+    return back()->withErrors($validasi)->withInput();
+}
     
         // Update the sector
         $sektor = Sektor::find($id);

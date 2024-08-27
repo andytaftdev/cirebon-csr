@@ -225,6 +225,7 @@ class ProyekController extends Controller
               
               $userId = json_decode($proyek->id_user, true);
 
+
               $idUser = User::whereIn('id', $userId)->with('identity')->get();
               
               

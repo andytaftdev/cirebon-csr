@@ -53,7 +53,7 @@
                             @csrf
                             {{method_field('PUT')}}
                             <input type="hidden" name="current_url" value="{{ url()->current() }}">
-                            <input type="number" name="terlihat" id="terlihat" value="1" hidden required>
+                            <input type="number" name="terlihat_admin" id="terlihat" value="1" hidden required>
                         <button id="close-notifications" type="submit" class="text-Ebony900 hover:text-Ebony300">
                             <!-- Heroicons Close Icon -->
 
@@ -67,7 +67,10 @@
                     <div class="p-5 max-h-96 overflow-y-auto scrollbar-hide space-y-3">
 
                     @foreach ($notification as $item)
-                       @if ($item->terlihat === 1 )
+                    @if ($item->status === 'revisi')
+
+                    @else
+                       @if ($item->terlihat_admin === 1 )
                  <div class="p-3 bg-white border border-Neutral100 rounded-lg" data-id="{{ $item->id }}">
                     @if ($item->level === 'mitra')
                           <div class="inline-block p-1.5 px-2.5 rounded-full bg-Blue50">
@@ -95,11 +98,11 @@
                                 </p>
                             </div>
                             @elseif ($item->status === 'terima')
-                       <div class="inline-block p-1.5 px-2.5 rounded-full bg-Blue50">
-                                <p class="text-xs font-semibold text-Blue500">
-                                  Laporan Diterima! 
-                                </p>
-                            </div>
+                            <div class="inline-block p-1.5 px-2.5 rounded-full bg-Success50">
+                                  <p class="text-xs font-semibold text-Success700">
+                                    Laporan Diterima! 
+                                  </p>
+                              </div>
                          @endif
                        @endif
                        <p class="text-sm font-semibold my-1 text-Ebony900">Mitra {{$item->judul}}</p>
@@ -121,20 +124,16 @@
                                   </p>
                               </div>
                               @elseif ($item->status === 'tolak')
-                         <div class="inline-block p-1.5 px-2.5 rounded-full bg-AccentRed100">
+                         <div class="inline-block p-1.5 px-2.5 rounded-full bg-white">
                                   <p class="text-xs font-semibold text-AccentRed900">
-                                    Laporan Ditolak! 
+                                    Laporan Ditolak!
                                   </p>
                               </div>
                               @elseif ($item->status === 'revisi')
-                         <div class="inline-block p-1.5 px-2.5 rounded-full bg-Blue50">
-                                  <p class="text-xs font-semibold text-Blue500">
-                                    Laporan perlu Direvisi! 
-                                  </p>
-                              </div>
+
                               @elseif ($item->status === 'terima')
-                         <div class="inline-block p-1.5 px-2.5 rounded-full bg-Blue50">
-                                  <p class="text-xs font-semibold text-Blue500">
+                              <div class="inline-block p-1.5 px-2.5 rounded-full bg-Success50">
+                                  <p class="text-xs font-semibold text-Success700">
                                     Laporan Diterima! 
                                   </p>
                               </div>
@@ -143,6 +142,7 @@
                               <p class="text-sm font-semibold my-1 text-Ebony900">Mitra {{$item->judul}}</p>
                               <p class="text-sm font-medium text-Ebony200">PT Mitra {{$item->deskripsi}}</p>
                           </div>
+                        @endif
                         @endif
                         @endforeach
                         </div>

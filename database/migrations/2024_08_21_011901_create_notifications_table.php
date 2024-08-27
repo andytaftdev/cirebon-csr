@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('status', ['revisi', 'baru', 'tolak', 'terima'])->default('baru');
             $table->enum('level', ['laporan', 'mitra'])->default('laporan');
             $table->boolean('terlihat')->default('0');
+            $table->boolean('terlihat_admin')->default('0');
             $table->enum('access', ['admin', 'mitra'])->default('mitra');
             $table->foreign('id_user')->references('id')->on('users')->onUpdate('cascade');
             $table->timestamps();

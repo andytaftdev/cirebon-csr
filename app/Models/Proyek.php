@@ -11,5 +11,8 @@ class Proyek extends Model
     protected $table = 'proyeks';
     protected $guarded = [];
 
-
+    public function sektor()
+    {
+        return $this->belongsTo(Sektor::class, 'id_sektor');
+    }
 }

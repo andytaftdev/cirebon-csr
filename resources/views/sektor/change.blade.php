@@ -104,7 +104,27 @@
 
 
             </div>
+            @if ($errors->any())
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+    <strong class="font-bold"><i class="fas fa-ban"></i> Please fill the data as you should!</strong>
+    <span class="block sm:inline">There are some errors:</span>
+    <ul class="mt-2">
+        @foreach ($errors->all() as $item)
+        <li>{{ $item }}</li>
+        @endforeach
+    </ul>
+    <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" data-dismiss="alert" aria-hidden="true">
+        <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20">
+            <title>Close</title>
+            <path d="M14.348 14.849a1 1 0 0 1-1.414 0L10 11.415l-2.934 2.934a1 1 0 1 1-1.414-1.414l2.934-2.934-2.934-2.934a1 1 0 0 1 1.414-1.414L10 8.585l2.934-2.934a1 1 0 0 1 1.414 1.414l-2.934 2.934 2.934 2.934a1 1 0 0 1 0 1.414z" />
+        </svg>
+    </button>
+</div>
+@endif
         </div>
+
+
 
         <!-- Button Actions -->
         <div class="flex justify-end rounded-lg border border-Neutral200 bg-white py-4 px-6 space-x-4">

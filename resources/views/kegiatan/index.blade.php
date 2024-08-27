@@ -94,7 +94,7 @@
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
                                 <!-- Image Placeholder -->
-                                <div class="w-48 h-24 rounded-md" style="background-image: url('{{ asset('storage/img/profile/'. $item->gambar_kegiatan) }}');"></div>
+                                <div class="w-48 h-24 rounded-md" style="background-image: url('{{ asset('storage/img/kegiatan/'. $item->gambar_kegiatan)}}');"></div>
                             </td>
                             <td class="px-6 py-4 text-sm text-Ebony300 whitespace-normal break-words max-w-xs">
                                 {{$item->judul}}

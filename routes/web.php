@@ -63,6 +63,11 @@ Route::get('/mitra/ubah/{id}', [IdentityController::class, 'ubahMitra'])->name('
 Route::put('/mitra/ubah/{id}/success', [IdentityController::class, 'updateMitra'])->name('identity.updateMitra');
 
 Route::resource('/laporan', LaporanController::class);
+Route::get('/laporan/status/{status}', [LaporanController::class, 'status'])->name('laporan.status');
+Route::put('/laporan/tolak/{id}', [LaporanController::class, 'tolak'])->name('laporan.tolak');
+Route::put('/laporan/revisi/{id}', [LaporanController::class, 'revisi'])->name('laporan.revisi');
+Route::put('/laporan/terima/{id}', [LaporanController::class, 'terima'])->name('laporan.terima');
+
 
 
 Route::resource('/kegiatan', KegiatanController::class);

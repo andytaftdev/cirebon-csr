@@ -66,7 +66,7 @@
                                 atau seret dan lepas kesini <br> PNG, JPG up to 10MB
                             </span>
                         </div>
-                        <input type="file" id="fileInput" name="mitra_logo" class="hidden" >
+                        <input type="file" id="fileInput" name="gambar_kegiatan" class="hidden" >
                     </div>
                 </div>
 
@@ -94,12 +94,32 @@
                 </div>
 
                 <input type="number" hidden id="statusInput" value="" name="status">
+                <input type="number" hidden id="terbitInput" value="" name="terbit">
+                @if ($errors->any())
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+    <strong class="font-bold"><i class="fas fa-ban"></i> Please fill the data as you should!</strong>
+    <span class="block sm:inline">There are some errors:</span>
+    <ul class="mt-2">
+        @foreach ($errors->all() as $item)
+        <li>{{ $item }}</li>
+        @endforeach
+    </ul>
+    <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" data-dismiss="alert" aria-hidden="true">
+        <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20">
+            <title>Close</title>
+            <path d="M14.348 14.849a1 1 0 0 1-1.414 0L10 11.415l-2.934 2.934a1 1 0 1 1-1.414-1.414l2.934-2.934-2.934-2.934a1 1 0 0 1 1.414-1.414L10 8.585l2.934-2.934a1 1 0 0 1 1.414 1.414l-2.934 2.934 2.934 2.934a1 1 0 0 1 0 1.414z" />
+        </svg>
+    </button>
+</div>
+@endif
 
 
         </div>
 
         <!-- Buttons Section -->
         <div class="bg-white shadow-md rounded-lg p-4 px-10 mt-7 mb-20">
+
             <div class="flex w-full justify-center md:justify-end space-x-4">
                <button id="submitButtons"
                     class="px-4 py-2 bg-white text-Ebony300 border border-Neutral300 rounded-lg flex justify-center items-center gap-1">
@@ -197,9 +217,11 @@
     document.getElementById('submitButtons').addEventListener('click', function(event) {
         const descriptionInput = document.getElementById('descriptionInput');
         const statusInput = document.getElementById('statusInput');
+        const terbitInput = document.getElementById('terbitInput');
         descriptionInput.value = quill.root.innerHTML;
 
         statusInput.value = '0'; 
+        terbitInput.value = ''; 
 
         // Submit form setelah input tersembunyi diisi
         document.getElementById('myForm').submit();

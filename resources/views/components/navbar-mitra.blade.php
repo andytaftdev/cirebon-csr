@@ -47,6 +47,9 @@
                     <div class="p-5 max-h-96 overflow-y-auto scrollbar-hide space-y-3">
 
                     @foreach ($notification as $item)
+                    @if($item->access === 'admin')
+
+                    @else
                        @if ($item->terlihat === 1 )
                  <div class="p-3 bg-white border border-Neutral100 rounded-lg" data-id="{{ $item->id }}">
                     @if ($item->level === 'mitra')
@@ -69,21 +72,21 @@
                                 </p>
                             </div>
                             @elseif ($item->status === 'revisi')
-                       <div class="inline-block p-1.5 px-2.5 rounded-full bg-Blue50">
-                                <p class="text-xs font-semibold text-Blue500">
+                       <div class="inline-block p-1.5 px-2.5 rounded-full bg-Warning50">
+                                <p class="text-xs font-semibold text-Warning700">
                                   Laporan perlu Direvisi! 
                                 </p>
                             </div>
                             @elseif ($item->status === 'terima')
-                       <div class="inline-block p-1.5 px-2.5 rounded-full bg-Blue50">
-                                <p class="text-xs font-semibold text-Blue500">
+                       <div class="inline-block p-1.5 px-2.5 rounded-full bg-Success50">
+                                <p class="text-xs font-semibold text-Success700">
                                   Laporan Diterima! 
                                 </p>
                             </div>
                          @endif
                        @endif
-                            <p class="text-sm font-semibold my-1 text-Ebony900">Laporan pengadaan perkakas masak untuk desa</p>
-                            <p class="text-sm font-medium text-Ebony200">Mitra Sejahtera</p>
+                       <p class="text-sm font-semibold my-1 text-Ebony900">{{$item->judul}}</p>
+                       <p class="text-sm font-medium text-Ebony200">{{$item->deskripsi}}</p>
                         </div>
                         @else 
                         <div class="p-3 bg-AccentRed100 border border-Neutral100 rounded-lg notification-item" data-id="{{ $item->id }}">
@@ -101,28 +104,29 @@
                                   </p>
                               </div>
                               @elseif ($item->status === 'tolak')
-                         <div class="inline-block p-1.5 px-2.5 rounded-full bg-AccentRed100">
+                         <div class="inline-block p-1.5 px-2.5 rounded-full bg-white">
                                   <p class="text-xs font-semibold text-AccentRed900">
                                     Laporan Ditolak! 
                                   </p>
                               </div>
                               @elseif ($item->status === 'revisi')
-                         <div class="inline-block p-1.5 px-2.5 rounded-full bg-Blue50">
-                                  <p class="text-xs font-semibold text-Blue500">
+                         <div class="inline-block p-1.5 px-2.5 rounded-full bg-Warning50">
+                                  <p class="text-xs font-semibold text-Warning700">
                                     Laporan perlu Direvisi! 
                                   </p>
                               </div>
                               @elseif ($item->status === 'terima')
-                         <div class="inline-block p-1.5 px-2.5 rounded-full bg-Blue50">
-                                  <p class="text-xs font-semibold text-Blue500">
+                         <div class="inline-block p-1.5 px-2.5 rounded-full bg-Success50">
+                                  <p class="text-xs font-semibold text-Success700">
                                     Laporan Diterima! 
                                   </p>
                               </div>
                            @endif
                          @endif
-                              <p class="text-sm font-semibold my-1 text-Ebony900">Laporan pengadaan perkakas masak untuk desa</p>
-                              <p class="text-sm font-medium text-Ebony200">Mitra Sejahtera</p>
+                         <p class="text-sm font-semibold my-1 text-Ebony900"> {{$item->judul}}</p>
+                         <p class="text-sm font-medium text-Ebony200"> {{$item->deskripsi}}</p>
                           </div>
+                        @endif
                         @endif
                         @endforeach
                         </div>

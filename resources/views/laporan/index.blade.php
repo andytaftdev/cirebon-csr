@@ -21,9 +21,10 @@
     <div class="container mx-auto px-4 py-8 mb-[200px]">
         <div class="flex items-center justify-between">
             <h1 class="text-3xl font-semibold text-Ebony900">Laporan Mitra</h1>
-            <button class="bg-AccentRed900 text-white px-4 py-2 rounded-lg">
+            <a href="{{route('laporan.create')}}"><button class="bg-AccentRed900 text-white px-4 py-2 rounded-lg">
                 + Buat Laporan Baru
             </button>
+        </a>
         </div>
 
         <div class="mt-6">
@@ -73,121 +74,39 @@
                 </thead>
     
                 <tbody class="text-Neutral700 text-sm whitespace-nowrap">
+                @foreach($laporan as $item)
                     <tr class="bg-white border-b border-Neutal200">
-                        <th scope="row" class="px-6 py-4 font-normal">
-                            Pengadaan sarana keterampilan Olahan Pangan	
-                        </th>
+                        <th scope="row" class="px-6 py-4 font-normal">{{$item->judul}}</th>
+                        <td class="px-6 py-4">{{$item->proyek->kecamatan}}</td>
+                        <td class="px-6 py-4">Rp.{{number_format($item->realisasi, 0, ',', ',')}}</td>
+                        <td class="px-6 py-4">{{$item->tanggal}} {{$item->bulan}} {{$item->tahun}}</td>
+                        <td class="px-6 py-4">{{$item->releaseDay}} {{$item->releaseMonth}} {{$item->releaseYear}}</td>
                         <td class="px-6 py-4">
-                            Kec. Karangwareng	
-                        </td>
-                        <td class="px-6 py-4">
-                            Rp.###,###,###	
-                        </td>
-                        <td class="px-6 py-4">
-                            1 Juli 2024	
-                        </td>
-                        <td class="px-6 py-4">
-                            16 July
-                        </td>
-                        <td class="px-6 py-4">
+                            @if($item->status === 'terima')
                             <span class="bg-Success50 text-Success700 py-1 px-3 rounded-full text-xs">Diterima</span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <button class="text-Neutral700">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>                                  
-                            </button>
-                        </td>
-                    </tr>
-    
-                    <tr class="bg-white border-b border-Neutal200">
-                        <th scope="row" class="px-6 py-4 font-normal">
-                            Pengadaan sarana keterampilan Olahan Pangan	
-                        </th>
-                        <td class="px-6 py-4">
-                            Kec. Karangwareng	
-                        </td>
-                        <td class="px-6 py-4">
-                            Rp.###,###,###	
-                        </td>
-                        <td class="px-6 py-4">
-                            1 Juli 2024	
-                        </td>
-                        <td class="px-6 py-4">
-                            16 July
-                        </td>
-                        <td class="px-6 py-4">
+                            @elseif($item->status === 'draf')
+                            <span class="bg-Gray100 text-Gray700 py-1 px-3 rounded-full text-xs">Draf</span>
+                            @elseif($item->status === 'revisi')
                             <span class="bg-Warning50 text-Warning700 py-1 px-3 rounded-full text-xs">Revisi</span>
+                            @elseif($item->status === 'pengajuan')
+                            <span class="bg-Blue50 text-Blue500 py-1 px-3 rounded-full text-xs">Pengajuan</span>
+                            @elseif($item->status === 'tolak')
+                            <span class="bg-AccentRed100 text-AccentRed300 text- py-1 px-3 rounded-full text-xs">tolak</span>
+                            @endif
+
                         </td>
                         <td class="px-6 py-4">
-                            <button class="text-Neutral700">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>                                  
-                            </button>
-                        </td>
+                                    <a href="{{route('laporan.show', $item->id)}}" class="text-Ebony300 hover:text-Ebony900">
+                                        <!-- Eye Icon -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                        </svg>
+                                    </a>
+                    </td>
                     </tr>
-                    
-                    <tr class="bg-white border-b border-Neutal200">
-                        <th scope="row" class="px-6 py-4 font-normal">
-                            Pengadaan sarana keterampilan Olahan Pangan	
-                        </th>
-                        <td class="px-6 py-4">
-                            Kec. Karangwareng	
-                        </td>
-                        <td class="px-6 py-4">
-                            Rp.###,###,###	
-                        </td>
-                        <td class="px-6 py-4">
-                            1 Juli 2024	
-                        </td>
-                        <td class="px-6 py-4">
-                            16 July
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="bg-Gray100 text-Gray700 py-1 px-3 rounded-full text-xs">Draf</span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <button class="text-Neutral700">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>                                  
-                            </button>
-                        </td>
-                    </tr>
-    
-                    <tr class="bg-white border-b border-Neutal200">
-                        <th scope="row" class="px-6 py-4 font-normal">
-                            Pengadaan sarana keterampilan Olahan Pangan	
-                        </th>
-                        <td class="px-6 py-4">
-                            Kec. Karangwareng	
-                        </td>
-                        <td class="px-6 py-4">
-                            Rp.###,###,###	
-                        </td>
-                        <td class="px-6 py-4">
-                            1 Juli 2024	
-                        </td>
-                        <td class="px-6 py-4">
-                            16 July
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="bg-Gray100 text-Gray700 py-1 px-3 rounded-full text-xs">Draf</span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <button class="text-Neutral700">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>                                  
-                            </button>
-                        </td>
-                    </tr>
+                    @endforeach
+
                 </tbody>
             </table>
         </div>
@@ -293,14 +212,31 @@
 <div class="container mx-auto rounded-lg mt-6">
     <!-- Filter Tabs -->
     <div class="flex items-center space-x-4 mb-4">
-        <button id="btn-semua" class="btn px-4 py-2 bg-Blue700 text-white font-medium rounded-full"
-            onclick="toggleActive('btn-semua')">Semua</button>
-        <button id="btn-diterima" class="btn px-4 py-2 text-Ebony100 font-medium rounded-full"
-            onclick="toggleActive('btn-diterima')">Diterima</button>
-        <button id="btn-revisi" class="btn px-4 py-2 text-Ebony100 font-medium rounded-full"
-            onclick="toggleActive('btn-revisi')">Revisi</button>
-        <button id="btn-ditolak" class="btn px-4 py-2 text-Ebony100 font-medium rounded-full"
-            onclick="toggleActive('btn-ditolak')">Ditolak</button>
+    <a href="{{ route('laporan.status', ['status' => 'semua']) }}">
+        <button class="px-4 py-2 font-medium rounded-full {{ request()->route('status')  === 'semua' ? 'active-button' : 'text-Ebony200' }}">
+            Semua
+        </button>
+    </a>
+    <a href="{{ route('laporan.status', ['status' => 'terima']) }}">
+        <button class="px-4 py-2 font-medium rounded-full {{ request()->route('status')  === 'terima' ? 'active-button' : 'text-Ebony200' }}">
+            Diterima
+        </button>
+    </a>
+    <a href="{{ route('laporan.status', ['status' => 'revisi']) }}">
+        <button class="px-4 py-2 font-medium rounded-full {{ request()->route('status')  === 'revisi' ? 'active-button' : 'text-Ebony200' }}">
+        Revisi
+        </button>
+    </a>
+    <a href="{{ route('laporan.status', ['status' => 'tolak']) }}">
+        <button class="px-4 py-2 font-medium rounded-full {{ request()->route('status')  === 'tolak' ? 'active-button' : 'text-Ebony200' }}">
+        Ditolak
+        </button>
+    </a>
+    <a href="{{ route('laporan.status', ['status' => 'pengajuan']) }}">
+        <button class="px-4 py-2 font-medium rounded-full {{ request()->route('status')  === 'pengajuan' ? 'active-button' : 'text-Ebony200' }}">
+        Pengajuan
+        </button>
+    </a>
     </div>
 
     <!-- Dropdown Filters -->
@@ -381,27 +317,28 @@
             </thead>
 
             <tbody class="text-Neutral700 text-sm whitespace-nowrap">
-                @foreach($laporan as $item)
-                <tr class="bg-white border border-Neutral300">
-                    <th scope="row" class="px-6 py-4 font-normal">
-                        {{$item->judul}}	
-                    </th>
-                    <td class="px-6 py-4">
-                        {{$item->kecamatan}}	
-                    </td>
-                    <td class="px-6 py-4">
-                    {{$item->kecamatan}}
-                    </td>
-                    <td class="px-6 py-4">
-                    {{$item->tanggal}} {{$item->bulan}} {{$item->tahun}}
-                    </td>
-                    <td class="px-6 py-4">
-                        16 July
-                    </td>
-                    <td class="px-6 py-4">
-                        <span class="bg-Green50 text-Green600 py-1 px-3 rounded-full text-xs">Diterima</span>
-                    </td>
-                    <td class="px-6 py-4">
+            @foreach($laporan as $item)
+                    <tr class="bg-white border-b border-Neutal200">
+                        <th scope="row" class="px-6 py-4 font-normal">{{$item->judul}}</th>
+                        <td class="px-6 py-4">{{$item->proyek->kecamatan}}</td>
+                        <td class="px-6 py-4">Rp.{{number_format($item->realisasi, 0, ',', ',')}}</td>
+                        <td class="px-6 py-4">{{$item->tanggal}} {{$item->bulan}} {{$item->tahun}}</td>
+                        <td class="px-6 py-4">{{$item->releaseDay}} {{$item->releaseMonth}} {{$item->releaseYear}}</td>
+                        <td class="px-6 py-4">
+                            @if($item->status === 'terima')
+                            <span class="bg-Success50 text-Success700 py-1 px-3 rounded-full text-xs">Diterima</span>
+                            @elseif($item->status === 'draf')
+                            <span class="bg-Gray100 text-Gray700 py-1 px-3 rounded-full text-xs">Draf</span>
+                            @elseif($item->status === 'revisi')
+                            <span class="bg-Warning50 text-Warning700 py-1 px-3 rounded-full text-xs">Revisi</span>
+                            @elseif($item->status === 'pengajuan')
+                            <span class="bg-Blue50 text-Blue500 py-1 px-3 rounded-full text-xs">Pengajuan</span>
+                            @elseif($item->status === 'tolak')
+                            <span class="bg-AccentRed100 text-AccentRed300 text- py-1 px-3 rounded-full text-xs">tolak</span>
+                            @endif
+
+                        </td>
+                        <td class="px-6 py-4">
                                     <a href="{{route('laporan.show', $item->id)}}" class="text-Ebony300 hover:text-Ebony900">
                                         <!-- Eye Icon -->
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
@@ -410,87 +347,9 @@
                                         </svg>
                                     </a>
                     </td>
-                </tr>
-                @endforeach
+                    </tr>
+                    @endforeach
 
-                <tr class="bg-white border border-Neutral300">
-                    <th scope="row" class="px-6 py-4 font-normal">
-                        Pengadaan sarana keterampilan Olahan Pangan	
-                    </th>
-                    <td class="px-6 py-4">
-                        Kec. Karangwareng	
-                    </td>
-                    <td class="px-6 py-4">
-                        Rp.###,###,###	
-                    </td>
-                    <td class="px-6 py-4">
-                        1 Juli 2024	
-                    </td>
-                    <td class="px-6 py-4">
-                        16 July
-                    </td>
-                    <td class="px-6 py-4">
-                        <span class="bg-Warning50 text-Warning700 py-1 px-3 rounded-full text-xs">Revisi</span>
-                    </td>
-                    <td class="px-6 py-4">
-                        <button class="text-Neutral700">
-                            <ion-icon class="h-5 w-5" name="eye-outline"></ion-icon>
-                        </button>
-                    </td>
-                </tr>
-                
-                <tr class="bg-white border border-Neutral300">
-                    <th scope="row" class="px-6 py-4 font-normal">
-                        Pengadaan sarana keterampilan Olahan Pangan	
-                    </th>
-                    <td class="px-6 py-4">
-                        Kec. Karangwareng	
-                    </td>
-                    <td class="px-6 py-4">
-                        Rp.###,###,###	
-                    </td>
-                    <td class="px-6 py-4">
-                        1 Juli 2024	
-                    </td>
-                    <td class="px-6 py-4">
-                        16 July
-                    </td>
-                    <td class="px-6 py-4">
-                        <span class="bg-Gray100 text-Gray700 py-1 px-3 rounded-full text-xs">Draf</span>
-                    </td>
-                    <td class="px-6 py-4">
-                        <button class="text-Neutral700">
-                            <ion-icon class="h-5 w-5" name="eye-outline"></ion-icon>
-                        </button>
-                    </td>
-                </tr>
-
-                <tr class="bg-white border border-Neutral300">
-                    <th scope="row" class="px-6 py-4 font-normal">
-                        Pengadaan sarana keterampilan Olahan Pangan	
-                    </th>
-                    <td class="px-6 py-4">
-                        Kec. Karangwareng	
-                    </td>
-                    <td class="px-6 py-4">
-                        Rp.###,###,###	
-                    </td>
-                    <td class="px-6 py-4">
-                        1 Juli 2024	
-                    </td>
-                    <td class="px-6 py-4">
-                        16 July
-                    </td>
-                    <td class="px-6 py-4">
-                        <span class="bg-Gray100 text-Gray700 py-1 px-3 rounded-full text-xs">Draf</span>
-                    </td>
-                    <td class="px-6 py-4">
-                        <button class="text-Neutral700">
-                            <ion-icon class="h-5 w-5" name="eye-outline"></ion-icon>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
         </table>
         <div class="flex items-center justify-between bg-white px-6 py-3  rounded-b-lg border-b border-l border-r border-Neutral300">
         @if ($laporan->hasPages())
