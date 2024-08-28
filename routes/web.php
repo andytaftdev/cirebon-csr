@@ -30,6 +30,8 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [HomeController::class, 'index']) ->middleware(['auth', 'verified'])->name('dashboard');
 Route::post('/register', [UserController::class, 'register'])->name('register');
+Route::get('/download-pdf', [HomeController::class, 'exportPdf'])->name('export.pdf');
+
 
 
 Route::middleware('auth')->group(function () {

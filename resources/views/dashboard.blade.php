@@ -108,42 +108,60 @@
 @include('components.navbar-mitra')
 
 <div class="relative w-full">
-    <img src="{{ asset('images/dashboard-img.png') }}" alt="Image Dashboard" class="w-full h-72 object-cover">
-    <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-        <h1 class="text-4xl text-white font-bold">Selamat Datang di Dashboard CSR Kabupaten Cirebon</h1>
-        <h2 class="text-2xl text-white mt-2">Lapor dan ketahui program CSR Anda</h2>
+    <img src="{{ asset('images/dashboard-img.png') }}" alt="Image Dashboard"
+        class="w-full h-60 md:h-64 lg:h-72 object-cover">
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4 lg:p-0">
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl text-white font-bold">Selamat Datang di Dashboard CSR Kabupaten
+            Cirebon</h1>
+        <h2 class="text-base md:text-xl lg:text-2xl text-white mt-2">Lapor dan ketahui program CSR Anda</h2>
     </div>
 </div>
 
-<div class="container mx-auto mt-5">
+<div class="container mx-auto mt-10 px-6">
     <div class="mt-12 mb-4">
-        <div class="flex justify-between items-center mb-2">
-            <div class="flex space-x-4 w-3/4">
-                <select class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white flex-grow">
+        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-2 space-y-4 lg:space-y-0">
+            <div class="flex flex-col md:flex-row md:space-x-4 w-full space-y-4 md:space-y-0">
+                <select
+                    class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white flex-grow lg:flex-grow-0 lg:w-1/2">
                     <option>2024</option>
                 </select>
-                <select class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white flex-grow">
+                <select
+                    class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white flex-grow lg:flex-grow-0 lg:w-full">
                     <option>Kuartal 2 (April, Mei, Juni)</option>
                 </select>
-                <button class="bg-AccentRed900 text-white px-4 py-2 rounded-lg">Terapkan filter</button>
+                <button class="bg-AccentRed900 hover:bg-red-700 text-white px-4 py-2 rounded-lg lg:w-fit text-nowrap">Terapkan
+                    filter</button>
             </div>
-            <div class="flex space-x-4">
-                <button class="bg-white text-Green600 border border-Neutral300 px-4 py-2 rounded-lg flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            <div
+                class="flex flex-col pt-3 md:pt-0 md:flex-row md:space-x-4 lg:pt-0 w-full md:w-auto lg:w-fit lg:ml-3.5 space-y-4 md:space-y-0 lg:justify-end">
+               <a href="">
+               <button
+                    class="bg-white hover:bg-Green50 text-Green600 border border-Neutral300 px-4 py-2 rounded-lg flex items-center lg:gap-1 gap-2 justify-center flex-grow lg:flex-grow-0 text-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="size-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                     </svg>
-                    <p>Unduh. csv</p>
+                    <p>Unduh .csv</p>
                 </button>
-                <button class="bg-white text-AccentRed900 border border-Neutral300 px-4 py-2 rounded-lg flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+               </a> 
+                <a href="{{route('export.pdf')}}">
+                <button
+                    class="bg-white hover:bg-AccentRed100 text-AccentRed900 border border-Neutral300 px-4 py-2 rounded-lg flex items-center lg:gap-1 gap-2 justify-center flex-grow lg:flex-grow-0 text-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="size-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                     </svg>
                     <p>Unduh .pdf</p>
                 </button>
+                </a>
             </div>
         </div>
-        <h1 class="text-2xl text-left text-Ebony900 my-6">Data Statistik</h1>
-    </div>    
+
+        <h1 class="text-xl md:text-2xl text-left text-Ebony900 my-6 font-bold">Data Statistik</h1>
+    </div>
+
 
     <!-- Data Statistik Section -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -152,15 +170,17 @@
             <div class="flex items-center">
                 <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-4">
                     <div class="bg-Orange50 w-8 h-8 rounded-full flex justify-center items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="size-5 text-Orange600">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m0 0a2.246 2.246 0 0 0-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0 1 21 12v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6c0-.98.626-1.813 1.5-2.122" />
-                        </svg>            
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2"
+                            stroke="currentColor" class="size-5 text-Orange600">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m0 0a2.246 2.246 0 0 0-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0 1 21 12v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6c0-.98.626-1.813 1.5-2.122" />
+                        </svg>
                     </div>
                 </div>
-                <div class="text-lg">Total Proyek CSR</div>
+                <div class="text-base md:text-lg">Total Proyek CSR</div>
             </div>
             <div class="mt-3 p-3 bg-Orange300 border border-Orange100 rounded-lg">
-                <div class="text-xl font-bold">1000</div>
+                <div class="text-lg md:text-xl font-bold">{{$data['jumlah_proyek']}}</div>
             </div>
         </div>
 
@@ -169,15 +189,17 @@
             <div class="flex items-center">
                 <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-4">
                     <div class="bg-Purple50 w-8 h-8 rounded-full flex justify-center items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="size-5 text-Purple500">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
-                        </svg> 
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2"
+                            stroke="currentColor" class="size-5 text-Purple500">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                        </svg>
                     </div>
                 </div>
-                <div class="text-lg">Proyek Terealisasi</div>
+                <div class="text-base md:text-lg">Proyek Terealisasi</div>
             </div>
             <div class="mt-3 p-3 bg-Purple200 border border-Purple100 rounded-lg">
-                <div class="text-xl font-bold">1000</div>
+                <div class="text-lg md:text-xl font-bold">{{$data['release_proyek']}}</div>
             </div>
         </div>
 
@@ -186,304 +208,363 @@
             <div class="flex items-center">
                 <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-4">
                     <div class="bg-Green50 w-8 h-8 rounded-full flex justify-center items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="size-5 text-Green600">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
-                        </svg> 
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2"
+                            stroke="currentColor" class="size-5 text-Green600">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                        </svg>
                     </div>
                 </div>
-                <div class="text-lg">Dana Realisasi CSR Mitra</div>
+                <div class="text-base md:text-lg">Dana Realisasi CSR Mitra</div>
             </div>
             <div class="mt-3 p-3 bg-Green300 border border-Green100 rounded-lg">
-                <div class="text-xl font-bold">Rp 10,000,000</div>
+                <div class="text-lg md:text-xl font-bold">Rp.{{number_format($data['dana_mitra'], 0, ',', ',')}}</div>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Chart Section -->
-<div class="container mx-auto w-full">
-    <h1 class="text-2xl text-left text-Ebony900 mt-10 mb-6">Realisasi proyek CSR</h1>
-    <div class="p-6 bg-white rounded-lg shadow-md">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-12">
-            <div>
-                <h2 class="text-xl font-semibold mb-4 text-Ebony900">Persentase total realisasi berdasarkan sektor CSR
-                </h2>
-                <div id="chart-pie"></div>
-            </div>
-            <div>
-                <h2 class="text-xl font-semibold mb-4 text-Ebony900">Total realisasi sektor CSR</h2>
-                <div id="chart-bar-sektor"></div>
-            </div>
-            <div class="col-span-2">
-                <h2 class="text-xl font-semibold mb-4 text-Ebony900">Total realisasi proyek CSR berdasarkan lokasi</h2>
-                <div id="chart-bar-lokasi"></div>
-            </div>
+<div class="container mx-auto w-full mb-20 mt-12 px-6">
+    <h1 class="my-6 text-xl md:text-2xl font-bold mb-4">Realisasi Proyek CSR</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-lg shadow-md p-6 md:p-6 lg:p-8">
+        <!-- Pie Chart -->
+        <div>
+            <h2 class="text-lg md:text-xl font-semibold mb-4 text-Ebony900">Persentase total realisasi berdasarkan
+                sektor CSR</h2>
+            <div id="pieChart"></div>
+        </div>
+        <!-- Bar Charts -->
+        <div>
+            <h2 class="text-lg md:text-xl font-semibold mb-4 text-Ebony900">Total realisasi sektor CSR</h2>
+            <div id="barChart1"></div>
+        </div>
+        <div class="md:col-span-2">
+            <h2 class="text-lg md:text-xl font-semibold mb-4 text-Ebony900">Total realisasi proyek CSR berdasarkan
+                lokasi</h2>
+            <div id="barChart2" class="w-full h-96 md:h-128 lg:h-full"></div>
         </div>
     </div>
 </div>
 {{-- End Chart Section --}}
-
-{{-- Laporan Mitra Section --}}
-<div class="container mx-auto py-8 mb-8">
+<div class="container mx-auto px-6 py-8 mb-8">
     <div class="flex items-center justify-between">
-        <h1 class="text-3xl font-bold text-Ebony900">Laporan Mitra</h1>
-        <button class="bg-AccentRed900 text-white px-4 py-2 rounded-lg">
+        <h1 class="text-xl md:text-2xl font-bold text-Ebony900">Laporan Mitra</h1>
+        <a href="{{route('laporan.create')}}">
+        <button class="bg-AccentRed900 hover:bg-red-700 text-sm md:text-base text-white px-4 py-2 rounded-lg">
             + Buat Laporan Baru
         </button>
+
+    </a>
+
     </div>
 
     <div class="mt-6">
         <div class="relative">
-            <input type="text"
-                class="w-full pl-6 pr-4 py-2 border border-Neutral300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-AccentRed900"
-                placeholder="Cari">
+            <input type="text" class="w-full pl-6 pr-4 py-2 border border-Neutral300 rounded-lg" placeholder="Cari">
         </div>
     </div>
 
-    <div class="mt-6 bg-white shadow-lg rounded-lg overflow-hidden">
-        <table class="min-w-full bg-white">
-            <thead class="bg-gray-50 border-b">
+    <div class="relative overflow-x-auto rounded-lg shadow-md mt-7">
+        <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-100 border-b">
                 <tr>
-                    <th class="text-left px-6 py-3 text-xs font-semibold text-Ebony900 uppercase tracking-wider">
+                    <th scope="col" class="px-6 py-3 text-Ebony900 font-semibold">
                         Judul
                     </th>
-                    <th class="text-left px-6 py-3 text-xs font-semibold text-Ebony900 uppercase tracking-wider">
+                    <th scope="col" class="px-6 py-3 text-Ebony900 font-semibold">
                         Lokasi
                     </th>
-                    <th class="text-left px-6 py-3 text-xs font-semibold text-Ebony900 uppercase tracking-wider">
+                    <th scope="col" class="px-6 py-3 text-Ebony900 font-semibold">
                         Realisasi
                     </th>
-                    <th class="text-left px-6 py-3 text-xs font-semibold text-Ebony900 uppercase tracking-wider">
+                    <th scope="col" class="px-6 py-3 text-Ebony900 font-semibold">
                         Tgl Realisasi
                     </th>
-                    <th class="text-left px-6 py-3 text-xs font-semibold text-Ebony900 uppercase tracking-wider">
+                    <th scope="col" class="px-6 py-3 text-Ebony900 font-semibold">
                         Laporan Dikirim
                     </th>
-                    <th class="text-left px-6 py-3 text-xs font-semibold text-Ebony900 uppercase tracking-wider">
+                    <th scope="col" class="px-6 py-3 text-Ebony900 font-semibold">
                         Status
                     </th>
-                    <th class="text-left px-6 py-3 text-xs font-semibold text-Ebony900 uppercase tracking-wider">
+                    <th scope="col" class="px-6 py-3 text-Ebony900 font-semibold">
                         Aksi
                     </th>
                 </tr>
             </thead>
-            <tbody class="divide-y">
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                        Pengadaan sarana keterampilan Olahan Pangan
+            @foreach($laporan as $item)
+            <tbody>
+                    <tr class="bg-white border-b border-Neutal200">
+                        <th scope="row" class="px-6 py-4 font-normal">{{$item->judul}}</th>
+                        <td class="px-6 py-4">{{$item->proyek->kecamatan}}</td>
+                        <td class="px-6 py-4">Rp.{{number_format($item->realisasi, 0, ',', ',')}}</td>
+                        <td class="px-6 py-4">{{$item->tanggal}} {{$item->bulan}} {{$item->tahun}}</td>
+                        <td class="px-6 py-4">{{$item->releaseDay}} {{$item->releaseMonth}} {{$item->releaseYear}}</td>
+                        <td class="px-6 py-4">
+                            @if($item->status === 'terima')
+                            <span class="bg-Success50 text-Success700 py-1 px-3 rounded-full text-xs">Diterima</span>
+                            @elseif($item->status === 'draf')
+                            <span class="bg-Gray100 text-Gray700 py-1 px-3 rounded-full text-xs">Draf</span>
+                            @elseif($item->status === 'revisi')
+                            <span class="bg-Warning50 text-Warning700 py-1 px-3 rounded-full text-xs">Revisi</span>
+                            @elseif($item->status === 'pengajuan')
+                            <span class="bg-Blue50 text-Blue500 py-1 px-3 rounded-full text-xs">Pengajuan</span>
+                            @elseif($item->status === 'tolak')
+                            <span class="bg-AccentRed100 text-AccentRed300 text- py-1 px-3 rounded-full text-xs">tolak</span>
+                            @endif
+
+                        </td>
+                        <td class="px-6 py-4">
+                                    <a href="{{route('laporan.show', $item->id)}}" class="text-Ebony300 hover:text-Ebony900">
+                                        <!-- Eye Icon -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                        </svg>
+                                    </a>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                        Kec. Karangwareng
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                        Rp.###,###,###
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                        1 Juli 2024
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                        16 July
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        <span
-                            class="px-2 p-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-Green50 text-Green600">
-                            Diterima
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        <a href="#" class="text-Ebony300 hover:text-Ebony900">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" class="size-5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                        Pengadaan sarana keterampilan Olahan Pangan
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                        Kec. Karangwareng
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                        Rp.###,###,###
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                        1 Juli 2024
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                        16 July
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        <span
-                            class="px-2 p-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-Yellow100 text-AccentRed300">
-                            Revisi
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        <a href="#" class="text-Ebony300 hover:text-Ebony900">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" class="size-5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                        Pengadaan sarana keterampilan Olahan Pangan
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                        Kec. Karangwareng
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                        Rp.###,###,###
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                        1 Juli 2024
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                        16 July
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        <span
-                            class="px-2 p-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-AccentRed100 text-AccentRed900">
-                            Ditolak
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        <a href="#" class="text-Ebony300 hover:text-Ebony900">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" class="size-5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
+                    </tr>
             </tbody>
+            @endforeach
+
         </table>
-    </div>
-    <div class="flex justify-center items-center mt-7">
-        <div class="cursor-pointer flex justify-center items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5 text-AccentRed900">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
-            </svg>              
-            <p class="text-AccentRed900 font-semibold">Muat lebih banyak</p>
+        <div class="pagination p-3 flex justify-center items-center border-t">
         </div>
     </div>
-</div>
-{{-- End Laporan Mitra Section --}}
 
+    <div class="flex justify-center items-center mt-7">
+       <a href="{{route('laporan.index')}}">
+       <div class="cursor-pointer flex justify-center items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" class="size-5 text-AccentRed900">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+            </svg>
+            <p class="text-AccentRed900 hover:text-red-700 text-sm md:text-base font-semibold">Muat lebih banyak</p>
+        </div>
+       </a> 
+    </div>
+</div>
 
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Persentase total realisasi berdasarkan sektor CSR (Legenda ditampilkan)
-        var optionsPie = {
-            chart: {
-                type: 'pie',
-                width: 600,
-                height: 600
-            },
-            series: [44, 100, 52, 37, 22, 69, 72],
-            labels: ['Sosial', 'Lingkungan', 'Kesehatan', 'Pendidikan', 'Infrastruktur dan lingkungan',
-                'Sarana dan prasarana keagmaan', 'Lainnya'
-            ],
-            colors: ['#28A0F6', '#4E5BA6', '#7A5AF8', '#EE46BC', '#B42121', '#F95016', '#FAC515'],
-            dataLabels: {
-                enabled: false
-            },
-            legend: {
-                show: true // Menampilkan legenda
+
+var dataRealisasi = @json($data_realisasi);
+        var categories = Object.keys(dataRealisasi);
+          var seriesData = Object.values(dataRealisasi);
+
+
+
+          var dataKec = @json($data_kecamatan);
+        var categoriesKec = Object.keys(dataKec);
+          var seriesKec = Object.values(dataKec);
+    // Pie Chart Configuration
+    var pieOptions = {
+        series: seriesData,
+        chart: {
+            type: 'pie',
+            height: 350
+        },
+        labels: categories,
+        colors: ['#4E5BA6', '#7A5AF8', '#EE46BC', '#B42121', '#F95016'], // Adjust the colors as needed
+        dataLabels: {
+            enabled: false
+        },
+        tooltip: {
+        y: {
+            formatter: function (val) {
+                return "Rp " + val.toLocaleString('id-ID');
             }
-        };
-
-        var chartPie = new ApexCharts(document.querySelector("#chart-pie"), optionsPie);
-        chartPie.render();
-
-        // Total realisasi sektor CSR (Legenda disembunyikan)
-        const chartBarSektor = new ApexCharts(document.querySelector("#chart-bar-sektor"), {
-            chart: {
-                type: 'bar',
-            },
-            series: [{
-                data: [20000000, 30000000, 5000000, 10000000, 7000000]
-            }],
-            xaxis: {
-                categories: ['Sosial', 'Lingkungan', 'Kesehatan', 'Pendidikan',
-                    'Infrastruktur dan lingkungan'
-                ]
-            },
-            yaxis: {
-                labels: {
-                    style: {
-                        fontSize: '13px',
+        }
+    },
+        responsive: [{
+                breakpoint: 1279,
+                options: {
+                    chart: {
+                        width: 300
+                    },
+                    legend: {
+                        position: 'bottom'
                     }
                 }
             },
-            colors: ['#4E5BA6', '#7A5AF8', '#EE46BC', '#B42121', '#F95016'],
-            plotOptions: {
-                bar: {
-                    horizontal: true,
-                    barHeight: '60%',
-                    distributed: true
-                }
-            },
-            legend: {
-                show: false
-            }
-        });
-        chartBarSektor.render();
-
-        // Total realisasi proyek CSR berdasarkan lokasi (Legenda disembunyikan)
-        const chartBarLokasi = new ApexCharts(document.querySelector("#chart-bar-lokasi"), {
-            chart: {
-                type: 'bar',
-            },
-            series: [{
-                data: [15000000, 12000000, 8000000, 5000000, 7000000, 6000000]
-            }],
-            xaxis: {
-                categories: ['Kec. Waled', 'Kec. Pusakanegara', 'Kec. Ciledug', 'Kec. Losari',
-                    'Kec. Pabedilan', 'Kec. Gebang'
-                ]
-            },
-            yaxis: {
-                labels: {
-                    style: {
-                        fontSize: '13px',
+            {
+                breakpoint: 1023,
+                options: {
+                    chart: {
+                        width: 300 // Adjust the width as needed
+                    },
+                    legend: {
+                        position: 'bottom'
                     }
                 }
             },
-            colors: ['#FAC515', '#16B364', '#28A0F6', '#4E5BA6', '#7A5AF8', '#EE46BC'],
-            plotOptions: {
-                bar: {
-                    horizontal: true,
-                    barHeight: '35%',
-                    distributed: true
+            {
+                breakpoint: 768,
+                options: {
+                    chart: {
+                        width: 500 // Adjust the width as needed
+                    },
+                    legend: {
+                        position: 'right',
+                    }
                 }
             },
-            legend: {
-                show: false
+            {
+                breakpoint: 565,
+                options: {
+                    chart: {
+                        width: 470
+                    },
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            },
+            {
+                breakpoint: 530,
+                options: {
+                    chart: {
+                        width: 300
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            },
+            {
+                breakpoint: 375,
+                options: {
+                    chart: {
+                        width: 250
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
             }
-        });
-        chartBarLokasi.render();
-    });
+        ]
+    };
+
+    var pieChart = new ApexCharts(document.querySelector("#pieChart"), pieOptions);
+    pieChart.render();
+
+    // Bar Chart 1 Configuration
+    var barOptions1 = {
+        series: [{
+            data: seriesData
+        }],
+        chart: {
+            type: 'bar',
+            height: 350
+        },
+        tooltip: {
+        y: {
+            formatter: function (val) {
+                return "Rp " + val.toLocaleString('id-ID');
+            }
+        }
+    },
+        plotOptions: {
+            bar: {
+                horizontal: true,
+                distributed: true,
+                dataLabels: {
+                    position: 'center' // Position the data labels inside the bars
+                }
+            }
+        },
+        colors: ['#4E5BA6', '#7A5AF8', '#EE46BC', '#B42121', '#F95016'], // Adjust the colors as needed
+        dataLabels: {
+            enabled: true,
+            style: {
+                colors: ['#FFFFFF'] // Set the text color to white for visibility
+            },
+            formatter: function (val) {
+                return 'Rp.' + val.toLocaleString(
+                    'id-ID'); // Format the values with 'Rp.' and thousands separator
+            }
+        },
+        xaxis: {
+            categories: categories,
+            labels: {
+                show: false // Disable x-axis labels
+            },
+            axisBorder: {
+                show: false // Optionally, hide the axis line
+            },
+            axisTicks: {
+                show: false // Optionally, hide the axis ticks
+            }
+        },
+        legend: {
+            show: false
+        }
+    };
+
+    var barChart1 = new ApexCharts(document.querySelector("#barChart1"), barOptions1);
+    barChart1.render();
+
+    // Bar Chart 2 Configuration
+    var barOptions2 = {
+        series: [{
+            data: seriesKec // Replace with your actual data
+        }],
+        chart: {
+            type: 'bar',
+            height: 450,
+        },
+        tooltip: {
+        y: {
+            formatter: function (val) {
+                return "Rp " + val.toLocaleString('id-ID');
+            }
+        }
+    },
+        plotOptions: {
+            bar: {
+                horizontal: true,
+                distributed: true,
+                dataLabels: {
+                    position: 'center' // Position the data labels inside the bars
+                }
+            }
+        },
+        colors: ['#4E5BA6', '#7A5AF8', '#EE46BC', '#B42121', '#F95016', '#66C61C',
+            '#16B364'
+        ], // Adjust the colors as needed
+        dataLabels: {
+            enabled: true,
+            style: {
+                colors: ['#FFFFFF'] // Set the text color to white for visibility
+            },
+            formatter: function (val) {
+                return 'Rp.' + val.toLocaleString(
+                    'id-ID'); // Format the values with 'Rp.' and thousands separator
+            }
+        },
+        xaxis: {
+            categories: categoriesKec,
+            labels: {
+                show: false // Disable x-axis labels
+            },
+            axisBorder: {
+                show: false // Optionally, hide the axis line
+            },
+            axisTicks: {
+                show: false // Optionally, hide the axis ticks
+            }
+        },
+        legend: {
+            show: false
+        }
+    };
+
+    var barChart2 = new ApexCharts(document.querySelector("#barChart2"), barOptions2);
+    barChart2.render();
 
 </script>
-
-
 @endif
     @else
     @if (Auth::user()->profile_status === 0)
