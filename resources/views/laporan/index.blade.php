@@ -115,6 +115,17 @@
 
                 </tbody>
             </table>
+            <div
+                class="flex items-center justify-between bg-white px-6 py-3  rounded-b-lg border-b border-l border-r border-Neutral300">
+                @if ($laporan->hasPages())
+                <div class="flex items-center justify-between w-full">
+                    {{-- Pagination Links --}}
+                    <div class="w-full">
+                        {{ $laporan->links() }}
+                    </div>
+                </div>
+                @endif
+            </div>
         </div>
     </div>
     <div class="w-full bg-white mx-auto py-12 mt-44 px-6 md:px-0">
