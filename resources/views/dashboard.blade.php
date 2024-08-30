@@ -121,15 +121,41 @@
     <div class="mt-12 mb-4">
         <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-2 space-y-4 lg:space-y-0">
             <div class="flex flex-col md:flex-row md:space-x-4 w-full space-y-4 md:space-y-0">
-                <select
-                    class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white flex-grow lg:flex-grow-0 lg:w-1/2">
-                    <option>2024</option>
-                </select>
-                <select
-                    class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white flex-grow lg:flex-grow-0 lg:w-full">
-                    <option>Kuartal 2 (April, Mei, Juni)</option>
-                </select>
-                <button class="bg-AccentRed900 hover:bg-red-700 text-white px-4 py-2 rounded-lg lg:w-fit text-nowrap">Terapkan
+            <form id="filter" method="GET" action="{{ route('filter.stat') }}" class="flex flex-wrap lg:flex-nowrap lg:flex-row w-full lg:gap-3">
+            @csrf
+
+                <!-- Dropdown 1 -->
+                <div class="w-full py-2 sm:pr-2 lg:pr-0 sm:w-1/2 md:w-1/2 lg:">
+                    <select name="year" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full">
+                    @for ($i = 2000; $i <= date('Y'); $i++) <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
+                    </select>
+                </div>
+                <!-- Dropdown 2 -->
+                <div class="w-full py-2 sm:pl-2 lg:pl-0 sm:w-1/2 md:w-1/2 lg:">
+                    <select name="kuartal" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full">
+                        <option value="1" >Kuartal 1 (Jan, Feb, Maret)</option>
+                        <option value="2" >Kuartal 2 (April, Mei, Juni)</option>
+                        <option value="3" >Kuartal 3 (Juli, Aug, Sep)</option>
+                        <option value="4">Kuartal 4 (Oct, Nov, Des)</option>
+                    </select>
+                </div>
+                <!-- Dropdown 3 -->
+                <div class="w-full py-2 sm:pr-2 lg:pr-0 sm:w-1/2 md:w-1/2 hidden lg:">
+                    <select name="sektor" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full">
+                        <option value="semua">Semua Sektor</option>
+
+                    </select>
+                </div>
+                <!-- Dropdown 4 -->
+                <div  class="w-full py-2 sm:pl-2 lg:pl-0 sm:w-1/2 md:w-1/2 hidden lg:">
+                    <select name="mitra" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full">
+                    <option value="semua">Semua Mitra</option>
+
+                    </select>
+                </div>
+                </form>
+                <button id="filterBtn" class="bg-AccentRed900 hover:bg-red-700 text-white px-4 py-2 rounded-lg lg:w-fit text-nowrap">Terapkan
                     filter</button>
             </div>
             <div
@@ -666,33 +692,48 @@
     <div class="mt-0 mb-4">
         <div class="flex flex-wrap justify-between items-center mb-2">
             <div class="flex flex-wrap lg:flex-nowrap lg:flex-row w-full lg:gap-3">
+            <form id="filter" method="GET" action="{{ route('filter.stat') }}" class="flex flex-wrap lg:flex-nowrap lg:flex-row w-full lg:gap-3">
+            @csrf
+
                 <!-- Dropdown 1 -->
                 <div class="w-full py-2 sm:pr-2 lg:pr-0 sm:w-1/2 md:w-1/2 lg:">
-                    <select class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full">
-                        <option>2024</option>
+                    <select name="year" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full">
+                    @for ($i = 2000; $i <= date('Y'); $i++) <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
                     </select>
                 </div>
                 <!-- Dropdown 2 -->
                 <div class="w-full py-2 sm:pl-2 lg:pl-0 sm:w-1/2 md:w-1/2 lg:">
-                    <select class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full">
-                        <option>Kuartal 2 (April, Mei, Juni)</option>
+                    <select name="kuartal" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full">
+                        <option value="1" >Kuartal 1 (Jan, Feb, Maret)</option>
+                        <option value="2" >Kuartal 2 (April, Mei, Juni)</option>
+                        <option value="3" >Kuartal 3 (Juli, Aug, Sep)</option>
+                        <option value="4">Kuartal 4 (Oct, Nov, Des)</option>
                     </select>
                 </div>
                 <!-- Dropdown 3 -->
                 <div class="w-full py-2 sm:pr-2 lg:pr-0 sm:w-1/2 md:w-1/2 lg:">
-                    <select class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full">
-                        <option>Semua Sektor</option>
+                    <select name="sektor" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full">
+                        <option value="semua">Semua Sektor</option>
+                        @foreach($sektor as $item)
+                        <option value="{{$item->id}}">{{$item->nama_sektor}}</option>
+                        @endforeach
+
                     </select>
                 </div>
                 <!-- Dropdown 4 -->
-                <div class="w-full py-2 sm:pl-2 lg:pl-0 sm:w-1/2 md:w-1/2 lg:">
-                    <select class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full">
-                        <option>Semua Mitra</option>
+                <div  class="w-full py-2 sm:pl-2 lg:pl-0 sm:w-1/2 md:w-1/2 lg:">
+                    <select name="mitra" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full">
+                    <option value="semua">Semua Mitra</option>
+                        @foreach($mitra as $item)
+                        <option value="{{$item->id}}">{{$item->identity->nama_mitra}}</option>
+                        @endforeach
                     </select>
                 </div>
+                </form>
                 <!-- Button Terapkan Filter Show Di Posisi lg, Hide di posisi selain lg -->
                 <div class="w-full py-2 lg:w-1/6 xl:w-fit xl:mr-4 xl:block hidden">
-                    <button
+                    <button id="filterBtn"
                         class="bg-AccentRed900 hover:bg-red-700 text-white px-4 py-2 mb-2 border-Neutral300 rounded-lg p-2 w-full text-nowrap">
                         Terapkan filter
                     </button>
@@ -1171,7 +1212,10 @@
         document.getElementById('pdfForm').submit();
     });
 });
+document.getElementById('filterBtn').addEventListener('click', function() {
+        document.getElementById('filter').submit();
     });
+});
 
 </script>
 

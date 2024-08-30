@@ -108,12 +108,51 @@ class LaporanController extends Controller
                 $item->logo = $user->identity->mitra_logo;
 
         }
+        $mitra = User::where('level', 'mitra')
+        ->whereNotNull('email_verified_at')
+        ->get();
 
         
         
-        return view('publik.publik-laporan.index', compact('laporan'));
+        return view('publik.publik-laporan.index', compact('laporan','mitra'));
         
     }
+
+    public function laporanPublikFilter(Request $request, $status)
+    {
+
+
+       
+        $sortOrder = request()->get('sort', 'desc'); // Get the sorting order from the request, default is 'desc'
+        $mitraFilter = request()->get('mitra'); // Get the "mitra" filter from the request
+        
+        $laporan = Laporan::where('status', 'terima')
+        ->when($mitraFilter, function ($query) use ($mitraFilter) {
+            return $query->whereHas('user.identity', function ($q) use ($mitraFilter) {
+                $q->where('nama_pt', $mitraFilter);
+            });
+        })
+        ->when($request->has('search') && $request->search != '', function ($query) use ($request) {
+            $search = $request->input('search');
+            return $query->where('judul', 'like', '%' . $search . '%');
+        })
+        ->orderBy('created_at', $sortOrder) // Use 'created_at' for sorting by date
+        ->get();
+        
+        foreach ($laporan as $item) {
+            $user = User::with('identity')->find($item['id_user']);
+            $item->user = $user->identity->nama_pt;
+            $item->logo = $user->identity->mitra_logo;
+        }
+        $mitra = User::where('level', 'mitra')
+        ->whereNotNull('email_verified_at')
+        ->get();
+        
+        
+        return view('publik.publik-laporan.index', compact('laporan','mitra'));
+        
+    }
+
 
     public function detailLaporan($id)
     {

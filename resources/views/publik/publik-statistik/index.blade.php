@@ -23,13 +23,16 @@
             <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-Ebony900 mb-8 self-center">Data Statistik</h2>
             <div class="flex flex-wrap justify-between items-center mb-2">
                 <div class="flex flex-wrap lg:flex-nowrap lg:flex-row w-full lg:gap-3">
-                    <!-- Input 1 -->
-                    <div class="relative w-full py-2 sm:pr-2 lg:pr-0 sm:w-1/2 md:w-1/2">
-                        <select
+                <form id="filter" method="GET" action="{{ route('filter.stat.publik') }}" class="flex flex-wrap lg:flex-nowrap lg:flex-row w-full lg:gap-3">
+            @csrf
+
+            <div class="relative w-full py-2 sm:pr-2 lg:pr-0 sm:w-1/2 md:w-1/2">
+                        <select name="year" id="year"
                             class="appearance-none border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full pr-10">
-                            <option value="">Tahun</option>
+                            @for ($i = 2000; $i <= date('Y'); $i++) <option value="{{ $i }}">{{ $i }}</option>
+                            @endfor
                         </select>
-                        <!-- Icon kalender -->
+
                         <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5 text-gray-500">
@@ -38,11 +41,14 @@
                             </svg>
                         </div>
                     </div>
-                    <!-- Input 2 -->
+
                     <div class="relative w-full py-2 sm:pl-2 lg:pl-0 sm:w-1/2 md:w-1/2">
-                        <select
+                        <select name="kuartal" id="kuartal"
                             class="appearance-none border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full pr-10">
-                            <option value="">Kuartal 2 (April, Mei, Juni)</option>
+                            <option value="1" >Kuartal 1 (Jan, Feb, Maret)</option>
+                        <option value="2" >Kuartal 2 (April, Mei, Juni)</option>
+                        <option value="3" >Kuartal 3 (Juli, Aug, Sep)</option>
+                        <option value="4">Kuartal 4 (Oct, Nov, Des)</option>
                         </select>
                         <!-- Icon kalender -->
                         <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
@@ -53,23 +59,39 @@
                             </svg>
                         </div>
                     </div>
+
+                <!-- Dropdown 3 -->
+                <div class="w-full py-2 sm:pr-2 lg:pr-0 sm:w-1/2 md:w-1/2 hidden lg:">
+                    <select name="sektor" id="sektor" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full">
+                        <option value="semua">Semua Sektor</option>
+
+                    </select>
+                </div>
+                <!-- Dropdown 4 -->
+                <div  class="w-full py-2 sm:pl-2 lg:pl-0 sm:w-1/2 md:w-1/2 hidden lg:">
+                    <select name="mitra" id="mitra" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full">
+                    <option value="semua">Semua Mitra</option>
+
+                    </select>
+                </div>
+                </form>
+                    <!-- Input 1 -->
+
+                    <!-- Input 2 -->
+
                     <!-- Button Unduh .csv -->
                     <div class="flex justify-center gap-3 w-full lg:w-auto">
                         <div class="w-full mt-2">
-                            <button
+                            <button id="filterBtn"
                                 class="bg-white hover:bg-gray-100 text-Ebony300 border border-Neutral300 px-4 py-2 rounded-lg flex items-center gap-2 w-full justify-center text-nowrap">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                    stroke="currentColor" class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                                </svg>
+
                                 <p>Unduh .csv</p>
                             </button>
                         </div>
                         <!-- Button Unduh .pdf -->
                         <div class="w-full mt-2">
                             <button
-                                class="bg-white hover:bg-gray-100 text-Ebony300 border border-Neutral300 px-4 py-2 rounded-lg flex items-center gap-2 w-full justify-center text-nowrap">
+                                id="captureBtn" class="bg-white hover:bg-gray-100 text-Ebony300 border border-Neutral300 px-4 py-2 rounded-lg flex items-center gap-2 w-full justify-center text-nowrap">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                                     stroke="currentColor" class="w-5 h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -78,9 +100,14 @@
                                 <p>Unduh .pdf</p>
                             </button>
                         </div>
+                        <form id="pdfForm" action="{{ route('publikStat.pdf') }}" method="POST">
+                             @csrf
+                           <input type="hidden" id="chartImage" name="chartImage">
+                          </form>
                     </div>
                 </div>
             </div>
+            <div id="pieContainer">
             {{-- Card Section --}}
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center mt-12">
                 <div class="text-left flex flex-row space-x-5 items-center">
@@ -144,6 +171,8 @@
                     </div>
                 </div>
             </div>
+            </div>
+
         </div>
         {{-- Contact US Section --}}
         <div class="w-full rounded-lg py-10 mx-auto flex flex-col md:flex-row space-y-10 md:space-y-0 md:space-x-10">
@@ -497,6 +526,27 @@
 
     var barChart3 = new ApexCharts(document.querySelector("#barChart3"), barOptions3);
     barChart3.render();
+
+</script>
+
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('captureBtn').addEventListener('click', function() {
+        console.log(html2canvas)
+    html2canvas(document.querySelector("#pieContainer")).then(canvas => {
+        var imgData = canvas.toDataURL("image/png");
+        document.getElementById('chartImage').value = imgData;
+        document.getElementById('pdfForm').submit();
+    });
+});
+document.getElementById('filterBtn').addEventListener('click', function() {
+        document.getElementById('filter').submit();
+});
+
+        document.getElementById('kuartal').addEventListener('change', function() {
+            document.getElementById('filter').submit();
+        });
+    });
 
 </script>
 

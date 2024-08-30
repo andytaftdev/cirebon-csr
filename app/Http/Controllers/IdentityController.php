@@ -35,7 +35,9 @@ class IdentityController extends Controller
         }else
         {
             $notification =  Notification::where('id_user', $user->id)->orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat', 0)->count();
+            $jumlahNotifikasi = Notification::where('terlihat', 0)
+            ->where('id_user', $user->id)
+            ->count();
 
         }
 
@@ -207,7 +209,9 @@ class IdentityController extends Controller
 
         }else
         {
-        $jumlahNotifikasi = Notification::where('terlihat', 0)->count();
+            $jumlahNotifikasi = Notification::where('terlihat', 0)
+            ->where('id_user', $user->id)
+            ->count();
         }
         
 

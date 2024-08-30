@@ -8,10 +8,10 @@
 
         <!-- Navbar Links (Hidden on Small Screens) -->
         <div class="hidden lg:flex items-center space-x-8">
-            <a class="text-AccentRed900 font-semibold underline underline-AccentRed900 underline-offset-8"
+            <a class="text-Ebony900 hover:text-AccentRed900 hover:font-semibold "
                 href="/dashboard">Dashboard</a>
             <a class="text-Ebony900 hover:text-AccentRed900 hover:font-semibold"
-                href="{{route('identity.index')}}">Kegiatan</a>
+                href="{{route('kegiatan.index')}}">Kegiatan</a>
             <a class="text-Ebony900 hover:text-AccentRed900 hover:font-semibold"
                 href="{{route('proyek.index')}}">Proyek</a>
             <a class="text-Ebony900 hover:text-AccentRed900 hover:font-semibold"
@@ -22,7 +22,6 @@
                 href="/mitra">Mitra</a>
         </div>
 
-        <!-- User Info and Notification (Hidden on Small Screens) -->
         <div class="hidden md:flex items-center space-x-4">
             <div class="text-right">
                 <p class="font-medium text-Ebony900">{{$identity->nama_mitra}}</p>

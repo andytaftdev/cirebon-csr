@@ -18,13 +18,19 @@
 
     <div class="container mx-auto px-7 md:px-0 md:w-3/4 my-4">
         <div class="my-6">
-            <div class="flex space-x-4 md:my-10">
-                <select class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full sm:w-fit md:w-1/3 lg:w-1/4">
-                    <option>Terbaru</option>
+
+            <form class="flex space-x-4 md:my-10" id="filter" action="{{route('laporan.publikFilter',['status' => 'semua']) }}" method="GET" >
+            <select name="sort" id="sort" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full sm:w-fit md:w-1/3 lg:w-1/4">
+            <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>Terbaru</option>
+            <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>Terlama</option>
+               </select>
+                <select id="mitra" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full sm:w-fit md:w-1/3 lg:w-1/4">
+                    <option value="semua">Semua Mitra</option>
+                    @foreach($mitra as $item)
+                    <option value="{{$item->id}}">{{$item->identity->nama_mitra}}</option>
+                    @endforeach
                 </select>
-                <select class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full sm:w-fit md:w-1/3 lg:w-1/4">
-                    <option>Semua Mitra</option>
-                </select>
+
                 {{-- Search Bar, Nampil di layar SM keatas --}}
                 <div class="relative w-9/12 hidden sm:flex">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -33,10 +39,11 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                     </svg>
-                    <input id="searchBar" type="text" placeholder="Cari kegiatan..."
+                    <input  id="searchBar" type="text" name="search" value="{{ request('search') }}" placeholder="Cari kegiatan..."
                         class="pl-14 text-base py-2 bg-white border border-Neutral300 rounded-lg w-full">
                 </div>
-            </div>
+                </form>
+        
             <div class="flex">
                 {{-- Search Bar, Hide di layar SM keatas --}}
                 <div class="relative block sm:hidden w-full mt-4">
@@ -162,5 +169,16 @@
     </div>
     <x-footer-umum></x-footer-umum>
 </div>
+<script>
+        document.getElementById('sort').addEventListener('change', function() {
+            document.getElementById('filter').submit();
+        });
+        document.getElementById('searchBar').addEventListener('change', function() {
+            document.getElementById('filter').submit();
+        });
+        document.getElementById('mitra').addEventListener('change', function() {
+            document.getElementById('filter').submit();
+        });
+</script>
 
 </x-guest-layout>

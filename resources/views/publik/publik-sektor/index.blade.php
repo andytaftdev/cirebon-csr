@@ -69,12 +69,19 @@
                 <!-- Card 1 -->
                  @foreach($proyek as $item)
                  @php
-             $gambarProyek = json_decode($item['gambar_proyek'], true);
+                 $gambarProyek = json_decode($item['gambar_proyek'], true);
+
+if (is_array($gambarProyek) && !empty($gambarProyek)) {
+    $gambarProyek = $gambarProyek[0];
+} else {
+    $gambarProyek = null;
+}
+
             @endphp
                 
                 <a href="{{route('proyek.detailProyek', $item->id)}}">
                     <div class="bg-white overflow-hidden">
-                    <img src="{{ asset('storage/img/proyek/'. $gambarProyek[0]) }}" alt="Sosial" class="w-full h-64 object-cover">
+                    <img src="{{ asset('storage/img/proyek/'. $gambarProyek) }}" alt="Sosial" class="w-full h-64 object-cover">
                     <div class="p-6 border border-Neutral300">
                         <h2 class="text-xl font-semibold mb-3">{{$item->nama_proyek}}</h2>
                         <div class="flex justify-betwen gap-2 p-2.5 mb-4 bg-gray-100 text-gray-500">

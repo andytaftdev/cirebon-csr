@@ -280,6 +280,36 @@ class KegiatanController extends Controller
     return view ('kegiatan.index', compact('identity','user','notification','kegiatan','jumlahNotifikasi'));
 }
 
+public function kegiatanPublikFilter(Request $request, $status)
+{
+
+
+   
+    $sortOrder = request()->get('sort', 'desc'); // Get the sorting order from the request, default is 'desc'
+    $mitraFilter = request()->get('mitra'); // Get the "mitra" filter from the request
+    
+    $kegiatan = Kegiatan::where('status', 1)
+    ->when($mitraFilter, function ($query) use ($mitraFilter) {
+        return $query->whereHas('user.identity', function ($q) use ($mitraFilter) {
+            $q->where('nama_pt', $mitraFilter);
+        });
+    })
+    ->when($request->has('search') && $request->search != '', function ($query) use ($request) {
+        $search = $request->input('search');
+        return $query->where('judul', 'like', '%' . $search . '%');
+    })
+    ->orderBy('created_at', $sortOrder) // Use 'created_at' for sorting by date
+    ->get();
+    
+
+ 
+    
+    
+    return view('publik.publik-kegiatan.index', compact('kegiatan'));
+    
+}
+
+
 
     /** 
      * Show the form for editing the specified resource.

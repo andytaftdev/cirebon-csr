@@ -5,37 +5,37 @@
             <img src="{{ asset('images/csr-logo.png') }}" alt="Logo" class="h-10">
         </div>
         <div class="hidden lg:flex items-center">
-            <a class="w-auto h-auto" href="#">
+            <a class="w-auto h-auto" href="/">
                 <p
-                    class="mt-1 mb-1 mr-8 text-AccentRed900 font-semibold underline underline-AccentRed900 underline-offset-8">
+                    class="mt-1 mb-1 mr-8text-Ebony900 hover:text-AccentRed900 hover:font-semibold">
                     Beranda</p>
             </a>
-            <a class="w-auto h-auto" href="#">
+            <a class="w-auto h-auto" href="/tentang">
                 <p
                     class="mt-1 mb-1 mr-8 text-Ebony900 hover:text-AccentRed900 hover:font-semibold font-normal">
                     Tentang</p>
             </a>
-            <a class="w-auto h-auto" href="#">
+            <a class="w-auto h-auto" href="/publik/kegiatan">
                 <p
                     class="mt-1 mb-1 mr-8 text-Ebony900 hover:text-AccentRed900 hover:font-semibold font-normal">
                     Kegiatan</p>
             </a>
-            <a class="w-auto h-auto" href="#">
+            <a class="w-auto h-auto" href="/statistik">
                 <p
                     class="mt-1 mb-1 mr-8 text-Ebony900 hover:text-AccentRed900 hover:font-semibold font-normal">
                     Statistik</p>
             </a>
-            <a class="w-auto h-auto" href="#">
+            <a class="w-auto h-auto" href="/publik/sektor">
                 <p
                     class="mt-1 mb-1 mr-8 text-Ebony900 hover:text-AccentRed900 hover:font-semibold font-normal">
                     Sektor</p>
             </a>
-            <a class="w-auto h-auto" href="#">
+            <a class="w-auto h-auto" href="/publik/laporan">
                 <p
                     class="mt-1 mb-1 mr-8 text-Ebony900 hover:text-AccentRed900 hover:font-semibold font-normal">
                     Laporan</p>
             </a>
-            <a class="w-auto h-auto" href="#">
+            <a class="w-auto h-auto" href="/publik/mitra">
                 <p
                     class="mt-1 mb-1 mr-8 text-Ebony900 hover:text-AccentRed900 hover:font-semibold font-normal">
                     Mitra</p>
@@ -57,10 +57,11 @@
                 </svg>
             </button>
         </div>
+        <a href="/dashboard">
         <button
         class="hidden md:block text-white bg-AccentRed900 py-2 px-6 rounded-lg text-base hover:bg-red-700 cursor-pointer">
         Pengajuan
-    </button>
+    </button></a>
         </div>
     </div>
 

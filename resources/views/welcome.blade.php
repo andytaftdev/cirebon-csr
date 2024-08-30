@@ -240,7 +240,11 @@
                 <div class="lg:w-1/2 w-full flex flex-col">
                     <div>
                         @foreach($sektor as $item)
-                        <button id="btn-{{$item->nama_sektor}}" onclick="toggleActive('btn-{{$item->nama_sektor}}'); changeContent('{{$item->nama_sektor}}')"
+                        @php
+        $sektor_name = $item->nama_sektor;
+        $sektors = str_replace(' ', '_', $sektor_name); // Mengganti spasi dengan underscore
+    @endphp
+                        <button id="btn-{{$sektors}}" onclick="toggleActive('btn-{{$sektors}}'); changeContent('{{$sektors}}')"
                             class="btn w-full text-left py-4 px-6 font-semibold bg-[#282F3E] hover:bg-[#282F3E] hover:font-semibold text-xl border-l-4 border-AccentRed400 flex justify-between">
                             {{$item->nama_sektor}}
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -263,11 +267,12 @@
                             Lihat program tersedia
                         </button>
                         </a>
-
+                       <a href="/statistik">
                         <button
                             class="w-full py-3 px-4 border border-white rounded-lg text-white hover:border-gray-400 hover:text-gray-400 mt-4">
                             Lihat realisasi program
                         </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -588,7 +593,11 @@
     // Untuk Berubah Konten Pada Sektor CSR Section
     const content = {
         @foreach($sektor as $item)
-        {{$item->nama_sektor}}: {
+        @php
+        $sektor_name = $item->nama_sektor;
+        $sektors = str_replace(' ', '_', $sektor_name); // Mengganti spasi dengan underscore
+    @endphp
+        {{$sektors}}: {
             imgSrc: "background-image: url('{{ asset('storage/img/sektor/'. $item->gambar_sektor) }}');",
             href: "{{route('sektor.detailSektor', $item->id)}}",
             description: "{{$item->deskripsi_sektor}}"

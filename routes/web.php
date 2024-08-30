@@ -30,15 +30,9 @@ use Illuminate\Http\Request;
 Route::get('/', [PublikController::class, 'index'])->name('profile.destroy');
 
 
-Route::get('/dashboard', [HomeController::class, 'index']) ->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::post('/register', [UserController::class, 'register'])->name('register');
-Route::get('/report-pdf', [HomeController::class, 'exportPdf'])->name('export.pdf');
-Route::get('/proyek-pdf', [HomeController::class, 'proyekPdf'])->name('proyek.pdf');
 
-Route::post('/stats-pdf', [HomeController::class, 'statPDF'])->name('stats.pdf');
-
-Route::get('/statistik', [HomeController::class, 'stats'])->name('home.stats');
-Route::get('/tentang', [HomeController::class, 'about'])->name('home.about');
 
 
 
@@ -63,7 +57,12 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-Route::resource('/notification', NotificationController::class);
+Route::middleware('auth')->group(function () {
+
+
+
+
+    Route::resource('/notification', NotificationController::class);
 Route::resource('/identity', IdentityController::class);
 Route::get('/mitra', [IdentityController::class, 'mitra']);
 Route::get('/mitra/create', [IdentityController::class, 'create'])->name('identity.create');
@@ -72,9 +71,9 @@ Route::get('/mitra/{id}', [IdentityController::class, 'detailMitra'])->name('ide
 Route::get('/mitra/ubah/{id}', [IdentityController::class, 'ubahMitra'])->name('identity.ubahMitra');
 Route::put('/mitra/update/{id}', [IdentityController::class, 'updateMitra'])->name('identity.updateMitra');
 Route::get('/mitra', [IdentityController::class, 'mitra']);
-Route::get('/publik/mitra', [IdentityController::class, 'mitraPublik'])->name('identity.mitraPublik');
-Route::get('/publik/mitra/{id}', [IdentityController::class, 'mitraDetail'])->name('identity.mitraDetail');
 Route::get('/kegiatan/search/{status}', [IdentityController::class, 'search'])->name('identity.search');
+
+
 
 
 Route::resource('/laporan', LaporanController::class);
@@ -82,10 +81,6 @@ Route::get('/laporan/status/{status}', [LaporanController::class, 'status'])->na
 Route::put('/laporan/tolak/{id}', [LaporanController::class, 'tolak'])->name('laporan.tolak');
 Route::put('/laporan/revisi/{id}', [LaporanController::class, 'revisi'])->name('laporan.revisi');
 Route::put('/laporan/terima/{id}', [LaporanController::class, 'terima'])->name('laporan.terima');
-Route::get('/publik/laporan', [LaporanController::class, 'laporanPublik'])->name('laporan.laporanPublik');
-Route::get('/publik/laporan/{id}', [LaporanController::class, 'detailLaporan'])->name('laporan.detailLaporan');
-
-
 
 
 Route::resource('/kegiatan', KegiatanController::class);
@@ -93,18 +88,14 @@ Route::get('kegiatan/create/{id}', [KegiatanController::class, 'create'])->name(
 Route::get('kegiatan/detail/{id}', [KegiatanController::class, 'detail'])->name('kegiatan.detail');
 Route::get('kegiatan/edit/{id}', [KegiatanController::class, 'edit'])->name('kegiatan.edit');
 Route::get('/kegiatan/status/{status}', [KegiatanController::class, 'filter'])->name('kegiatan.filter');
-Route::get('/publik/kegiatan', [KegiatanController::class, 'kegiatanPublik'])->name('kegiatan.kegiatanPublik');
-Route::get('/publik/kegiatan/{id}', [KegiatanController::class, 'detailKegiatan'])->name('kegiatan.detailKegiatan');
+
 
 
 
 Route::resource('/sektor', SektorController::class);
 Route::get('sektor/detail/{id}', [SektorController::class, 'detail'])->name('sektor.detail');
 Route::get('sektor/edit/{id}', [SektorController::class, 'edit'])->name('sektor.edit');
-Route::get('/publik/sektor', [SektorController::class, 'sektorPublik'])->name('sektor.sektorPublik');
-Route::get('/publik/sektor/{id}', [SektorController::class, 'detailSektor'])->name('sektor.detailSektor');
 Route::get('/sektor/status/{status}', [SektorController::class, 'search'])->name('sektor.search');
-
 
 Route::resource('/program', ProgramController::class);
 Route::delete('/program/delete/{id}', [ProgramController::class, 'destroy'])->name('program.destroy');
@@ -113,7 +104,52 @@ Route::get('/get-program/{id}', [ProgramController::class, 'getPrograms']);
 
 Route::resource('/proyek', ProyekController::class);
 Route::get('/proyek/status/{status}', [ProyekController::class, 'filter'])->name('proyek.filter');
+
+
+Route::get('/report-pdf', [HomeController::class, 'exportPdf'])->name('export.pdf');
+Route::get('/proyek-pdf', [HomeController::class, 'proyekPdf'])->name('proyek.pdf');
+
+Route::post('/stats-pdf', [HomeController::class, 'statPDF'])->name('stats.pdf');
+
+
+});
+
+
+Route::get('/publik/mitra', [IdentityController::class, 'mitraPublik'])->name('identity.mitraPublik');
+Route::get('/publik/mitra/{id}', [IdentityController::class, 'mitraDetail'])->name('identity.mitraDetail');
+
+
+
+Route::get('/publik/laporan', [LaporanController::class, 'laporanPublik'])->name('laporan.laporanPublik');
+Route::get('/publik/laporan/{id}', [LaporanController::class, 'detailLaporan'])->name('laporan.detailLaporan');
+Route::get('/filter/{status}', [LaporanController::class, 'laporanPublikFilter'])->name('laporan.publikFilter');
+Route::get('/publik/kegiatan/filter/{status}', [KegiatanController::class, 'kegiatanPublikFilter'])->name('kegiatan.publikFilter');
+
+
+
+
+
+Route::get('/publik/kegiatan', [KegiatanController::class, 'kegiatanPublik'])->name('kegiatan.kegiatanPublik');
+Route::get('/publik/kegiatan/{id}', [KegiatanController::class, 'detailKegiatan'])->name('kegiatan.detailKegiatan');
+
+
+
+Route::get('/publik/sektor', [SektorController::class, 'sektorPublik'])->name('sektor.sektorPublik');
+Route::get('/publik/sektor/{id}', [SektorController::class, 'detailSektor'])->name('sektor.detailSektor');
+
+
 Route::get('/publik/proyek/{id}', [ProyekController::class, 'detailProyek'])->name('proyek.detailProyek');
+
+
+
+
+Route::get('/statistik', [HomeController::class, 'stats'])->name('home.stats');
+Route::get('/tentang', [HomeController::class, 'about'])->name('home.about');
+Route::post('/publik-stats-pdf', [HomeController::class, 'publikStat'])->name('publikStat.pdf');
+Route::get('/statistik/filter', [HomeController::class, 'filterStat'])->name('filter.stat');
+Route::get('/statistik/public', [HomeController::class, 'filterPublicStat'])->name('filter.stat.publik');
+
+
 
 
 

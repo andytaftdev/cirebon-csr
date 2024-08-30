@@ -232,6 +232,7 @@ class ProyekController extends Controller
                    
                 }
                 $userId = json_decode($proyek->id_user, true);
+                $imgName = json_decode($proyek->gambar_proyek, true);
                 
 
                 if($userId === null)
@@ -243,7 +244,7 @@ class ProyekController extends Controller
                 }
            
 
-        return view('publik.publik-sektor.detail-proyek', compact('proyek','proyekAll','idUser'));
+        return view('publik.publik-sektor.detail-proyek', compact('proyek','proyekAll','idUser','imgName'));
         
     }
 

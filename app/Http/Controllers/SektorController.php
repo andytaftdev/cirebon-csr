@@ -156,6 +156,9 @@ $programs = Program::where('id_sektor', $id)
     ->get();
 
 
+
+
+
                    
 
            
@@ -352,7 +355,7 @@ return redirect()->route('sektor.index')->with('success', 'Data has been success
         }
     
 
-    
+        
         return redirect()->route('sektor.index')->with('success', 'Data has been successfully saved!');
 
     }

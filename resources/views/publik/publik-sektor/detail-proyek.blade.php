@@ -31,21 +31,14 @@
         <h1 class="text-Ebony900 font-semibold text-xl md:text-2xl mt-12">Galeri</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-5 mb-8">
             <!-- Card 1 -->
+            @foreach($imgName as $item)
+
             <div class="overflow-hidden relative">
-                <img class="w-full h-44 object-cover" src="{{ asset('images/img1.png') }}" alt="Image 1">
+                <img class="w-full h-44 object-cover" src="{{ asset('storage/img/proyek/'. $item) }}" alt="Image 1">
             </div>
-            {{-- Card 2 --}}
-            <div class="overflow-hidden relative">
-                <img class="w-full h-44 object-cover" src="{{ asset('images/img2.png') }}" alt="Image 2">
-            </div>
-            {{-- Card 3 --}}
-            <div class="overflow-hidden relative">
-                <img class="w-full h-44 object-cover" src="{{ asset('images/img3.png') }}" alt="Image 3">
-            </div>
-            {{-- Card 4 --}}
-            <div class="overflow-hidden relative">
-                <img class="w-full h-44 object-cover" src="{{ asset('images/img4.png') }}" alt="Image 4">
-            </div>
+
+           @endforeach
+
         </div>
         {{-- Mitra Yang Berpartisipasi --}}
         <h1 class="text-Ebony900 font-semibold text-2xl md:text-3xl mt-14">Mitra yang berpartisipasi</h1>
@@ -103,6 +96,7 @@
                             {{$item->year}}  
                         </td>
                         <td class="px-6 py-4 font-normal">
+                            <a href="{{route('identity.mitraDetail', $item->id)}}">
                             <button
                                 class="bg-AccentRed900 hover:bg-red-700 text-white py-2 px-4 rounded-lg flex justify-center items-center gap-2 mt-4 md:mt-0 text-nowrap">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -114,6 +108,7 @@
                                 </svg>
                                 Lihat detail
                             </button>
+                            </a>
                         </td>
                     </tr>
                     @endforeach

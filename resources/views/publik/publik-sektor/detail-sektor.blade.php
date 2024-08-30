@@ -38,170 +38,43 @@
                     <p class="text-Ebony200">Bidang program CSR Kabupaten Cirebon yang tersedia</p>
                 </div>
             </div>
-            <div class="flex flex-col md:flex-row mt-10">
-                <!-- Sidebar -->
-                <div class="w-full md:w-1/4 mb-4 md:mb-0">
-                    <ul>
-                    <!-- @foreach($programs as $program)
-    <h3>{{ $program->nama_program }} ({{ $program->proyek_count }} Proyek)</h3>
+           <div class="flex flex-col mx-auto md:flex-row mt-10">
+    <!-- Sidebar -->
 
-    <ul>
-        @foreach($program->proyek as $proyek)
-            <li>{{ $proyek->name }}</li>
-        @endforeach
-    </ul>
-@endforeach -->
-                        <li class="border-l-4 border-red-500 bg-AccentRed100 p-4 flex items-center justify-between">
-                            <div>
-                                <a href="#" class="text-Ebony900 md:text-lg font-bold">Rehabilitasi sosial</a>
-                                <p class="text-gray-500 text-base">9 proyek</p>
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" class="w-5 h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                            </svg>
-                        </li>
-                        <li class="border-l-4 border-gray-200 hover:bg-gray-100 p-4 flex items-center justify-between">
-                            <div>
-                                <a href="#" class="text-Ebony900 md:text-lg font-bold">Jaminan sosial</a>
-                                <p class="text-gray-500 text-base">13 proyek</p>
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" class="w-5 h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                            </svg>
-                        </li>
-                        <li class="border-l-4 border-gray-200 hover:bg-gray-100 p-4 flex items-center justify-between">
-                            <div>
-                                <a href="#" class="text-Ebony900 md:text-lg font-bold">Pemberdayaan sosial</a>
-                                <p class="text-gray-500 text-base">1 proyek</p>
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" class="w-5 h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                            </svg>
-                        </li>
-                        <li class="border-l-4 border-gray-200 hover:bg-gray-100 p-4 flex items-center justify-between">
-                            <div>
-                                <a href="#" class="text-Ebony900 md:text-lg font-bold">Perlindungan sosial terhadap
-                                    PMKS</a>
-                                <p class="text-gray-500 text-base">8 proyek</p>
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" class="w-5 h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                            </svg>
-                        </li>
-                        <li class="border-l-4 border-gray-200 hover:bg-gray-100 p-4 flex items-center justify-between">
-                            <div>
-                                <a href="#" class="text-Ebony900 md:text-lg font-bold">Lainnya</a>
-                                <p class="text-gray-500 text-base">23 proyek</p>
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" class="w-5 h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                            </svg>
-                        </li>
-                    </ul>
-                </div>
+    <div class="w-full md:w-1/4 mb-4 md:mb-0">
+        <ul>
+            @foreach($programs as $item)
+            @php
+            $program_name = $item->nama_program;
+              $program = str_replace(' ', '_', $program_name);  
 
-                <!-- Main Content -->
-                <div class="w-full md:w-3/4 px-4 md:px-10">
-                    <div class="grid grid-cols-1 gap-4">
-                        <!-- Content 1 -->
-                        <div
-                            class="flex flex-col md:flex-row items-start md:items-center justify-between bg-white py-3.5 md:px-0 md:p-3 border-b border-Neutral300">
-                            <div class="flex-1">
-                                <p class="text-gray-500 max-w-80">Pengadaan sarana keterampilan <br> Olahan Pangan</p>
-                            </div>
-                            <div class="flex-1 mt-2 md:mt-0">
-                                <p class="text-gray-500 max-w-80">UPTD Pusat Pelayanan Sosial Griya Wanita Mandiri, Kab
-                                    Cirebon</p>
-                            </div>
-                            <button
-                                class="bg-AccentRed900 hover:bg-red-700 text-white text-nowrap py-2 px-4 rounded-lg flex justify-center items-center gap-2 mt-4 md:mt-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                    stroke="currentColor" class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>
-                                Lihat detail
-                            </button>
-                        </div>
-                        {{-- Content 2 --}}
-                        <div
-                            class="flex flex-col md:flex-row items-start md:items-center justify-between bg-white py-3.5 md:px-0 md:p-3 border-b border-Neutral300">
-                            <div class="flex-1">
-                                <p class="text-gray-500 max-w-80">Pengadaan sarana keterampilan <br> Olahan Pangan</p>
-                            </div>
-                            <div class="flex-1 mt-2 md:mt-0">
-                                <p class="text-gray-500 max-w-80">UPTD Pusat Pelayanan Sosial Griya Wanita Mandiri, Kab
-                                    Cirebon</p>
-                            </div>
-                            <button
-                                class="bg-AccentRed900 hover:bg-red-700 text-white text-nowrap py-2 px-4 rounded-lg flex justify-center items-center gap-2 mt-4 md:mt-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                    stroke="currentColor" class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>
-                                Lihat detail
-                            </button>
-                        </div>
-                        {{-- Content 3 --}}
-                        <div
-                            class="flex flex-col md:flex-row items-start md:items-center justify-between bg-white py-3.5 md:px-0 md:p-3 border-b border-Neutral300">
-                            <div class="flex-1">
-                                <p class="text-gray-500 max-w-80">Pengadaan sarana keterampilan <br> Olahan Pangan</p>
-                            </div>
-                            <div class="flex-1 mt-2 md:mt-0">
-                                <p class="text-gray-500 max-w-80">UPTD Pusat Pelayanan Sosial Griya Wanita Mandiri, Kab
-                                    Cirebon</p>
-                            </div>
-                            <button
-                                class="bg-AccentRed900 hover:bg-red-700 text-white text-nowrap py-2 px-4 rounded-lg flex justify-center items-center gap-2 mt-4 md:mt-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                    stroke="currentColor" class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>
-                                Lihat detail
-                            </button>
-                        </div>
-                        {{-- Content 4 --}}
-                        <div
-                            class="flex flex-col md:flex-row items-start md:items-center justify-between bg-white py-3.5 md:px-0 md:p-3 border-b border-Neutral300">
-                            <div class="flex-1">
-                                <p class="text-gray-500 max-w-80">Pengadaan sarana keterampilan <br> Olahan Pangan</p>
-                            </div>
-                            <div class="flex-1 mt-2 md:mt-0">
-                                <p class="text-gray-500 max-w-80">UPTD Pusat Pelayanan Sosial Griya Wanita Mandiri, Kab
-                                    Cirebon</p>
-                            </div>
-                            <button
-                                class="bg-AccentRed900 hover:bg-red-700 text-white text-nowrap py-2 px-4 rounded-lg flex justify-center items-center gap-2 mt-4 md:mt-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                    stroke="currentColor" class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>
-                                Lihat detail
-                            </button>
-                        </div>
-                    </div>
+            @endphp
+            <li onclick="showData('{{$program}}')"
+                class="border-l-4 border-red-500 bg-AccentRed100 p-4 flex items-center justify-between cursor-pointer">
+                <div>
+                    <a class="text-Ebony900 md:text-lg font-bold">{{$item->nama_program}}</a>
+                    <p class="text-gray-500 text-base">{{ $item->proyek_count }} proyek</p>
                 </div>
-            </div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                </svg>
+            </li>
+            @endforeach
+
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="w-full md:w-3/4 px-4 md:px-10">
+        <div class="grid grid-cols-1 gap-4">
+            <div id="data-display"></div>
         </div>
-        {{-- Contact US Section --}}
-        <div class="w-full rounded-lg py-10 mx-auto flex flex-col md:flex-row space-y-10 md:space-y-0 md:space-x-10">
+    </div>
+    
+</div>
+{{-- Contact US Section --}}
+        <div class="w-full rounded-lg py-10 mx-auto flex flex-col md:flex-row space-y-10 md:space-y-0 md:space-x-10 mt-10 md:mt-20">
             <div class="flex flex-col w-full md:w-1/2">
                 <div class="w-[40px] h-[4px] bg-Orange600"></div>
                 <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-Ebony900 mt-5">Hubungi Kami</h2>
@@ -273,10 +146,91 @@
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126727.45521340737!2d108.53109120810333!3d-6.741796154826186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6f1edbeac82d55%3A0x3039d80b2201da0!2sKabupaten%20Cirebon%2C%20Jawa%20Barat!5e0!3m2!1sid!2sid!4v1629440009474!5m2!1sid!2sid"
                     width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
+            
         </div>
-    </div>
-    <x-footer-umum></x-footer-umum>
+
+
+
+<script>
+    const projects = {
+        @foreach($programs as $item)
+    @php
+        $program_name = $item->nama_program;
+        $program = str_replace(' ', '_', $program_name); // Mengganti spasi dengan underscore
+    @endphp
+
+    {{$program}}: [
+        @foreach($item->proyek as $proyekItem)
+        {
+            id: "{{ $proyekItem->id }}",
+            title: "{{ $proyekItem->nama_proyek }}",
+            location: "{{ $proyekItem->kecamatan }}"
+        }@if(!$loop->last),@endif
+        @endforeach
+    ],
+@endforeach
+
+        // Tambahkan data lainnya...
+    };
+
+    function showData(category) {
+        const display = document.getElementById('data-display');
+        const selectedProjects = projects[category] || [];
+
+        display.innerHTML = selectedProjects.map(project => `
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between bg-white py-3.5 md:px-0 md:p-3 border-b border-Neutral300">
+                <div class="flex-1">
+                    <p class="text-gray-500 max-w-80">${project.title} </p>
+                </div>
+                <div class="flex-1 mt-2 md:mt-0">
+                    <p class="text-gray-500 max-w-80">${project.location}</p>
+                </div>
+                <a href="/publik/proyek/${project.id}">
+                <button class="bg-AccentRed900 hover:bg-red-700 text-white text-nowrap py-2 px-4 rounded-lg flex justify-center items-center gap-2 mt-4 md:mt-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+                    Lihat detail
+                </button>
+                </a>
+            </div>
+        `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Set default active tab
+        const defaultActive = document.querySelector('.border-l-4');
+        if (defaultActive) {
+            defaultActive.classList.add('border-red-500', 'bg-AccentRed100');
+            defaultActive.classList.remove('border-gray-200');
+            showData('rehabilitasi'); // Ganti dengan kategori default sesuai kebutuhan
+        }
+
+        document.querySelectorAll('.border-l-4').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.border-l-4').forEach(card => {
+                    card.classList.remove('border-red-500', 'bg-AccentRed100');
+                    card.classList.add('border-gray-200');
+                });
+
+                this.classList.add('border-red-500', 'bg-AccentRed100');
+                this.classList.remove('border-gray-200');
+
+                const category = this.getAttribute('onclick').split("'")[1];
+                showData(category);
+            });
+        });
+    });
+</script>
+
+
 </div>
+</div>
+<x-footer-umum></x-footer-uum>
+
+</div>
+
 
 
 </x-guest-layout>
