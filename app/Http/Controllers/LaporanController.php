@@ -24,16 +24,23 @@ class LaporanController extends Controller
     {
         $user = auth()->user();
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
-        $laporan = Laporan::with(['proyek'])->paginate(10);
+        $laporan = Laporan::with(['proyek'])->paginate(5);
+
 
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+
         }else
         {
             $notification =  Notification::where('id_user', $user->id)->orderBy('id', 'desc');
             $notification->where('id_user', Auth::id());
             $notification = $notification->get();
+            $jumlahNotifikasi = Notification::where('terlihat', 0)
+            ->where('id_user', $user->id)
+            ->count();
+
         }
 
                 foreach ($laporan as $item) {
@@ -50,7 +57,7 @@ class LaporanController extends Controller
 
      
 
-        return view ('laporan.index', compact('identity','user','notification','laporan'));
+        return view ('laporan.index', compact('identity','user','notification','laporan','jumlahNotifikasi'));
 
     }
 
@@ -61,22 +68,92 @@ class LaporanController extends Controller
     {
         $user = auth()->user();
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
+        
 
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+
         }else
         {
             $notification =  Notification::where('id_user', $user->id)->orderBy('id', 'desc');
             $notification->where('id_user', Auth::id());
             $notification = $notification->get();
+        $jumlahNotifikasi = Notification::where('terlihat', 0)
+        ->where('id_user', $user->id)
+        ->count();
+
         }
 
                    $sektor = Sektor::all();
-                   $proyek = Proyek::all();
+                   $proyek = Proyek::where('status', 'terbit')->orderBy('id')->get();
      
 
-        return view ('laporan.create', compact('identity','user','notification','sektor','proyek'));
+        return view ('laporan.create', compact('identity','user','notification','sektor','proyek','jumlahNotifikasi'));
+    }
+
+    public function laporanPublik()
+    {
+
+
+       
+        $laporan = Laporan::where('status', 'terima')
+        ->orderBy('id', 'desc')
+        ->get();
+        foreach ($laporan as $item) {
+                $user = User::with('identity')->find($item['id_user']);
+
+                $item->user = $user->identity->nama_pt;
+                $item->logo = $user->identity->mitra_logo;
+
+        }
+
+        
+        
+        return view('publik.publik-laporan.index', compact('laporan'));
+        
+    }
+
+    public function detailLaporan($id)
+    {
+        $laporan = Laporan::find($id);
+
+        $sektor = Sektor::find($laporan->id_sektor);
+        $proyek = Proyek::find($laporan->id_proyek);
+        $program = Program::where('id_sektor', $sektor->id)->orderBy('id')->first();
+        $imgName = json_decode($laporan->gambar_laporan, true);
+        $laporanAll = Laporan::where('status', 'terima')
+        ->orderBy('id', 'desc')
+        ->get();
+
+                $user = User::with('identity')->find($laporan['id_user']);
+
+                $laporan->user = $user->identity->nama_pt;
+                $laporan->logo = $user->identity->mitra_logo;
+                $laporan->nama_sektor = $sektor->nama_sektor;
+                
+                $laporan->nama_proyek = $program->nama_proyek;
+                $laporan->kecamatan = $program->kecamatan;
+
+                if($laporan->nama_proyek === null)
+                {
+                    $laporan->nama_proyek = 'Tidak memilih proyek';
+                    $laporan->kecamatan = 'Tidak ada kecamatan';
+                }
+
+
+                foreach ($laporanAll as $item) {
+                $user = User::with('identity')->find($item['id_user']);
+
+                    $item->user = $user->identity->nama_pt;
+                    $item->logo = $user->identity->mitra_logo;
+                   
+                }
+           
+
+        return view('publik.publik-laporan.detail', compact('laporan','laporanAll','program','imgName'));
+        
     }
 
     /**
@@ -167,9 +244,23 @@ class LaporanController extends Controller
         // Mengambil data berdasarkan status
         $user = auth()->user();
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
-        $notification =  Notification::where('id_user', $user->id)->orderBy('id', 'desc');
-        $notification->where('id_user', Auth::id());
-        $notification = $notification->get();
+
+        if ($user->level === 'admin')
+        {
+            $notification =  Notification::orderBy('id', 'desc')->get();
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+
+        }else
+        {
+            $notification =  Notification::where('id_user', $user->id)->orderBy('id', 'desc');
+            $notification->where('id_user', Auth::id());
+            $notification = $notification->get();
+            $jumlahNotifikasi = Notification::where('terlihat', 0)
+            ->where('id_user', $user->id)
+            ->count();
+
+        }
+        
 
     
         $query = Laporan::with(['proyek']);
@@ -205,7 +296,7 @@ class LaporanController extends Controller
     
 
      
-        return view ('laporan.index', compact('identity','user','notification','laporan'));
+        return view ('laporan.index', compact('identity','user','notification','laporan','jumlahNotifikasi'));
     }
 
     /**
@@ -219,11 +310,17 @@ class LaporanController extends Controller
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+
         }else
         {
             $notification =  Notification::where('id_user', $user->id)->orderBy('id', 'desc');
             $notification->where('id_user', Auth::id());
             $notification = $notification->get();
+            $jumlahNotifikasi = Notification::where('terlihat', 0)
+            ->where('id_user', $user->id)
+            ->count();
+
         }
 
         $laporan = Laporan::find($id);
@@ -244,7 +341,7 @@ class LaporanController extends Controller
 
             
                    
-        return view('laporan.detail', compact('laporan', 'notification','identity','program','sektor','imgName'));
+        return view('laporan.detail', compact('laporan', 'notification','identity','program','sektor','imgName','jumlahNotifikasi'));
     }
 
     /**
@@ -258,18 +355,24 @@ class LaporanController extends Controller
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+
         }else
         {
             $notification =  Notification::where('id_user', $user->id)->orderBy('id', 'desc');
             $notification->where('id_user', Auth::id());
             $notification = $notification->get();
+                    $jumlahNotifikasi = Notification::where('terlihat', 0)
+            ->where('id_user', $user->id)
+            ->count();
+
         }
-        
+
                    $sektor = Sektor::all();
                    $proyek = Proyek::all();
                    $laporan = Laporan::find($id);
 
-        return view ('laporan.edit', compact('identity','user','notification','sektor','proyek','laporan'));
+        return view ('laporan.edit', compact('identity','user','notification','sektor','proyek','laporan','jumlahNotifikasi'));
     }
 
     /**

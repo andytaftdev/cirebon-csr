@@ -108,7 +108,7 @@
 @include('components.navbar-mitra')
 
 <div class="relative w-full">
-    <img src="{{ asset('images/dashboard-img.png') }}" alt="Image Dashboard"
+    <img src="{{ asset('images/background.png') }}" alt="Image Dashboard"
         class="w-full h-60 md:h-64 lg:h-72 object-cover">
     <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4 lg:p-0">
         <h1 class="text-2xl sm:text-3xl lg:text-4xl text-white font-bold">Selamat Datang di Dashboard CSR Kabupaten
@@ -117,7 +117,7 @@
     </div>
 </div>
 
-<div class="container mx-auto mt-10 px-6">
+<div id="pieContainer" class="container mx-auto mt-10 px-6">
     <div class="mt-12 mb-4">
         <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-2 space-y-4 lg:space-y-0">
             <div class="flex flex-col md:flex-row md:space-x-4 w-full space-y-4 md:space-y-0">
@@ -134,8 +134,7 @@
             </div>
             <div
                 class="flex flex-col pt-3 md:pt-0 md:flex-row md:space-x-4 lg:pt-0 w-full md:w-auto lg:w-fit lg:ml-3.5 space-y-4 md:space-y-0 lg:justify-end">
-               <a href="">
-               <button
+                <button
                     class="bg-white hover:bg-Green50 text-Green600 border border-Neutral300 px-4 py-2 rounded-lg flex items-center lg:gap-1 gap-2 justify-center flex-grow lg:flex-grow-0 text-nowrap">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="size-5">
@@ -144,10 +143,8 @@
                     </svg>
                     <p>Unduh .csv</p>
                 </button>
-               </a> 
-                <a href="{{route('export.pdf')}}">
                 <button
-                    class="bg-white hover:bg-AccentRed100 text-AccentRed900 border border-Neutral300 px-4 py-2 rounded-lg flex items-center lg:gap-1 gap-2 justify-center flex-grow lg:flex-grow-0 text-nowrap">
+                    id="captureBtn" class="bg-white hover:bg-AccentRed100 text-AccentRed900 border border-Neutral300 px-4 py-2 rounded-lg flex items-center lg:gap-1 gap-2 justify-center flex-grow lg:flex-grow-0 text-nowrap">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="size-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -155,7 +152,10 @@
                     </svg>
                     <p>Unduh .pdf</p>
                 </button>
-                </a>
+                <form id="pdfForm" action="{{ route('stats.pdf') }}" method="POST">
+                             @csrf
+                           <input type="hidden" id="chartImage" name="chartImage">
+                          </form>
             </div>
         </div>
 
@@ -222,10 +222,7 @@
             </div>
         </div>
     </div>
-</div>
-
-<!-- Chart Section -->
-<div class="container mx-auto w-full mb-20 mt-12 px-6">
+    <div class="container mx-auto w-full mb-20 mt-12 px-6">
     <h1 class="my-6 text-xl md:text-2xl font-bold mb-4">Realisasi Proyek CSR</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-lg shadow-md p-6 md:p-6 lg:p-8">
         <!-- Pie Chart -->
@@ -246,6 +243,10 @@
         </div>
     </div>
 </div>
+</div>
+
+<!-- Chart Section -->
+
 {{-- End Chart Section --}}
 <div class="container mx-auto px-6 py-8 mb-8">
     <div class="flex items-center justify-between">
@@ -254,9 +255,7 @@
         <button class="bg-AccentRed900 hover:bg-red-700 text-sm md:text-base text-white px-4 py-2 rounded-lg">
             + Buat Laporan Baru
         </button>
-
-    </a>
-
+        </a>
     </div>
 
     <div class="mt-6">
@@ -293,37 +292,52 @@
                 </tr>
             </thead>
             @foreach($laporan as $item)
-            <tbody>
-                    <tr class="bg-white border-b border-Neutal200">
-                        <th scope="row" class="px-6 py-4 font-normal">{{$item->judul}}</th>
-                        <td class="px-6 py-4">{{$item->proyek->kecamatan}}</td>
-                        <td class="px-6 py-4">Rp.{{number_format($item->realisasi, 0, ',', ',')}}</td>
-                        <td class="px-6 py-4">{{$item->tanggal}} {{$item->bulan}} {{$item->tahun}}</td>
-                        <td class="px-6 py-4">{{$item->releaseDay}} {{$item->releaseMonth}} {{$item->releaseYear}}</td>
-                        <td class="px-6 py-4">
-                            @if($item->status === 'terima')
-                            <span class="bg-Success50 text-Success700 py-1 px-3 rounded-full text-xs">Diterima</span>
-                            @elseif($item->status === 'draf')
-                            <span class="bg-Gray100 text-Gray700 py-1 px-3 rounded-full text-xs">Draf</span>
-                            @elseif($item->status === 'revisi')
-                            <span class="bg-Warning50 text-Warning700 py-1 px-3 rounded-full text-xs">Revisi</span>
-                            @elseif($item->status === 'pengajuan')
-                            <span class="bg-Blue50 text-Blue500 py-1 px-3 rounded-full text-xs">Pengajuan</span>
-                            @elseif($item->status === 'tolak')
-                            <span class="bg-AccentRed100 text-AccentRed300 text- py-1 px-3 rounded-full text-xs">tolak</span>
-                            @endif
 
-                        </td>
-                        <td class="px-6 py-4">
-                                    <a href="{{route('laporan.show', $item->id)}}" class="text-Ebony300 hover:text-Ebony900">
-                                        <!-- Eye Icon -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                        </svg>
-                                    </a>
+            <tbody>
+                <tr class="bg-white border-b">
+                    <th scope="row" class="px-6 py-4 font-normal text-Ebony200 whitespace-nowrap">
+                    {{$item->judul}}
+                    </th>
+                    <td class="px-6 py-4 font-normal text-Ebony200">
+                        {{$item->proyek->kecamatan}}
                     </td>
-                    </tr>
+                    <td class="px-6 py-4 font-normal text-Ebony200">
+                    Rp.{{number_format($item->realisasi, 0, ',', ',')}}
+                    </td>
+                    <td class="px-6 py-4 font-normal text-Ebony200">
+                    {{$item->tanggal}} {{$item->bulan}} {{$item->tahun}}
+                    </td>
+                    <td class="px-6 py-4 font-normal text-Ebony200">
+                    {{$item->releaseDay}} {{$item->releaseMonth}} {{$item->releaseYear}}
+                    </td>
+                    <td class="px-6 py-4">
+                            @if($item->status === 'terima')
+                            <span class="bg-Success50 text-Success700 px-2 p-1 inline-flex text-xs leading-5 font-semibold rounded-full">Diterima</span>
+                            @elseif($item->status === 'draf')
+                            <span class="bg-Gray100 text-Gray700 px-2 p-1 inline-flex text-xs leading-5 font-semibold rounded-full">Draf</span>
+                            @elseif($item->status === 'revisi')
+                            <span class="bg-Warning50 text-Warning700 px-2 p-1 inline-flex text-xs leading-5 font-semibold rounded-full">Revisi</span>
+                            @elseif($item->status === 'pengajuan')
+                            <span class="bg-Blue50 text-Blue500 px-2 p-1 inline-flex text-xs leading-5 font-semibold rounded-full">Pengajuan</span>
+                            @elseif($item->status === 'tolak')
+                            <span class="bg-AccentRed100 text-AccentRed300 px-2 p-1 inline-flex text-xs leading-5 font-semibold rounded-full">tolak</span>
+                            @endif
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-4">
+                            <a href="{{route('laporan.show', $item->id)}}" class="text-Ebony200 hover:text-Ebony900">
+                                <!-- Eye Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
             @endforeach
 
@@ -333,24 +347,24 @@
     </div>
 
     <div class="flex justify-center items-center mt-7">
-       <a href="{{route('laporan.index')}}">
-       <div class="cursor-pointer flex justify-center items-center gap-2">
+        <div class="cursor-pointer flex justify-center items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                 stroke="currentColor" class="size-5 text-AccentRed900">
                 <path stroke-linecap="round" stroke-linejoin="round"
                     d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
             </svg>
-            <p class="text-AccentRed900 hover:text-red-700 text-sm md:text-base font-semibold">Muat lebih banyak</p>
+            <a href="{{route('laporan.index')}}"><p class="text-AccentRed900 hover:text-red-700 text-sm md:text-base font-semibold">Muat lebih banyak</p></a>
         </div>
-       </a> 
     </div>
 </div>
 
 
+<x-footer-admin></x-footer-admin>
 
 <script>
+    // Pie Chart Configuration
 
-var dataRealisasi = @json($data_realisasi);
+    var dataRealisasi = @json($data_realisasi);
         var categories = Object.keys(dataRealisasi);
           var seriesData = Object.values(dataRealisasi);
 
@@ -359,7 +373,7 @@ var dataRealisasi = @json($data_realisasi);
           var dataKec = @json($data_kecamatan);
         var categoriesKec = Object.keys(dataKec);
           var seriesKec = Object.values(dataKec);
-    // Pie Chart Configuration
+
     var pieOptions = {
         series: seriesData,
         chart: {
@@ -367,7 +381,10 @@ var dataRealisasi = @json($data_realisasi);
             height: 350
         },
         labels: categories,
-        colors: ['#4E5BA6', '#7A5AF8', '#EE46BC', '#B42121', '#F95016'], // Adjust the colors as needed
+        colors: ['#28A0F6', '#4E5BA6', '#7A5AF8', '#EE46BC', '#B42121', '#F95016',
+            '#FAC515'
+        ],
+         // Adjust the colors as needed
         dataLabels: {
             enabled: false
         },
@@ -645,7 +662,7 @@ var dataRealisasi = @json($data_realisasi);
     </div>
 </div>
 
-<div class="container mx-auto mt-10 px-6">
+<div id="pieContainer" class="container mx-auto mt-10 px-6">
     <div class="mt-0 mb-4">
         <div class="flex flex-wrap justify-between items-center mb-2">
             <div class="flex flex-wrap lg:flex-nowrap lg:flex-row w-full lg:gap-3">
@@ -695,7 +712,7 @@ var dataRealisasi = @json($data_realisasi);
                 <!-- Button Unduh .pdf di posisi xl -->
                 <div class="w-fit mt-2 xl:block hidden">
                     <button
-                        class="bg-white hover:bg-AccentRed100 text-AccentRed900 border border-Neutral300 px-4 py-2 rounded-lg flex items-center gap-2 w-full justify-center text-nowrap">
+                    id="captureBtn" class="bg-white hover:bg-AccentRed100 text-AccentRed900 border border-Neutral300 px-4 py-2 rounded-lg flex items-center gap-2 w-full justify-center text-nowrap">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                             stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -724,7 +741,7 @@ var dataRealisasi = @json($data_realisasi);
                 <!-- Button Unduh .pdf di posisi selain xl -->
                 <div class="w-full py-2 md:w-1/3 lg:w-full lg:block xl:hidden">
                     <button
-                        class="bg-white text-AccentRed900 border border-Neutral300 px-4 py-2 rounded-lg flex items-center gap-2 w-full justify-center text-nowrap">
+                       id="captureBtn" type="button" class="bg-white text-AccentRed900 border border-Neutral300 px-4 py-2 rounded-lg flex items-center gap-2 w-full justify-center text-nowrap">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -732,6 +749,11 @@ var dataRealisasi = @json($data_realisasi);
                         </svg>
                         <p>Unduh .pdf</p>
                     </button>
+                    <form id="pdfForm" action="{{ route('stats.pdf') }}" method="POST">
+                             @csrf
+                           <input type="hidden" id="chartImage" name="chartImage">
+                          </form>
+
                 </div>
             </div>
         </div>
@@ -740,6 +762,7 @@ var dataRealisasi = @json($data_realisasi);
 
 
     <!-- Data Statistik Section -->
+  
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Total Proyek CSR -->
         <div class="bg-Orange600 text-white rounded-xl p-5 flex flex-col relative">
@@ -817,10 +840,7 @@ var dataRealisasi = @json($data_realisasi);
             </div>
         </div>
     </div>
-</div>
-
-<!-- Chart Section -->
-<div class="container mx-auto w-full mb-20 mt-12 px-6">
+    <div class="container mx-auto w-full mb-20 mt-12 px-6">
     <h1 class="my-6 text-xl md:text-2xl font-bold mb-4">Realisasi Proyek CSR</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-lg shadow-md p-6 md:p-6 lg:p-8">
         <!-- Pie Chart -->
@@ -845,7 +865,11 @@ var dataRealisasi = @json($data_realisasi);
             <div id="barChart3"></div>
         </div>
     </div>
+ </div>
 </div>
+
+<!-- Chart Section -->
+
 {{-- End Chart Section --}}
 
 
@@ -1126,9 +1150,30 @@ var dataRealisasi = @json($data_realisasi);
     var barChart3 = new ApexCharts(document.querySelector("#barChart3"), barOptions3);
     barChart3.render();
 
+
+
+
+
+
+
 </script>
+
 @endif
+
 @endif
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('captureBtn').addEventListener('click', function() {
+        console.log(html2canvas)
+    html2canvas(document.querySelector("#pieContainer")).then(canvas => {
+        var imgData = canvas.toDataURL("image/png");
+        document.getElementById('chartImage').value = imgData;
+        document.getElementById('pdfForm').submit();
+    });
+});
+    });
+
+</script>
 
 <script>
      document.getElementById('upload').addEventListener('click', function() {
@@ -1148,6 +1193,7 @@ var dataRealisasi = @json($data_realisasi);
             reader.readAsDataURL(file);
         }
     });
+
 </script>
 
 

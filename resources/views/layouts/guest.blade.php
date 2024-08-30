@@ -13,10 +13,17 @@
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.0.0/html2canvas.min.js"></script>
+
+
+
+
     </head>
-    <body class="font-sans bg-[#F2F4F7] antialiased">
+    <body class="font-sans bg-white antialiased">
 
     {{ $slot }}
        

@@ -63,18 +63,20 @@ class NotificationController extends Controller
         if ($user->level === 'admin')
         {
             $updated = Notification::query()
-            ->update(['terlihat_admin' => $statusAdmin]);        
+            ->update(['terlihat_admin' => $statusAdmin]);      
+
         }else
         {
             $updated = Notification::where('id_user', $id)
              ->update(['terlihat' => $status]);
+
         }
-         
 
              $previousUrl = url()->previous();
 
              // Check if the previous URL contains "dashboard" or "profile"
              return redirect($request->input('current_url'));
+
 
     }
 

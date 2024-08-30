@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('tanggal_terbit')->nullable();
             $table->integer('jumlah_mitra')->default(0);
             $table->text('deskripsi');
-            $table->string('gambar_proyek')->default('default.png');
+            $table->json('gambar_proyek');
             $table->string('kuartal')->nullable();
             $table->string('status');
             $table->foreign('id_sektor')->references('id')->on('sektors')->onUpdate('cascade');

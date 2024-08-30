@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
 <div class="min-h-screen flex flex-col justify-between bg-Neutral50">
     {{-- Navbar Section --}}
     <div class="w-full bg-white">
@@ -128,5 +128,5 @@
     togglePasswordVisibility('togglePassword', 'password', 'eyeIcon');
     togglePasswordVisibility('toggleConfirmPassword', 'password_confirmation', 'eyeConfirmIcon');
 </script>
-</x-guest-layout>
+</x-app-layout>
 

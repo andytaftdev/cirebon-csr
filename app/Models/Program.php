@@ -16,5 +16,10 @@ class Program extends Model
         return $this->belongsTo(Sektor::class, 'id_sektor');
     }
 
+    public function proyek()
+    {
+        return $this->hasMany(Proyek::class, 'id_program');
+    }
+
 
 }

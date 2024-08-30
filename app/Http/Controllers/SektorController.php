@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Sektor;
 use App\Models\User;
 use App\Models\Identity;
+use App\Models\Proyek;
 use App\Models\Program;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -27,6 +28,8 @@ class SektorController extends Controller
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
         
         $notification = Notification::orderBy('id', 'desc')->get();
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+
 
         $sektor = Sektor::withCount('programs')->paginate(5);
         foreach ($sektor as $item) {
@@ -55,7 +58,7 @@ class SektorController extends Controller
              $sektors = Sektor::withCount('programs')->get();
 
      
-        return view ('sektor.index', compact('identity','user','notification','sektor'));
+        return view ('sektor.index', compact('identity','user','notification','sektor','jumlahNotifikasi'));
     }
 
     public function detail($id)
@@ -65,9 +68,100 @@ class SektorController extends Controller
                    $notification = Notification::orderBy('id', 'desc')->get();
         $sektor = Sektor::find($id);
         $programs = $sektor->programs;
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+
      
 
-        return view ('sektor.detail', compact('identity','user','notification','sektor','programs'));
+        return view ('sektor.detail', compact('identity','user','notification','sektor','programs','jumlahNotifikasi'));
+    }
+
+    public function sektorPublik()
+    {
+
+
+       
+
+        $sektor = Sektor::orderBy('id', 'desc')->get();
+        foreach ($sektor as $item) {
+
+
+        $program = Program::where('id_sektor', $item->id);
+        $item->program = $program->count();
+
+            
+
+           
+        }
+        $proyek = Proyek::orderBy('id', 'desc')->get();
+        foreach ($proyek as $item) {
+
+            $date = $item->tanggal_akhir;
+            $sektors = Sektor::find($item->id_sektor);
+            $item->sektor = $sektors->nama_sektor;
+            $item->alamat = 'Jl. Sunan Kalijaga No.7, Sumber, Kec. Sumber, Kabupaten Cirebon, Jawa Barat 45611';
+
+            $carbonDate = Carbon::parse($date);
+            
+            $item->month = $carbonDate->format('F'); // Full month name
+            $item->day = $carbonDate->format('d');   // Day of the month
+            $item->year = $carbonDate->format('Y');   // Day of the month
+    
+    
+               
+            }
+
+        
+        return view('publik.publik-sektor.index', compact('sektor','proyek'));
+        
+    }
+
+    public function detailSektor($id)
+    {
+        $sektor = Sektor::find($id);
+        $sektorAll = Sektor::orderBy('id', 'desc')
+        ->get();
+        $program = Program::where('id_sektor', $id)->orderBy('id')->get();
+        // $programs = Program::where('id_sektor', $id)->orderBy('id')->pluck('id');
+            $date = $sektor->terbit; // Replace with your actual date field name
+
+                $carbonDate = Carbon::parse($date);
+                $deskripsi = $sektor->deskripsi_sektor;
+
+                $parts = explode("\n", wordwrap($deskripsi, strlen($deskripsi) / 2, "\n"));
+    
+                    $sektor->deskripsi1 = isset($parts[0]) ? $parts[0] : '';
+                  $sektor->deskripsi2 = isset($parts[1]) ? $parts[1] : '';  
+
+            
+                $sektor->month = $carbonDate->format('F'); // Full month name
+                $sektor->day = $carbonDate->format('d');   // Day of the month
+                $sektor->year = $carbonDate->format('Y');   // Day of the month
+
+                foreach ($sektorAll as $item) {
+                    $date = $item->terbit; // Replace with your actual date field name
+        
+                        $carbonDate = Carbon::parse($date);
+                    
+                        $item->month = $carbonDate->format('F'); // Full month name
+                        $item->day = $carbonDate->format('d');   // Day of the month
+                        $item->year = $carbonDate->format('Y');   // Day of the month
+                   
+                }
+
+$programs = Program::where('id_sektor', $id)
+    ->with(['proyek' => function ($query) {
+        $query->orderBy('id', 'desc'); // Optional: to order proyek by ID
+    }])
+    ->withCount('proyek')
+    ->get();
+
+
+                   
+
+           
+
+        return view('publik.publik-sektor.detail-sektor', compact('sektor','sektorAll','programs'));
+        
     }
 
     /**
@@ -78,9 +172,11 @@ class SektorController extends Controller
         $user = auth()->user();
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
                    $notification = Notification::orderBy('id', 'desc')->get();
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+
      
 
-        return view ('sektor.create', compact('identity','user','notification'));
+        return view ('sektor.create', compact('identity','user','notification','jumlahNotifikasi'));
     }
 
     /**
@@ -158,7 +254,8 @@ foreach ($input['nama_program'] as $index => $namaProgram) {
 
 
 
-return redirect()->route('sektor.index');
+return redirect()->route('sektor.index')->with('success', 'Data has been successfully added!');
+
 
 
     }
@@ -183,9 +280,11 @@ return redirect()->route('sektor.index');
                    $notification = Notification::orderBy('id', 'desc')->get();
         $sektor = Sektor::find($id);
         $programs = $sektor->programs;
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+
      
 
-        return view ('sektor.change', compact('identity','user','notification','sektor','programs'));
+        return view ('sektor.change', compact('identity','user','notification','sektor','programs','jumlahNotifikasi'));
     }
 
     /**
@@ -254,15 +353,45 @@ return redirect()->route('sektor.index');
     
 
     
-        return redirect()->route('sektor.index');
+        return redirect()->route('sektor.index')->with('success', 'Data has been successfully saved!');
+
+    }
+    public function search(Request $request,$status)
+    {
+       $user = auth()->user();
+        $identity = Identity::where('id_user', $user->id)->orderBy('id')->first();
+        $notification = Notification::orderBy('id', 'desc')->get();
+    
+        $query = Sektor::query();
+
+        if ($status !== 'semua') {
+            $query->where('status', $status);
+        }
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->input('search');
+            $query->where('nama_sektor', 'like', '%' . $search . '%');
+        }
+    
+        // Paginate the results
+        $sektor = $query->paginate(5);
+    
+
+    
+     
+        return view ('sektor.index', compact('identity','user','notification','sektor','jumlahNotifikasi'));
     }
     
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Sektor $sektor)
+    public function destroy($id)
     {
-        //
+        
+
+
     }
 }

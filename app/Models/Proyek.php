@@ -15,4 +15,9 @@ class Proyek extends Model
     {
         return $this->belongsTo(Sektor::class, 'id_sektor');
     }
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class, 'id_program');
+    }
 }
