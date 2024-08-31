@@ -116,7 +116,7 @@ class HomeController extends Controller
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         }else
         {
@@ -152,7 +152,7 @@ class HomeController extends Controller
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         }else
         {
@@ -408,7 +408,7 @@ $dana_mitra = Laporan::when($year, function ($query) use ($year) {
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         }else
         {

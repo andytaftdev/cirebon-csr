@@ -30,7 +30,7 @@ class LaporanController extends Controller
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         }else
         {
@@ -73,7 +73,7 @@ class LaporanController extends Controller
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         }else
         {
@@ -147,7 +147,7 @@ class LaporanController extends Controller
         $mitra = User::where('level', 'mitra')
         ->whereNotNull('email_verified_at')
         ->get();
-        
+
         
         return view('publik.publik-laporan.index', compact('laporan','mitra'));
         
@@ -287,7 +287,7 @@ class LaporanController extends Controller
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         }else
         {
@@ -349,7 +349,7 @@ class LaporanController extends Controller
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         }else
         {
@@ -394,7 +394,7 @@ class LaporanController extends Controller
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         }else
         {

@@ -30,7 +30,7 @@ class IdentityController extends Controller
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         }else
         {
@@ -54,9 +54,10 @@ class IdentityController extends Controller
         $mitra = Identity::whereHas('user', function ($query) {
             $query->where('level', 'mitra');
         })->paginate(5); // Menambahkan pagination dengan 10 data per halaman
-        $notification = Notification::where('id_user', $user->id)->orderBy('id', 'desc')->get();
+        $notification =  Notification::orderBy('id', 'desc')->get();
 
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         return view('mitra.index', compact('identity', 'user', 'notification', 'mitra','jumlahNotifikasi'));
         
@@ -69,7 +70,7 @@ class IdentityController extends Controller
                    $notification = Notification::orderBy('id', 'desc')->get();
     
         $query = Identity::query();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
 
     
@@ -120,7 +121,7 @@ class IdentityController extends Controller
         $identity = Identity::find($id);
 
         $notification = Notification::where('id_user', $user->id)->orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
         
         return view('mitra.detail', compact('identity', 'user', 'notification','jumlahNotifikasi'));
         
@@ -131,7 +132,7 @@ class IdentityController extends Controller
         $identity = Identity::find($id);
 
         $notification = Notification::where('id_user', $user->id)->orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
         
         return view('mitra.change', compact('identity', 'user', 'notification','jumlahNotifikasi'));
         
@@ -205,7 +206,7 @@ class IdentityController extends Controller
         $notification = Notification::where('id_user', $user->id)->orderBy('id', 'desc')->get();
         if ($user->level === 'admin')
         {
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         }else
         {
@@ -315,7 +316,7 @@ class IdentityController extends Controller
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         }else
         {

@@ -24,7 +24,7 @@ class KegiatanController extends Controller
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
                    $notification = Notification::orderBy('id', 'desc')->get();
         $kegiatan = Kegiatan::paginate(5); // Mengambil 10 item per halaman
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         foreach ($kegiatan as $item) {
             $item->tags = json_decode($item->tags);
@@ -120,7 +120,7 @@ class KegiatanController extends Controller
         $user = auth()->user();;
                    $notification = Notification::orderBy('id', 'desc')->get();
                    $notification->where('id_user', Auth::id());
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
 
 
@@ -202,7 +202,7 @@ class KegiatanController extends Controller
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
         $kegiatan = Kegiatan::find($id);
         $notification =  Notification::orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
 
 
@@ -239,7 +239,7 @@ class KegiatanController extends Controller
    $user = auth()->user();
     $identity = Identity::where('id_user', $user->id)->orderBy('id')->first();
     $notification = Notification::orderBy('id', 'desc')->get();
-    $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+     $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
 
     $query = Kegiatan::query();
@@ -320,7 +320,7 @@ public function kegiatanPublikFilter(Request $request, $status)
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
         $kegiatan = Kegiatan::find($id);
         $notification =  Notification::orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
 
 

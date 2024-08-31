@@ -24,7 +24,7 @@ class ProyekController extends Controller
                    $notification = Notification::orderBy('id', 'desc')->get();
         $proyek = Proyek::paginate(5); // Mengambil 10 item per halaman
 
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
 
         
@@ -82,7 +82,7 @@ class ProyekController extends Controller
         $notification = Notification::orderBy('id', 'desc')->get();
         $sektor = Sektor::all();
 
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
 
         
@@ -263,7 +263,7 @@ class ProyekController extends Controller
         $sektorAll = Sektor::all();
 
 
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
 
 
@@ -351,7 +351,7 @@ class ProyekController extends Controller
             $query->where('status', 'draf');
         }
 
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
+         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         // Apply the search filter if a search term is provided
         if ($request->has('search') && $request->search != '') {

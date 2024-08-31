@@ -7,7 +7,7 @@
         <div class="hidden lg:flex items-center">
             <a class="w-auto h-auto" href="/">
                 <p
-                    class="mt-1 mb-1 mr-8text-Ebony900 hover:text-AccentRed900 hover:font-semibold">
+                    class="mt-1 mb-1 mr-8 text-Ebony900 hover:text-AccentRed900 hover:font-semibold">
                     Beranda</p>
             </a>
             <a class="w-auto h-auto" href="/tentang">

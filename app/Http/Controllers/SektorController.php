@@ -28,8 +28,7 @@ class SektorController extends Controller
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
         
         $notification = Notification::orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
-
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         $sektor = Sektor::withCount('programs')->paginate(5);
         foreach ($sektor as $item) {
@@ -68,8 +67,7 @@ class SektorController extends Controller
                    $notification = Notification::orderBy('id', 'desc')->get();
         $sektor = Sektor::find($id);
         $programs = $sektor->programs;
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
-
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
      
 
         return view ('sektor.detail', compact('identity','user','notification','sektor','programs','jumlahNotifikasi'));
@@ -175,8 +173,7 @@ $programs = Program::where('id_sektor', $id)
         $user = auth()->user();
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
                    $notification = Notification::orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
-
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
      
 
         return view ('sektor.create', compact('identity','user','notification','jumlahNotifikasi'));
@@ -283,8 +280,7 @@ return redirect()->route('sektor.index')->with('success', 'Data has been success
                    $notification = Notification::orderBy('id', 'desc')->get();
         $sektor = Sektor::find($id);
         $programs = $sektor->programs;
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
-
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
      
 
         return view ('sektor.change', compact('identity','user','notification','sektor','programs','jumlahNotifikasi'));
@@ -370,8 +366,7 @@ return redirect()->route('sektor.index')->with('success', 'Data has been success
         if ($status !== 'semua') {
             $query->where('status', $status);
         }
-        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->count();
-
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         if ($request->has('search') && $request->search != '') {
             $search = $request->input('search');
