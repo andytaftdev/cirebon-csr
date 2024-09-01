@@ -42,6 +42,11 @@ class IdentityController extends Controller
 
         }
 
+        if($identity->message_non_aktif !== null)
+        {
+            return view('errors.mitra-non-aktif', compact('identity'));
+        }
+
      
 
         return view ('identity.index', compact('identity','user','notification','jumlahNotifikasi'));
@@ -158,6 +163,7 @@ $mitra = $query->get();
     }
     public function mitraDetail($id)
     {
+        
 
 
         $mitra = Identity::find($id);
@@ -178,7 +184,7 @@ $mitra = $query->get();
             return view('errors.404');
         }
 
-        $notification = Notification::where('id_user', $user->id)->orderBy('id', 'desc')->get();
+        $notification =  Notification::orderBy('id', 'desc')->get();
          $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
         
         return view('mitra.detail', compact('identity', 'user', 'notification','jumlahNotifikasi'));
@@ -193,7 +199,7 @@ $mitra = $query->get();
             return view('errors.404');
         }
 
-        $notification = Notification::where('id_user', $user->id)->orderBy('id', 'desc')->get();
+        $notification =  Notification::orderBy('id', 'desc')->get();
          $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
         
         return view('mitra.change', compact('identity', 'user', 'notification','jumlahNotifikasi'));
@@ -266,15 +272,26 @@ $mitra = $query->get();
     {
         $user = auth()->user();
         $identity = Identity::where('id_user', $user->id)->orderBy('id')->first();
-        $notification = Notification::where('id_user', $user->id)->orderBy('id', 'desc')->get();
+        $notification =  Notification::orderBy('id', 'desc')->get();
         if ($user->level === 'admin')
         {
+            $notification =  Notification::orderBy('id', 'desc')->get();
          $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
         }else
         {
-          return view('errors.404');
+            $notification =  Notification::where('id_user', $user->id)->orderBy('id', 'desc')->get();
+            $jumlahNotifikasi = Notification::where('terlihat', 0)
+            ->where('id_user', $user->id)
+            ->count();
+
         }
+
+        if($identity->message_non_aktif !== null)
+        {
+            return view('errors.mitra-non-aktif', compact('identity'));
+        }
+
 
         
 
@@ -285,7 +302,7 @@ $mitra = $query->get();
     {
         $user = auth()->user();
         $identity = Identity::where('id_user', $user->id)->orderBy('id')->first();
-        $notification = Notification::where('id_user', $user->id)->orderBy('id', 'desc')->get();
+        $notification =  Notification::orderBy('id', 'desc')->get();
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -377,7 +394,8 @@ $mitra = $query->get();
     {
         $identity = Identity::find($id);
         $user = auth()->user();;
-  
+
+
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
@@ -386,8 +404,15 @@ $mitra = $query->get();
         }else
         {
             $notification =  Notification::where('id_user', $user->id)->orderBy('id', 'desc')->get();
-        $jumlahNotifikasi = Notification::where('terlihat', 0)->count();
-        return view('errors.404');
+            $jumlahNotifikasi = Notification::where('terlihat', 0)
+            ->where('id_user', $user->id)
+            ->count();        
+
+        }
+
+        if($identity->message_non_aktif !== null)
+        {
+            return view('errors.mitra-non-aktif', compact('identity'));
         }
 
 
@@ -458,11 +483,34 @@ $mitra = $query->get();
         return redirect('/identity');
     }
 
+
+    public function nonAktifMitra(Request $request, $id)
+    {
+        $data = identity::find($id);
+        $data->message_non_aktif = $request->message; 
+        $data->save();
+
+        return back();
+
+    }
+
+    public function aktifMitra(Request $request, $id)
+    {
+        $data = identity::find($id);
+        $data->message_non_aktif = null; 
+        $data->save();
+
+        return back();
+
+    }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Identity $identity)
+    public function destroy(Request $request, $id)
     {
-        //
+        $data = Identity::find($id);
+        $data->delete();
+        return redirect('/mitra');
     }
 }

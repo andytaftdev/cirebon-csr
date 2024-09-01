@@ -35,7 +35,7 @@ class IdentitiesSeeder extends Seeder
             ],
             [
                 'id_user' => 3, // ID user yang valid
-                'mitra_logo' => 'images/mitrac.png',
+                'mitra_logo' => 'default.png',
                 'nama_mitra' => 'Mitra C',
                 'nama_pt' => 'Perusahaan C',
                 'nomor_hp' => '083456789012',

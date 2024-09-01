@@ -137,6 +137,11 @@
                                         class="px-2 p-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-AccentRed100 text-AccentRed300">
                                         Non-Aktif
                                     </span>
+                                    @elseif(!is_null($item->message_non_aktif))
+                                    <span
+                                        class="px-2 p-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-AccentRed100 text-AccentRed300">
+                                        Non-Aktif
+                                    </span>
                                     @else
                                     <span
                                         class="px-2 p-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-Green50 text-Green600">

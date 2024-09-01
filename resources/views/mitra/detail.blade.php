@@ -47,9 +47,20 @@
 
                     @if($identity->user->email_verified_at === null)
 
+                    @elseif(!is_null($identity->message_non_aktif))
+
+                    <button
+                       id="active" class="text-Success700 bg-white hover:bg-Success50 text-sm md:text-base border border-Success700 flex justify-center items-center px-5 py-3 rounded-lg gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2"
+                            stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
+                        </svg>
+                        aktifkan mitra
+                    </button>
                     @else
                     <button
-                        class="text-AccentRed900 bg-white hover:bg-gray-100 text-sm md:text-base border border-AccentRed900 flex justify-center items-center px-5 py-3 rounded-lg gap-2">
+                       id="non-aktif" class="text-AccentRed900 bg-white hover:bg-gray-100 text-sm md:text-base border border-AccentRed900 flex justify-center items-center px-5 py-3 rounded-lg gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2"
                             stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -76,6 +87,11 @@
                             <span
                                 class="px-2 p-1 inline-flex text-xs font-semibold rounded-full bg-Yellow100 text-AccentRed300">
                                 Pengajuan
+                            </span>
+                            @elseif(!is_null($identity->message_non_aktif))
+                            <span
+                                class="px-2 p-1 inline-flex text-xs font-semibold rounded-full bg-AccentRed100 text-AccentRed900">
+                                Non-Aktif
                             </span>
                             @else
                             <span
@@ -159,21 +175,68 @@
                 </div>
                 <!-- Modal Content -->
                 <!-- Modal Form -->
-                <div class="mb-6">
+                <form id="nonAktif" action="{{route('mitra.non.aktif', $identity->id)}}" class="mb-6" method="post">
+                    @csrf
+                    @method('PUT')
+
                     <label for="alasan" class="block text-sm font-bold text-Ebony900">Alasan</label>
-                    <textarea id="alasan" rows="3"
+                    <textarea id="alasan" name="message" rows="3"
                         class="mt-1 p-2 block w-full rounded-md border border-Neutral300 shadow-sm focus:ring-AccentRed900 focus:border-AccentRed900 sm:text-sm"
                         placeholder="Masukan Alasan"></textarea>
-                </div>
+                 </form>
                 <!-- Modal Actions -->
                 <div class="flex justify-end gap-4">
                     <button id="cancelButton"
                         class="w-full px-4 py-2 bg-white text-Ebony900 border border-Neutral300 rounded-lg">Batal</button>
-                    <button id="saveButton"
+                    <button id="saveButton" 
                         class="w-full px-4 py-2 bg-AccentRed900 text-white rounded-lg">Simpan</button>
                 </div>
+
+
+
             </div>
         </div>
+
+        <div id="activeModal"
+            class="fixed hidden inset-0 bg-gray-950 bg-opacity-[95%] z-40 flex justify-center items-center">
+            <!-- Modal -->
+            <div class="bg-white rounded-lg p-6 w-full max-w-md">
+                <!-- Modal Header -->
+                <div class="flex justify-start items-start flex-col">
+                    <div class="w-12 h-12 bg-Blue50 rounded-full flex items-center justify-center">
+                        <div class="bg-Blue102 w-10 h-10 rounded-full flex justify-center items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" class="size-6 text-Blue">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h2 class="text-xl font-bold Ebony900 mt-3 mb-1">Aktifkan Mitra?</h2>
+                    <button id="closeActiveModal"></button>
+                    <p class="text-Ebony200 mb-4">Mitra akan diaktifkan , pengguna bisa menggunakan akun kembali
+                        setelahnya
+                    </p>
+                </div>
+                <!-- Modal Content -->
+                <!-- Modal Form -->
+                <form id="aktif" action="{{route('mitra.aktif', $identity->id)}}" class="mb-6" method="post">
+                    @csrf
+                    @method('PUT')
+                 </form>
+                <!-- Modal Actions -->
+                <div class="flex justify-end gap-4">
+                    <button id="cancelAktifButton"
+                        class="w-full px-4 py-2 bg-white text-Ebony900 border border-Neutral300 rounded-lg">Batal</button>
+                    <button id="saveAktifButton" 
+                        class="w-full px-4 py-2 bg-Success50 text-Success700 rounded-lg">Aktifkan</button>
+                </div>
+
+
+
+            </div>
+        </div>
+
         <!-- Footer -->
     </div>
     <x-footer-admin></x-footer-admin>
@@ -181,15 +244,62 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Elements
-            const deactivateButton = document.querySelector('.text-AccentRed900.bg-white');
+
+            @if($identity->user->email_verified_at === null)
+
+            @elseif(!is_null($identity->message_non_aktif))
+
+                                    //activate
+
+            const activateButton = document.getElementById('active');
+            const activeModal = document.getElementById('activeModal');
+            const closeActiveModal = document.getElementById('closeActiveModal');
+            const cancelActiveButton = document.getElementById('cancelAktifButton');
+            const aktifButton = document.getElementById('saveAktifButton');
+
+
+
+                                   activateButton.addEventListener('click', function () {
+                activeModal.classList.remove('hidden');
+            });
+
+            aktifButton.addEventListener('click', function () {
+                document.getElementById('aktif').submit();
+            });
+
+            // Close Modal
+            closeActiveModal.addEventListener('click', function () {
+                activeModal.classList.add('hidden');
+            });
+
+            cancelActiveButton.addEventListener('click', function () {
+                activeModal.classList.add('hidden');
+            });
+
+
+
+            @else
+
+                        // Elements
+             const deactivateButton = document.getElementById('non-aktif');
             const modal = document.getElementById('deactivateModal');
             const closeModal = document.getElementById('closeModal');
             const cancelButton = document.getElementById('cancelButton');
+            const nonAktifButton = document.getElementById('saveButton');
+
+
+
+
+
+
 
             // Open Modal
             deactivateButton.addEventListener('click', function () {
                 modal.classList.remove('hidden');
+            });
+
+            nonAktifButton.addEventListener('click', function () {
+                document.getElementById('nonAktif').submit();
             });
 
             // Close Modal
@@ -200,6 +310,14 @@
             cancelButton.addEventListener('click', function () {
                 modal.classList.add('hidden');
             });
+
+            @endif
+
+
+
+
+
+ 
         });
 
     </script>

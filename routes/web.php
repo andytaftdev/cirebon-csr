@@ -70,6 +70,8 @@ Route::post('mitra/create/success', [IdentityController::class, 'register'])->na
 Route::get('/mitra/{id}', [IdentityController::class, 'detailMitra'])->name('identity.detailMitra');
 Route::get('/mitra/ubah/{id}', [IdentityController::class, 'ubahMitra'])->name('identity.ubahMitra');
 Route::put('/mitra/update/{id}', [IdentityController::class, 'updateMitra'])->name('identity.updateMitra');
+Route::put('/mitra/nonaktif/{id}', [IdentityController::class, 'nonAktifMitra'])->name('mitra.non.aktif');
+Route::put('/mitra/aktif/{id}', [IdentityController::class, 'aktifMitra'])->name('mitra.aktif');
 Route::get('/mitra', [IdentityController::class, 'mitra']);
 Route::get('/kegiatan/search/{status}', [IdentityController::class, 'search'])->name('identity.search');
 

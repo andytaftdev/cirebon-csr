@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             IdentitiesSeeder::class,
             SektorsSeeder::class,
+            KegiatansSeeder::class,
             ProgramsSeeder::class,
             ProyeksSeeder::class,
             LaporansSeeder::class,

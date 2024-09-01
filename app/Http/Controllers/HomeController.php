@@ -53,6 +53,8 @@ class HomeController extends Controller
             }
 
 
+
+
      
 
 
@@ -131,7 +133,10 @@ class HomeController extends Controller
     ->whereNotNull('email_verified_at')
     ->get();
 
-
+    if($identity->message_non_aktif !== null)
+    {
+        return view('errors.mitra-non-aktif', compact('identity'));
+    }
 
 
 
@@ -388,6 +393,11 @@ $dana_mitra = Laporan::when($year, function ($query) use ($year) {
                 'data_mitra' => $mitra_data,
                 'dana_mitra' => $dana_mitra,
             ];
+
+            if($identity->message_non_aktif !== null)
+            {
+                return view('errors.mitra-non-aktif', compact('identity'));
+            }
 
             return view('/dashboard', compact('user', 'notification', 'identity','laporan','data','data_realisasi','data_pt','data_kecamatan','jumlahNotifikasi','mitra','sektor'));
 

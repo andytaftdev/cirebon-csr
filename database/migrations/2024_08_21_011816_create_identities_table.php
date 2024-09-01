@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('nomor_hp')->nullable();
             $table->string('alamat')->nullable();
             $table->text('deskripsi')->nullable();
+            $table->text('message_non_aktif')->nullable();
             $table->foreign('id_user')->on('users')->references('id')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
