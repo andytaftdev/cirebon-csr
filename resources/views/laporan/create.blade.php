@@ -6,10 +6,11 @@
     @else
     @include('components.navbar-mitra')
 
+    <main class="flex-grow"> 
 
     <!-- Bagian Header dengan Icon Home -->
     <div class="container md:w-3/4 mx-auto py-5 px-6 md:px-0 flex items-center space-x-2">
-        <a href="#" class="flex items-center text-Ebony100">
+        <a href="/dashboard" class="flex items-center text-Ebony100">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-5">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -307,6 +308,10 @@
         });
 
     </script>
+
+</main>
+
+<x-footer-admin></x-footer-admin>
 
 
 </x-app-layout>

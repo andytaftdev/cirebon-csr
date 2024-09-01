@@ -1,6 +1,9 @@
 <x-app-layout>
     @include('components.navbar-admin')
 
+    <main class="flex-grow"> 
+
+
     <div class="flex flex-col w-full md:w-3/4 mx-auto min-h-screen">
         <div class="flex-grow p-7 mx-auto w-full max-w-screen-2xl h-full">
             <!-- Breadcrumb -->
@@ -223,5 +226,9 @@
         togglePasswordVisibility('toggleConfirmPassword', 'password_confirmation', 'eyeConfirmIcon');
 
     </script>
+
+</main>
+
+<x-footer-admin></x-footer-admin>
 
 </x-app-layout>

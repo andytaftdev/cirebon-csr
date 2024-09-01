@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Sektor;
 use App\Models\Program;
 use App\Models\Proyek;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,50 @@ class LaporanController extends Controller
         $user = auth()->user();
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
         $laporan = Laporan::with(['proyek'])->paginate(5);
+
+
+        if ($user->level === 'admin')
+        {
+            $notification =  Notification::orderBy('id', 'desc')->get();
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
+
+        }else
+        {
+            $notification =  Notification::where('id_user', $user->id)->orderBy('id', 'desc');
+            $notification->where('id_user', Auth::id());
+            $notification = $notification->get();
+            $jumlahNotifikasi = Notification::where('terlihat', 0)
+            ->where('id_user', $user->id)
+            ->count();
+
+        }
+
+                foreach ($laporan as $item) {
+
+            $releaseDate = $item->created_at; 
+           
+                $carbonDate = Carbon::parse($releaseDate);
+            
+                $item->releaseMonth = $carbonDate->format('F'); // Full month name
+                $item->releaseDay = $carbonDate->format('d');   // Day of the month
+                $item->releaseYear = $carbonDate->format('Y');   // Day of the month
+            }
+
+
+     
+
+        return view ('laporan.index', compact('identity','user','notification','laporan','jumlahNotifikasi'));
+
+    }
+
+    public function laporanSearch(Request $request)
+    {
+        $user = auth()->user();
+        $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
+        $laporan = Laporan::with(['proyek'])->when($request->has('search') && $request->search != '', function ($query) use ($request) {
+            $search = $request->input('search');
+            return $query->where('judul', 'like', '%' . $search . '%');
+        })->paginate(5);
 
 
         if ($user->level === 'admin')
@@ -117,6 +162,83 @@ class LaporanController extends Controller
         return view('publik.publik-laporan.index', compact('laporan','mitra'));
         
     }
+
+    public function laporanFilter(Request $request)
+    {
+
+
+        $year = $request->input('year', date('Y'));
+        $quarter = $request->input('kuartal'); 
+
+        $months = [];
+        if ($quarter == '1') {
+            $months = [1, 2, 3];
+        }elseif($quarter == '2')
+        {
+            $months = [4, 5, 6];
+        }elseif($quarter == '3')
+        {
+            $months = [7, 8, 9];
+        }elseif($quarter == '4')
+        {
+            $months = [10, 11, 12];
+        }
+        
+        $laporan = Laporan::when($year, function ($query) use ($year) {
+            return $query->whereYear('created_at', $year);
+        })
+        ->when($months, function ($query) use ($months) {
+            return $query->whereIn(DB::raw('MONTH(created_at)'), $months);
+        })
+        ->when($request->has('search') && $request->search != '', function ($query) use ($request) {
+            $search = $request->input('search');
+            return $query->where('judul', 'like', '%' . $search . '%');
+        })
+        ->paginate(5);
+        
+
+        $user = auth()->user();
+        $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
+
+
+        if ($user->level === 'admin')
+        {
+            $notification =  Notification::orderBy('id', 'desc')->get();
+        $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
+
+        }else
+        {
+            $notification =  Notification::where('id_user', $user->id)->orderBy('id', 'desc');
+            $notification->where('id_user', Auth::id());
+            $notification = $notification->get();
+            $jumlahNotifikasi = Notification::where('terlihat', 0)
+            ->where('id_user', $user->id)
+            ->count();
+
+        }
+
+                foreach ($laporan as $item) {
+
+            $releaseDate = $item->created_at; 
+           
+                $carbonDate = Carbon::parse($releaseDate);
+            
+                $item->releaseMonth = $carbonDate->format('F'); // Full month name
+                $item->releaseDay = $carbonDate->format('d');   // Day of the month
+                $item->releaseYear = $carbonDate->format('Y');   // Day of the month
+            }
+
+
+     
+
+        return view ('laporan.index', compact('identity','user','notification','laporan','jumlahNotifikasi'));
+        
+    }
+
+
+
+
+
 
     public function laporanPublikFilter(Request $request, $status)
     {

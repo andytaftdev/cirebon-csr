@@ -117,13 +117,16 @@ Route::post('/stats-pdf', [HomeController::class, 'statPDF'])->name('stats.pdf')
 
 Route::get('/publik/mitra', [IdentityController::class, 'mitraPublik'])->name('identity.mitraPublik');
 Route::get('/publik/mitra/{id}', [IdentityController::class, 'mitraDetail'])->name('identity.mitraDetail');
+Route::get('/publik/mitras/filter/', [IdentityController::class, 'mitraPublikFilter'])->name('mitra.publikFilter');
+
 
 
 
 Route::get('/publik/laporan', [LaporanController::class, 'laporanPublik'])->name('laporan.laporanPublik');
 Route::get('/publik/laporan/{id}', [LaporanController::class, 'detailLaporan'])->name('laporan.detailLaporan');
 Route::get('/filter/{status}', [LaporanController::class, 'laporanPublikFilter'])->name('laporan.publikFilter');
-Route::get('/publik/kegiatan/filter/{status}', [KegiatanController::class, 'kegiatanPublikFilter'])->name('kegiatan.publikFilter');
+Route::get('/laporans/filter/', [LaporanController::class, 'laporanFilter'])->name('laporan.filter');
+Route::get('/laporans/search/', [LaporanController::class, 'laporanSearch'])->name('laporan.search');
 
 
 
@@ -131,6 +134,8 @@ Route::get('/publik/kegiatan/filter/{status}', [KegiatanController::class, 'kegi
 
 Route::get('/publik/kegiatan', [KegiatanController::class, 'kegiatanPublik'])->name('kegiatan.kegiatanPublik');
 Route::get('/publik/kegiatan/{id}', [KegiatanController::class, 'detailKegiatan'])->name('kegiatan.detailKegiatan');
+Route::get('/publik/kegiatan/filter/{status}', [KegiatanController::class, 'kegiatanPublikFilter'])->name('kegiatan.publikFilter');
+
 
 
 
@@ -139,6 +144,10 @@ Route::get('/publik/sektor/{id}', [SektorController::class, 'detailSektor'])->na
 
 
 Route::get('/publik/proyek/{id}', [ProyekController::class, 'detailProyek'])->name('proyek.detailProyek');
+Route::get('/publik/proyeks/filter/', [ProyekController::class, 'proyekPublikFilter'])->name('proyek.publikFilter');
+Route::get('/proyeks/filter/', [ProyekController::class, 'proyekFilter'])->name('proyek.filters');
+
+
 
 
 

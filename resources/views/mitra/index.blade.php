@@ -121,7 +121,7 @@
 
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                                    {{$item->deskripsi}}
+                                {{ Str::words($item->deskripsi, 6, '...') }}
 
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
@@ -180,7 +180,7 @@
                 </div>
             </div>
         </div>
-        <x-footer></x-footer>
     </div>
+    <x-footer-admin></x-footer-admin>
 
 </x-app-layout>

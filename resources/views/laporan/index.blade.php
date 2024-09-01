@@ -1,11 +1,15 @@
 <x-app-layout>
+<main class="flex-grow"> 
+    
 
     @if (Auth::user()->level === 'mitra')
 
     @include('components.navbar-mitra')
 
+
+
     <div class="container w-full md:w-3/4 mx-auto py-5 px-6 md:px-0 flex items-center space-x-2">
-        <a href="#" class="flex items-center text-Ebony100">
+        <a href="/dashboard" class="flex items-center text-Ebony100">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-5">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -236,6 +240,7 @@
 
     <div class="container w-full px-6 md:px-0 md:w-3/4 mx-auto rounded-lg mt-8">
         <!-- Filter Tabs -->
+         
         <div class="flex flex-wrap items-center gap-4 mb-4">
             <a href="{{ route('laporan.status', ['status' => 'semua']) }}">
                 <button
@@ -270,22 +275,32 @@
         </div>        
         
 
-        <!-- Dropdown Filters -->
+
         <div class="flex flex-row items-center w-full space-x-4 mb-3 mt-10 justify-between">
             <div
                 class="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-2 space-y-4 lg:space-y-0 w-full">
                 <div class="flex flex-col md:flex-row md:space-x-4 w-full space-y-4 md:space-y-0">
+
+                <form method="GET" action="{{ route('laporan.filter') }}" class="flex flex-wrap lg:flex-nowrap lg:flex-row w-full lg:gap-3">
+                @csrf
+
                     <select
-                        class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white flex-grow lg:flex-grow-0 lg:w-1/2">
-                        <option>2024</option>
+                    name="year" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white flex-grow lg:flex-grow-0 lg:w-1/2">
+                    @for ($i = 2000; $i <= date('Y'); $i++) <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
                     </select>
                     <select
-                        class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white flex-grow lg:flex-grow-0 lg:w-full">
-                        <option>Kuartal 2 (April, Mei, Juni)</option>
+                      name="kuartal"  class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white flex-grow lg:flex-grow-0 lg:w-full">
+                        <option value="1" >Kuartal 1 (Jan, Feb, Maret)</option>
+                        <option value="2" >Kuartal 2 (April, Mei, Juni)</option>
+                        <option value="3" >Kuartal 3 (Juli, Aug, Sep)</option>
+                        <option value="4">Kuartal 4 (Oct, Nov, Des)</option>
                     </select>
                     <button
-                        class="bg-AccentRed900 hover:bg-red-700 text-white px-4 py-2 rounded-lg lg:w-fit text-nowrap">Terapkan
+                       type="submit" class="bg-AccentRed900 hover:bg-red-700 text-white px-4 py-2 rounded-lg lg:w-fit text-nowrap">Terapkan
                         filter</button>
+                        </form>
+
                 </div>
                 <div
                     class="flex flex-col pt-3 md:pt-0 md:flex-row md:space-x-4 lg:pt-0 w-full md:w-auto lg:w-fit lg:ml-3.5 space-y-4 md:space-y-0 lg:justify-end">
@@ -300,6 +315,7 @@
                     </button>
                     <a href="{{route('export.pdf')}}">
                     <button
+                    
                         class="bg-white hover:bg-AccentRed100 text-AccentRed900 border border-Neutral300 px-4 py-2 rounded-lg flex items-center lg:gap-1 gap-2 justify-center flex-grow lg:flex-grow-0 text-nowrap">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                             stroke="currentColor" class="size-5">
@@ -314,9 +330,15 @@
         </div>
 
         <!-- Search Bar -->
+        <form method="GET" action="{{ route('laporan.search') }}" >
+        @csrf
         <div class="mb-8">
-            <input type="text" placeholder="Cari" class="w-full px-4 py-2 rounded-lg border border-gray-300">
+        <input type="text" name="search" placeholder="Cari"
+                             class="w-full px-4 py-2 rounded-lg border border-gray-300"
+                             value="{{ request('search') }}">
         </div>
+       </form>
+
 
         <!-- Table -->
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-16">
@@ -431,6 +453,13 @@
 
     </script>
 
+
+
     @endif
+    </main>
+
+<x-footer-admin></x-footer-admin>
+
+
 
 </x-app-layout>

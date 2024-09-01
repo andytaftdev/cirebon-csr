@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Publik;
 use App\Models\Sektor;
+use App\Models\Identity;
 use App\Models\Proyek;
 use App\Models\Kegiatan;
 use App\Models\User;
@@ -20,7 +21,7 @@ class PublikController extends Controller
     {
         $sektor = Sektor::all();
         $kegiatan = Kegiatan::where('status', 1)
-        ->orderBy('id', 'desc')->take(3)
+        ->orderBy('id', 'desc')->take(4)
         ->get();
         $proyek = Proyek::count();
         $proyek_released = Proyek::where('status', 'terbit')->count();
@@ -29,6 +30,24 @@ class PublikController extends Controller
         $laporan = Laporan::where('status', 'terima')
         ->take(4)->orderBy('id', 'desc')
         ->get();
+
+        $kegiatanCarousel = Kegiatan::where('status', 1)->take(5)
+        ->orderBy('id', 'desc')
+        ->get();
+        foreach ($kegiatanCarousel as $item) {
+            $date = $item->terbit; // Replace with your actual date field name
+
+                $carbonDate = Carbon::parse($date);
+            
+                $item->month = $carbonDate->format('F'); // Full month name
+                $item->day = $carbonDate->format('d');   // Day of the month
+                $item->year = $carbonDate->format('Y');   // Day of the month
+           
+        }
+
+        $mitra = Identity::whereHas('user', function ($query) {
+            $query->where('level', 'mitra');
+        })->take(8)->get();
 
 
 
@@ -74,7 +93,7 @@ class PublikController extends Controller
                        
                     }
 
-        return view('welcome', compact('sektor','data','kegiatan','laporan'));
+        return view('welcome', compact('sektor','data','kegiatan','laporan','kegiatanCarousel','mitra'));
     }
 
     /**

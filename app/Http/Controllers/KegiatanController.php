@@ -20,6 +20,11 @@ class KegiatanController extends Controller
     {
         $user = auth()->user();
 
+        if($user->level === 'mitra')
+        {
+            return view('errors.404');
+        }
+
 
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
                    $notification = Notification::orderBy('id', 'desc')->get();
@@ -49,6 +54,7 @@ class KegiatanController extends Controller
             }
            
         }
+
 
      
         return view ('kegiatan.index', compact('identity','user','notification','kegiatan','jumlahNotifikasi'));
@@ -122,7 +128,10 @@ class KegiatanController extends Controller
                    $notification->where('id_user', Auth::id());
          $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
-
+         if($user->level === 'mitra')
+         {
+             return view('errors.404');
+         }
 
 
         return view('kegiatan.create', compact('identity', 'notification','jumlahNotifikasi'));
@@ -203,6 +212,10 @@ class KegiatanController extends Controller
         $kegiatan = Kegiatan::find($id);
         $notification =  Notification::orderBy('id', 'desc')->get();
          $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
+         if($user->level === 'mitra')
+         {
+             return view('errors.404');
+         }
 
 
 
@@ -240,6 +253,10 @@ class KegiatanController extends Controller
     $identity = Identity::where('id_user', $user->id)->orderBy('id')->first();
     $notification = Notification::orderBy('id', 'desc')->get();
      $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
+     if($user->level === 'mitra')
+     {
+         return view('errors.404');
+     }
 
 
     $query = Kegiatan::query();
@@ -321,6 +338,10 @@ public function kegiatanPublikFilter(Request $request, $status)
         $kegiatan = Kegiatan::find($id);
         $notification =  Notification::orderBy('id', 'desc')->get();
          $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
+         if($user->level === 'mitra')
+         {
+             return view('errors.404');
+         }
 
 
 

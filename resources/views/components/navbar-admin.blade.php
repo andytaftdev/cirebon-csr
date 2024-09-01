@@ -169,8 +169,11 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                 </svg>
+                @if ($jumlahNotifikasi == 0)
+                @else
                 <span
-                    class="absolute bottom-4 left-3 inline-block w-4 h-4 text-[11px] pl-0.5 font-bold text-white bg-AccentRed900 rounded-full">69</span>
+                class="absolute bottom-4 left-3 inline-block w-4 h-4 text-[11px] pl-0.5 font-bold text-white bg-AccentRed900 rounded-full">{{ $jumlahNotifikasi }}</span>
+                @endif
             </button>
             <button id="menu-toggle" class="outline-none mobile-menu-button">
                 <!-- Hamburger Icon -->
@@ -190,13 +193,12 @@
 
     {{-- Mobile Menu --}}
     <div class="hidden mobile-menu md:hidden border-t border-Neutral300">
-        <a href="#"
-            class="block text-sm px-7 py-4 text-AccentRed900 underline underline-AccentRed900 underline-offset-8 hover:bg-gray-200 font-semibold">Dashboard</a>
-        <a href="#" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Kegiatan</a>
-        <a href="#" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Proyek</a>
-        <a href="#" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Sektor</a>
-        <a href="#" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Laporan</a>
-        <a href="#" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Mitra</a>
+        <a href="/dashboard" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Dashboard</a>
+        <a href="/kegiatan" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Kegiatan</a>
+        <a href="/proyek" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Proyek</a>
+        <a href="/sektor" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Sektor</a>
+        <a href="/laporan" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Laporan</a>
+        <a href="/mitra" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Mitra</a>
     </div>
 
     <!-- Mobile Notification Dropdown -->

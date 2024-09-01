@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Identity;
 use App\Models\Sektor;
 use App\Models\Program;
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use App\Models\Notification;
@@ -23,8 +25,13 @@ class ProyekController extends Controller
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
                    $notification = Notification::orderBy('id', 'desc')->get();
         $proyek = Proyek::paginate(5); // Mengambil 10 item per halaman
+        $sektor = Sektor::all();
 
          $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
+         if($user->level === 'mitra')
+         {
+             return view('errors.404');
+         }
 
 
         
@@ -68,9 +75,88 @@ class ProyekController extends Controller
 
            
         }
+
      
-        return view ('proyek.index', compact('proyek','user','notification','identity','jumlahNotifikasi'));
+        return view ('proyek.index', compact('proyek','user','notification','identity','jumlahNotifikasi','sektor'));
     }
+
+    public function proyekFilter(Request $request)
+{
+    $year = $request->input('year', date('Y')); 
+    $quarter = $request->input('kuartal');
+    $sectorId = $request->input('sektor'); 
+    $sektor = Sektor::all();
+    if($user->level === 'mitra')
+    {
+        return view('errors.404');
+    }
+
+
+    $months = [];
+    if ($quarter == '1') {
+        $months = [1, 2, 3];
+    } elseif ($quarter == '2') {
+        $months = [4, 5, 6];
+    } elseif ($quarter == '3') {
+        $months = [7, 8, 9];
+    } elseif ($quarter == '4') {
+        $months = [10, 11, 12];
+    }
+
+
+    $proyek = Proyek::when($year, function ($query) use ($year) {
+            return $query->whereYear('created_at', $year);
+        })
+        ->when($months, function ($query) use ($months) {
+            return $query->whereIn(DB::raw('MONTH(created_at)'), $months);
+        })
+        ->when($sectorId, function ($query) use ($sectorId) {
+            return $query->where('id_sektor', $sectorId);
+        })
+        ->paginate(5);
+
+
+    $user = auth()->user();
+    $identity = Identity::where('id_user', $user->id)->orderBy('id')->first();
+    $notification = Notification::orderBy('id', 'desc')->get();
+    $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status', ['baru', 'tolak', 'terima'])->count();
+
+    // Process each project item
+    foreach ($proyek as $item) {
+        $item->id_user = json_decode($item->id_user);
+
+        $firstDate = $item->tanggal_mulai;
+        $lastDate = $item->tanggal_akhir;
+        $releaseDate = $item->tanggal_terbit;
+
+        if ($releaseDate === null) {
+            $item->releaseMonth = '-';
+            $item->releaseDay = '-';
+            $item->releaseYear = '-';
+        } else {
+            $carbonDate = Carbon::parse($releaseDate);
+            $item->releaseMonth = $carbonDate->format('F');
+            $item->releaseDay = $carbonDate->format('d');
+            $item->releaseYear = $carbonDate->format('Y');
+
+            $item->jumlah_mitra = $item->id_user === null ? 0 : count($item->id_user);
+        }
+
+        $firstDate = Carbon::parse($firstDate);
+        $lastDate = Carbon::parse($lastDate);
+
+        $item->firstMonth = $firstDate->format('F');
+        $item->firstDay = $firstDate->format('d');
+        $item->firstYear = $firstDate->format('Y');
+
+        $item->lastMonth = $lastDate->format('F');
+        $item->lastDay = $lastDate->format('d');
+        $item->lastYear = $lastDate->format('Y');
+    }
+
+    return view('proyek.index', compact('proyek', 'user', 'notification', 'identity', 'jumlahNotifikasi','sektor'));
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -83,6 +169,10 @@ class ProyekController extends Controller
         $sektor = Sektor::all();
 
          $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
+         if($user->level === 'mitra')
+         {
+             return view('errors.404');
+         }
 
 
         
@@ -203,6 +293,7 @@ class ProyekController extends Controller
         ->orderBy('id', 'desc')
         ->get();
 
+
         
             $startDate = $proyek->tanggal_mulai; // Replace with your actual date field name
             $endDate = $proyek->tanggal_akhir; // Replace with your actual date field name
@@ -248,6 +339,55 @@ class ProyekController extends Controller
         
     }
 
+    public function proyekPublikFilter(Request $request)
+{
+    $sector = $request->input('id_sektor');
+    $search = $request->input('search');
+
+
+
+    $sektor = Sektor::orderBy('id', 'desc')->get();
+    foreach ($sektor as $item) {
+
+    $program = Program::where('id_sektor', $item->id);
+    $item->program = $program->count();
+
+        
+
+       
+    }
+
+    $query = Proyek::query();
+
+    if ($sector) {
+        $query->where('id_sektor', $sector);
+    }
+
+    if ($search) {
+        $query->where('nama_proyek', 'like', '%' . $search . '%');
+    }
+
+    $proyek = $query->paginate(4);
+    foreach ($proyek as $item) {
+
+        $date = $item->tanggal_akhir;
+        $sektors = Sektor::find($item->id_sektor);
+        $item->sektor = $sektors->nama_sektor;
+        $item->alamat = 'Jl. Sunan Kalijaga No.7, Sumber, Kec. Sumber, Kabupaten Cirebon, Jawa Barat 45611';
+
+        $carbonDate = Carbon::parse($date);
+        
+        $item->month = $carbonDate->format('F'); // Full month name
+        $item->day = $carbonDate->format('d');   // Day of the month
+        $item->year = $carbonDate->format('Y');   // Day of the month
+
+
+           
+        }
+
+        return view('publik.publik-sektor.index', compact('sektor','proyek'));
+}
+
     /**
      * Display the specified resource.
      */
@@ -261,6 +401,10 @@ class ProyekController extends Controller
         $sektor = Sektor::find($proyek->id_sektor);
         $program = Program::find($proyek->id_program);
         $sektorAll = Sektor::all();
+        if($user->level === 'mitra')
+        {
+            return view('errors.404');
+        }
 
 
          $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
@@ -340,6 +484,11 @@ class ProyekController extends Controller
         $user = auth()->user();
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
                    $notification = Notification::orderBy('id', 'desc')->get();
+        $sektor = Sektor::all();
+        if($user->level === 'mitra')
+        {
+            return view('errors.404');
+        }
     
         $query = Proyek::query();
     
@@ -405,7 +554,7 @@ class ProyekController extends Controller
 
         }
      
-        return view ('proyek.index', compact('identity','user','notification','proyek','jumlahNotifikasi'));
+        return view ('proyek.index', compact('identity','user','notification','proyek','jumlahNotifikasi', 'sektor'));
     }
 
     /**

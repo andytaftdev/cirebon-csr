@@ -1,5 +1,6 @@
 <x-app-layout>
-    @if(Auth::user()->level === 'admin')
+<main class="flex-grow"> 
+
     @include('components.navbar-admin')
     <!-- Bagian Header dengan Icon Home -->
     <div class="flex flex-col w-full md:w-3/4 mx-auto min-h-screen">
@@ -297,21 +298,13 @@
         renderTableRows();
 
     </script>
-    @else
-
-    @include('components.navbar-mitra')
 
 
-    <div class="flex flex-col items-center justify-center w-full min-h-screen bg-white">
-        <h1 class="text-4xl font-bold text-AccentRed900 mb-4">404</h1>
-        <p class="text-lg text-Ebony900 mb-4">Oops! Halaman yang Anda cari tidak ditemukan.</p>
-        <a href="{{ url('/dashboard') }}" class="px-4 py-2 bg-AccentRed900 text-white rounded-lg">Kembali ke
-            Dashboard</a>
-    </div>
 
-    <x-footer></x-footer>
 
-    @endif
+    </main>
+
+<x-footer-admin></x-footer-admin>
 
 
 </x-app-layout>

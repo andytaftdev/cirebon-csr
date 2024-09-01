@@ -2,7 +2,8 @@
     @include('components.navbar-admin')
 
 
-    <!-- Bagian Header dengan Icon Home -->
+    <main class="flex-grow"> 
+
     <div class="container w-full md:w-3/4 px-6 md:px-0 mx-auto py-5 flex items-center space-x-2">
         <a href="/dashboard" class="flex items-center text-Ebony100">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -26,7 +27,6 @@
     </div>
 
     <div class="container w-full md:w-3/4 px-6 md:px-0 mx-auto rounded-lg mt-6">
-        <!-- Filter Tabs -->
         <div class="flex items-center space-x-4 mb-4">
             <a href="{{ route('proyek.filter', ['status' => 'semua']) }}">
                 <button
@@ -48,28 +48,34 @@
             </a>            
         </div>
 
-        <!-- Dropdown Filters -->
+
         <div class="flex flex-row justify-center items-center w-full space-x-2 my-6 gap-3">
-            <div class="w-full flex flex-col md:flex-row items-center justify-center gap-3">
-                <select class="px-4 py-2 border w-full border-Neutral300 rounded-lg">
-                    <option value="2024">2024</optin>
-                        <!-- Tambahkan opsi lainnya sesuai kebutuhan -->
+        <form id="filter" name="filter" method="GET" action="{{ route('proyek.filters') }}" class="w-full flex flex-col md:flex-row items-center justify-center gap-3">
+        @csrf
+
+                <select name="year" class="px-4 py-2 border w-full border-Neutral300 rounded-lg">
+                @for ($i = 2000; $i <= date('Y'); $i++) <option value="{{ $i }}">{{ $i }}</option>
+                @endfor
                 </select>
-                <select class="px-4 py-2 border w-full border-Neutral300 rounded-lg">
-                    <option value="Q2">Kuartal 2 (April, Mei, Juni)</option>
-                    <!-- Tambahkan opsi lainnya sesuai kebutuhan -->
+                <select name="kuartal" class="px-4 py-2 border w-full border-Neutral300 rounded-lg">
+                <option value="1" >Kuartal 1 (Jan, Feb, Maret)</option>
+                        <option value="2" >Kuartal 2 (April, Mei, Juni)</option>
+                        <option value="3" >Kuartal 3 (Juli, Aug, Sep)</option>
+                        <option value="4">Kuartal 4 (Oct, Nov, Des)</option>
                 </select>
-                <select class="px-4 py-2 border w-full border-Neutral300 rounded-lg">
-                    <option value="Q2">Sektor</option>
-                    <!-- Tambahkan opsi lainnya sesuai kebutuhan -->
+                <select name="sektors" class="px-4 py-2 border w-full border-Neutral300 rounded-lg">
+                    @foreach($sektor as $item)
+                    <option value="{{$item->id}}">{{$item->nama_sektor}}</option>
+                    @endforeach
                 </select>
-                <button class="flex md:hidden w-full justify-center items-center py-2 text-nowrap bg-AccentRed900 hover:bg-red-700 text-white rounded-lg">Terapkan
+                <button type="submit" class="flex md:hidden w-full justify-center items-center py-2 text-nowrap bg-AccentRed900 hover:bg-red-700 text-white rounded-lg">Terapkan
                     filter
                 </button>
-            </div>
+            </form>
+
 
             <div class="w-full hidden lg:flex flex-row items-center lg:justify-end lg:w-fit gap-3">
-                <button class="px-4 py-2 text-nowrap bg-AccentRed900 hover:bg-red-700 text-white rounded-lg">Terapkan
+                <button type="submit"  id="filterBtn" class="px-4 py-2 text-nowrap bg-AccentRed900 hover:bg-red-700 text-white rounded-lg">Terapkan
                     filter
                 </button>
 
@@ -91,9 +97,10 @@
                     Unduh .pdf
                 </button>
                 </a>
-            </form>
             </div>
+
         </div>
+
         <div class="w-full lg:hidden flex flex-row items-center justify-center gap-3 mb-5">
             <button class="w-full hidden md:flex justify-center items-center py-2 text-nowrap bg-AccentRed900 text-white rounded-lg hover:bg-red-700">Terapkan
                 filter
@@ -117,7 +124,6 @@
             </button>
         </div>
 
-        <!-- Search Bar -->
         <form action="{{ route('proyek.filter', ['status' => 'semua']) }}" method="GET" class="w-full">
             @csrf
         <div class="mb-6">
@@ -136,7 +142,6 @@
     </div>
 @endif
 
-        <!-- Table -->
         <div class="relative overflow-x-auto sm:rounded-lg border border-Neutral200 mb-16">
             <table class="w-full text-left rtl:text-right">
                 <thead class="text-sm uppercase bg-white text-Gray900 border-b border-b-Neutral200">
@@ -240,19 +245,26 @@
 
     <script>
         function toggleActive(selectedId) {
-            // Hapus kelas aktif dari semua tombol
             document.querySelectorAll('.btn').forEach(function (button) {
                 button.classList.remove('bg-Blue700', 'text-white');
                 button.classList.add('text-Ebony100');
             });
 
-            // Tambahkan kelas aktif ke tombol yang dipilih
             const selectedButton = document.getElementById(selectedId);
             selectedButton.classList.add('bg-Blue700', 'text-white');
             selectedButton.classList.remove('text-Ebony100');
         }
 
+        document.getElementById('filterBtn').addEventListener('click', function() {
+            document.getElementById('filter').submit();
+        });
+
+
     </script>
+
+</main>
+
+<x-footer-admin></x-footer-admin>
 
 </x-app-layout>
 

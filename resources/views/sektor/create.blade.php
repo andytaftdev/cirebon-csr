@@ -1,7 +1,8 @@
 <x-app-layout>
     @include('components.navbar-admin')
 
-    <!-- Bagian Header dengan Icon Home -->
+    <main class="flex-grow"> 
+
     <div class="container w-full md:w-3/4 px-6 md:px-0 mx-auto p-5 flex items-center space-x-2">
         <a href="/dashboard" class="flex items-center text-Ebony100">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -33,11 +34,9 @@
     </div>
 
     <div class="container w-full md:w-3/4 px-6 md:px-0 mx-auto mt-6 mb-16">
-        <!-- Form Ubah Data Sektor -->
         <form enctype="multipart/form-data" action="{{route('sektor.store')}}" method="post">
             @csrf
             <div class="bg-white border border-Neutral200 rounded-lg p-6 mb-6">
-                <!-- Foto Thumbnail -->
                 <div class="mb-6 font-medium">
                     <label class="block mb-2 text-sm font-medium text-gray-700" for="foto-thumbnail">
                         Foto Thumbnail <span class="text-AccentRed900">*</span>
@@ -63,7 +62,6 @@
                         accept="image/png, image/jpeg">
                 </div>
 
-                <!-- Nama Sektor -->
                 <div class="mb-6">
                     <label class="block mb-2 text-sm font-medium text-gray-700" for="nama-sektor">
                         Nama Sektor <span class="text-AccentRed900">*</span>
@@ -72,7 +70,6 @@
                         placeholder="Nama Sektor" />
                 </div>
 
-                <!-- Deskripsi -->
                 <div class="mb-6">
                     <label class="block mb-2 text-sm font-medium text-gray-700" for="deskripsi">
                         Deskripsi
@@ -81,13 +78,11 @@
                         rows="3" placeholder="Masukan Deskripsi"></textarea>
                 </div>
 
-                <!-- Daftar Program -->
                 <div>
                     <label class="block mb-2 text-lg font-semibold text-gray-700">
                         Daftar Program
                     </label>
 
-                    <!-- Program Item 1 -->
                     <div id="program-list">
                         <div class="program-item flex flex-col md:flex-row mb-4 gap-4">
                             <div class="w-full">
@@ -148,7 +143,6 @@
                 @endif
             </div>
 
-            <!-- Button Actions -->
             <div
                 class="flex justify-center items-center md:justify-end rounded-lg border border-Neutral200 bg-white py-4 px-6 space-x-4">
                 <button type="submit"
@@ -245,5 +239,10 @@
         });
 
     </script>
+
+
+</main>
+
+<x-footer-admin></x-footer-admin>
 
 </x-app-layout>

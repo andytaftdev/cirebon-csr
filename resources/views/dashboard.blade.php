@@ -385,7 +385,7 @@
 </div>
 
 
-<x-footer-admin></x-footer-admin>
+
 
 <script>
     // Pie Chart Configuration
@@ -1239,6 +1239,8 @@ document.getElementById('filterBtn').addEventListener('click', function() {
     });
 
 </script>
+
+<x-footer-admin></x-footer-admin>
 
 
 

@@ -68,7 +68,7 @@
             <div class="bg-white border border-Neutral300 overflow-hidden relative">
                 <img class="w-full h-58 object-cover" src="{{ asset('storage/img/laporan/'. $gambarLaporan[0]) }}" alt="Image 2">
                 <!-- Date overlay -->
-                <span class="text-xs text-white bg-AccentRed900 px-4 py-2 rounded absolute top-5 left-5 z-20">{{$item->day}} {{$item->bulan}} {{$item->tahun}}</span>
+                <span class="text-xs text-white bg-AccentRed900 px-4 py-2 rounded absolute top-5 left-5 z-20">{{$item->tanggal}} {{$item->bulan}} {{$item->tahun}}</span>
                 <div class="p-6">
                     <div class="flex items-center">
                         <img class="w-10 h-10 rounded-full border-2 border-AccentRed900"
@@ -87,10 +87,13 @@
 
         </div>
         {{-- Button Muat Lebih Banyak --}}
+        <a href="{{route('laporan.laporanPublik')}}">
         <button
             class="bg-white hover:bg-neutral-100 border border-Neutral300 font-semibold rounded-lg text-Ebony200 px-4 py-2 flex justify-center items-center my-10 mx-auto">Muat
             Lebih Banyak
         </button>
+        </a>
+
         {{-- Contact US Section --}}
         <div class="w-full rounded-lg py-10 mx-auto flex flex-col md:flex-row space-y-10 md:space-y-0 md:space-x-10">
             <div class="flex flex-col w-full md:w-1/2">

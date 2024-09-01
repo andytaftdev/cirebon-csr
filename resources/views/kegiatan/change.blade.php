@@ -1,4 +1,5 @@
 <x-app-layout>
+<main class="flex-grow"> 
     @if(Auth::user()->level === 'admin')
     @include('components.navbar-admin')
 
@@ -264,5 +265,9 @@
 
     @endif
 
+
+    </main>
+
+<x-footer-admin></x-footer-admin>
 
 </x-app-layout>

@@ -550,4 +550,6 @@ document.getElementById('filterBtn').addEventListener('click', function() {
 
 </script>
 
+
+
 </x-guest-layout>

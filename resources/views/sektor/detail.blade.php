@@ -2,10 +2,9 @@
 
     @include('components.navbar-admin')
 
-
-    <!-- Header Sektor -->
+    <main class="flex-grow"> 
     <div class="bg-cover h-72 md:h-96 bg-no-repeat bg-center relative"
-        style="background-image: url('{{ asset('storage/img/sektor/'. $sektor->gambar_sektor)}}')">
+        style="background-image: url('{{ asset('images/background.png') }}')">
         <div class="container w-full md:w-3/4 mx-auto p-5 flex flex-row items-center justify-between">
             <div class="flex items-center space-x-2">
                 <a href="/dashboard" class="flex items-center text-white">
@@ -48,7 +47,6 @@
         </div>
     </div>
 
-    <!-- Tabel Program -->
     <div class="container w-full md:w-3/4 mx-auto p-4 md:p-0 md:mb-6">
         <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 mt-10">Program</h2>
     </div>
@@ -78,5 +76,8 @@
             </tbody>
         </table>
     </div>
+</main>
+
+<x-footer-admin></x-footer-admin>
 
 </x-app-layout>

@@ -175,8 +175,9 @@
             </div>
         </div>
         <!-- Footer -->
-        <x-footer></x-footer>
     </div>
+    <x-footer-admin></x-footer-admin>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

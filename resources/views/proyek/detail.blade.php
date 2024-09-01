@@ -2,6 +2,9 @@
 
     @include('components.navbar-admin')
 
+    <main class="flex-grow"> 
+
+
     @if($proyek->status === 'terbit')
 
     <div class="container w-full md:w-3/4 px-6 md:px-0 mx-auto p-5 flex items-center space-x-2">
@@ -399,5 +402,9 @@
 
     </script>
     @endif
+
+    </main>
+
+<x-footer-admin></x-footer-admin>
 
 </x-app-layout>

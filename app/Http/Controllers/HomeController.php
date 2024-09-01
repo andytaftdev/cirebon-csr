@@ -401,23 +401,10 @@ $dana_mitra = Laporan::when($year, function ($query) use ($year) {
         $partner = $request->input('mitra'); // Partner filter
 
         $user = auth()->user();
-        $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
         $laporan = Laporan::with(['proyek'])->paginate(10);
 
 
-        if ($user->level === 'admin')
-        {
-            $notification =  Notification::orderBy('id', 'desc')->get();
-         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
-        }else
-        {
-            $notification =  Notification::where('id_user', $user->id)->orderBy('id', 'desc');
-            $notification->where('id_user', Auth::id());
-            $notification = $notification->get();
-        $jumlahNotifikasi = Notification::where('terlihat', 0)->where('id_user', $user->id)->count();
-
-        }
         $sektor = Sektor::all();
         $mitra = User::where('level', 'mitra')
     ->whereNotNull('email_verified_at')
@@ -657,7 +644,7 @@ $dana_mitra = Laporan::when($year, function ($query) use ($year) {
                 'dana_mitra' => formatRupiah($dana_mitra),
             ];
 
-            return view('publik.publik-statistik.index', compact('laporan','data','data_realisasi','data_pt','data_kecamatan','jumlahNotifikasi','mitra','sektor'));
+            return view('publik.publik-statistik.index', compact('laporan','data','data_realisasi','data_pt','data_kecamatan','mitra','sektor'));
 
 
     }
@@ -759,12 +746,13 @@ $dana_mitra = Laporan::when($year, function ($query) use ($year) {
                 $join->on('sektors.id', '=', 'laporans.id_sektor')
                      ->where('laporans.status', '=', 'terima');
             })
-            ->select('sektors.nama_sektor', DB::raw('SUM(laporans.realisasi) as total'))
+            ->select('sektors.nama_sektor', DB::raw('COALESCE(SUM(laporans.realisasi), 0) as total'))
             ->groupBy('sektors.nama_sektor')
             ->get()
             ->pluck('total', 'nama_sektor')
             ->toArray();
-         
+
+
 
             $data_pt = DB::table('laporans')
             ->leftJoin('identities', 'laporans.id_user', '=', 'identities.id_user') // Join with identities table
@@ -827,7 +815,7 @@ $dana_mitra = Laporan::when($year, function ($query) use ($year) {
 
    
         $laporan = Laporan::where('status', 'terima')
-        ->orderBy('id', 'desc')
+        ->orderBy('id', 'desc')->take(3)
         ->get();
                 foreach ($laporan as $item) {
                 $user = User::with('identity')->find($item['id_user']);

@@ -1,4 +1,6 @@
 <x-app-layout>
+<main class="flex-grow"> 
+
     @if (Auth::user()->level === 'mitra')
     @include('components.navbar-mitra')
 
@@ -191,5 +193,9 @@
         <x-footer></x-footer>
     </div>
     @endif
+
+    </main>
+
+<x-footer-admin></x-footer-admin>
 
 </x-app-layout>

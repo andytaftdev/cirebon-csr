@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -56,6 +57,11 @@ class IdentityController extends Controller
         })->paginate(5); // Menambahkan pagination dengan 10 data per halaman
         $notification =  Notification::orderBy('id', 'desc')->get();
 
+        if($user->level === 'mitra')
+        {
+            return view('errors.404');
+        }
+
 
          $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
@@ -71,6 +77,10 @@ class IdentityController extends Controller
     
         $query = Identity::query();
          $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
+         if($user->level === 'mitra')
+         {
+             return view('errors.404');
+         }
 
 
     
@@ -102,6 +112,50 @@ class IdentityController extends Controller
         return view('publik.publik-mitra.index', compact('mitra'));
         
     }
+    public function mitraPublikFilter(Request $request)
+    {
+
+
+    $mitraIds = User::where('level', 'mitra')->pluck('id');
+
+    $query = Identity::whereIn('identities.id_user', $mitraIds)
+    ->leftJoin('laporans', 'identities.id_user', '=', 'laporans.id_user')
+    ->select(
+        'identities.id', 
+        'identities.id_user', 
+        'identities.nama_pt', 
+        'identities.mitra_logo',
+        'identities.nama_mitra',
+        'identities.nomor_hp',
+        'identities.alamat',
+        'identities.deskripsi',
+        DB::raw('COUNT(laporans.id) as total_laporan') // Count the total number of laporans
+    )
+    ->groupBy(
+        'identities.id',
+        'identities.id_user', 
+        'identities.nama_pt', 
+        'identities.mitra_logo',
+        'identities.nama_mitra',
+        'identities.nomor_hp',
+        'identities.alamat',
+        'identities.deskripsi'
+    );
+
+if ($search = $request->input('search')) {
+    $query->where('identities.nama_pt', 'like', '%' . $search . '%');
+}
+
+if ($order = $request->input('order')) {
+    $query->orderBy('total_laporan', $order);
+}
+
+$mitra = $query->get();
+
+
+    return view('publik.publik-mitra.index', compact('mitra'));
+        
+    }
     public function mitraDetail($id)
     {
 
@@ -119,6 +173,10 @@ class IdentityController extends Controller
     {
         $user = auth()->user();
         $identity = Identity::find($id);
+        if($user->level === 'mitra')
+        {
+            return view('errors.404');
+        }
 
         $notification = Notification::where('id_user', $user->id)->orderBy('id', 'desc')->get();
          $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
@@ -130,6 +188,10 @@ class IdentityController extends Controller
     {
         $user = auth()->user();
         $identity = Identity::find($id);
+        if($user->level === 'mitra')
+        {
+            return view('errors.404');
+        }
 
         $notification = Notification::where('id_user', $user->id)->orderBy('id', 'desc')->get();
          $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
@@ -145,6 +207,7 @@ class IdentityController extends Controller
         $user = User::find($data->id_user);
 
         $level = $user->level;
+
 
 
 
@@ -210,13 +273,12 @@ class IdentityController extends Controller
 
         }else
         {
-            $jumlahNotifikasi = Notification::where('terlihat', 0)
-            ->where('id_user', $user->id)
-            ->count();
+          return view('errors.404');
         }
+
         
 
-        return view('mitra.create', compact('identity', 'user', 'notification'));
+        return view('mitra.create', compact('identity', 'user', 'notification','jumlahNotifikasi'));
 
     }
     public function register(Request $request)
@@ -274,6 +336,18 @@ class IdentityController extends Controller
                 'alamat' => 'required|min:16|max:256|string',
                 
             ]);
+
+        $notifikasi =[
+
+            'judul' => $request->nama_mitra ,
+            'deskripsi' => $request->nama_pt,
+            'level' => 'mitra',
+            'access' => 'admin',
+  
+          ];
+
+        Notification::create($notifikasi);
+
         }
         
 
@@ -286,14 +360,6 @@ class IdentityController extends Controller
 
 
 
-        $notifikasi =[
-
-          'judul' => $request->nama_mitra ,
-          'deskripsi' => $request->nama_pt,
-          'level' => 'mitra',
-          'access' => 'admin',
-
-        ];
         $user->profile_status = 1; 
         $user->email = $request->email; 
 
@@ -301,7 +367,6 @@ class IdentityController extends Controller
         $input = $request->except(['email', $request->id_user]);
 
         Identity::create($input);
-        Notification::create($notifikasi);
         return back();
     }
 
@@ -322,6 +387,7 @@ class IdentityController extends Controller
         {
             $notification =  Notification::where('id_user', $user->id)->orderBy('id', 'desc')->get();
         $jumlahNotifikasi = Notification::where('terlihat', 0)->count();
+        return view('errors.404');
         }
 
 

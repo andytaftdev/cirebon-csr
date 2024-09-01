@@ -19,10 +19,12 @@
             <div class="w-[40px] h-[4px] bg-Orange600"></div>
         </div>
         {{-- Option --}}
-        <div class="flex space-x-5 mt-8">
-            <select class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-fit md:w-96">
-                <option>Laporan Terbanyak</option>
-            </select>
+            <form  class="flex space-x-5 mt-8" id="filter" action="{{route('mitra.publikFilter') }}" method="GET" >
+
+         <select id="count" name="order" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-fit md:w-96">
+            <option value="desc" {{ request()->input('order') == 'desc' ? 'selected' : '' }}>Laporan Terbanyak</option>
+            <option value="asc" {{ request()->input('order') == 'asc' ? 'selected' : '' }}>Laporan Terdikit</option>
+        </select>
             <div class="relative w-full md:w-9/12">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor"
@@ -30,10 +32,10 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>
-                <input id="searchBar" type="text" placeholder="Cari kegiatan..."
+                <input id="searchBar" name="search" value="{{ request()->input('search') }}" type="text" placeholder="Cari kegiatan..."
                     class="pl-14 text-base py-2 bg-white border border-Neutral300 rounded-lg w-full">
             </div>
-        </div>
+            </form>
         {{-- Card Mitra Section --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-14">
            @foreach($mitra as $item)
@@ -126,5 +128,22 @@
     </div>
     <x-footer-umum></x-footer-umum>
 </div>
+<script>
+        document.getElementById('count').addEventListener('change', function() {
+            document.getElementById('filter').submit();
+        });
+        document.getElementById('searchBar').addEventListener('change', function() {
+            document.getElementById('filter').submit();
+        });
+
+        document.getElementById('searchBar').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('filter').submit(); // Manually submit the form
+    }
+});
+
+
+</script>
 
 </x-guest-layout>

@@ -25,19 +25,19 @@
             <div id="carousel"
                 class="absolute z-30 bottom-0 right-0 xl:right-20 bg-Gray900 backdrop-blur-lg bg-opacity-85 px-6 py-5 lg:px-12 lg:py-11 max-w-lg xl:max-w-xl">
                 <div class="relative overflow-hidden">
+                    @foreach($kegiatanCarousel as $item)
+
                     <div class="carousel-item block duration-700 ease-in-out transform translate-x-0 opacity-100">
-                        <h2 class="text-white text-xl lg:text-2xl font-semibold mb-4">Pemkab Cirebon Terima Bantuan PJU
-                            Tematik Dari Bank BJB</h2>
-                        <span class="text-white text-xs px-3 py-2 bg-AccentRed900 uppercase tracking-widest">Jum'at,
-                            24 Jul 2024</span>
-                        <p class="text-white text-base leading-relaxed mt-4">Penyerahan bantuan ini dihadiri
-                            langsung oleh Penjabat (Pj) Bupati Cirebon, Drs H Wahyu Mijaya SH MSi di Pendopo Bupati
-                            Cirebon, Jumat (12/7/2024). “Kami berterima kasih kepada Bank BJB yang telah memberikan PJU
-                            untuk dipasang di beberapa titik di wilayah Sumber, Kabupaten Cirebon,” ujar Wahyu. Ia
-                            menjelaskan, bahwa pemasangan PJU di kawasan Sumber, yang dekat dengan kantor pe...</p>
+                        <h2 class="text-white text-xl lg:text-2xl font-semibold mb-4">{{$item->judul}}</h2>
+                        <span class="text-white text-xs px-3 py-2 bg-AccentRed900 uppercase tracking-widest">{{$item->day}} {{$item->month}} {{$item->year}}</span>
+                        <div class="text-white text-base leading-relaxed mt-4" style="color: white !important;">
+                       {!! $item->deskripsi !!}
+                       </div>
                     </div>
-                    <!-- Add additional carousel items here... -->
+                    @endforeach
+
                 </div>
+
                 <div class="bg-white w-full h-[2px] my-5 rounded-full lg:block hidden"></div>
                 <div class="mt-4 lg:block hidden">
                     <div class="flex space-x-2">
@@ -46,9 +46,11 @@
                         <div class="carousel-indicator w-5 h-2 bg-ColorE7E7E7 rounded-full"></div>
                         <div class="carousel-indicator w-5 h-2 bg-ColorE7E7E7 rounded-full"></div>
                         <div class="carousel-indicator w-5 h-2 bg-ColorE7E7E7 rounded-full"></div>
+                        <!-- Additional indicators go here... -->
                     </div>
                 </div>
             </div>
+
         </div>
 
 
@@ -60,47 +62,13 @@
                 </h2>
                 <div class="grid grid-cols-2 lg:grid-cols-5 z-30">
                     <!-- Ganti "path_to_logo" dengan URL logo yang sesuai -->
+                     @foreach($mitra as $item)
                     <div class=" flex items-center justify-center border-gray-200 p-9 border-b border-r">
-                        <img src="{{ asset('images/logoipsum1.png') }}" alt="logoipsum" class="h-10">
+                        <img src="{{ asset('storage/img/profile/'. $item->mitra_logo) }}" alt="logoipsum" class="h-10">
                     </div>
+                    @endforeach
 
-                    <div class=" flex items-center justify-center border-gray-200 p-9 border-b lg:border-r">
-                        <img src="{{ asset('images/logoipsum2.png') }}" alt="logoipsum" class="h-10">
-                    </div>
 
-                    <div class=" flex items-center justify-center border-gray-200 p-9 border-b border-r">
-                        <img src="{{ asset('images/logoipsum3.png') }}" alt="logoipsum" class="h-10">
-                    </div>
-
-                    <div class=" flex items-center justify-center border-gray-200 p-9 border-b lg:border-r">
-                        <img src="{{ asset('images/logoipsum4.png') }}" alt="logoipsum" class="h-10">
-                    </div>
-
-                    <div class=" flex items-center justify-center border-gray-200 p-9 border-b lg:border-r-0 border-r">
-                        <img src="{{ asset('images/logoipsum5.png') }}" alt="logoipsum" class="h-10">
-                    </div>
-
-                    <div
-                        class=" flex items-center justify-center border-gray-200 p-9 border-b lg:border-b-0 lg:border-r">
-                        <img src="{{ asset('images/logoipsum6.png') }}" alt="logoipsum" class="h-10">
-                    </div>
-
-                    <div class=" flex items-center justify-center border-gray-200 p-9 border-r border-b lg:border-b-0">
-                        <img src="{{ asset('images/logoipsum7.png') }}" alt="logoipsum" class="h-10">
-                    </div>
-
-                    <div
-                        class=" flex items-center justify-center border-gray-200 p-9 lg:border-r border-b lg:border-b-0">
-                        <img src="{{ asset('images/logoipsum8.png') }}" alt="logoipsum" class="h-10">
-                    </div>
-
-                    <div class=" flex items-center justify-center border-gray-200 p-9 border-r">
-                        <img src="{{ asset('images/logoipsum9.png') }}" alt="logoipsum" class="h-10">
-                    </div>
-
-                    <div class=" flex items-center justify-center border-gray-200 p-9">
-                        <img src="{{ asset('images/logoipsum10.png') }}" alt="logoipsum" class="h-10">
-                    </div>
 
                 </div>
             </div>
@@ -111,7 +79,7 @@
             <div class="w-full md:w-3/4 mx-auto py-12 px-7 md:px-0 bg-white flex flex-col justify-center">
                 <div class="bg-red-500 h-1 w-12 self-center mb-4"></div>
                 <h2 class="text-3xl md:text-4xl font-bold text-[#121C22] mb-8 self-center">Data Statistik</h2>
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center mt-12">
 
                     <div class="text-left flex flex-row space-x-5 items-center justify-center">
                         <div class="bg-red-200 h-full w-0.5"></div>
@@ -205,14 +173,15 @@
                 <div class="w-full flex flex-col lg:flex-row lg:space-x-14">
                     <div class="lg:w-1/2 w-full flex flex-col">
                         <div>
-                            @foreach($sektor as $item)
+                            @foreach($sektor as $index => $item)
                             @php
-        $sektor_name = $item->nama_sektor;
-        $sektors = str_replace(' ', '_', $sektor_name); // Mengganti spasi dengan underscore
-    @endphp
+                            $sektor_name = $item->nama_sektor;
+                            $sektors = str_replace(' ', '_', $sektor_name); // Mengganti spasi dengan underscore
+                            @endphp
                             <button id="btn-{{$sektors}}"
                                 onclick="toggleActive('btn-{{$sektors}}'); changeContent('{{$sektors}}')"
-                                class="btn w-full text-left py-4 px-6 font-semibold bg-[#282F3E] hover:bg-[#282F3E] hover:font-semibold text-xl border-l-4 border-AccentRed400 flex justify-between">
+                                class="btn w-full text-left py-4 px-6 font-semibold text-xl border-l-4 flex justify-between
+                                {{ $loop->first ? 'bg-[#282F3E] border-AccentRed400 font-semibold' : 'border-Neutral700' }}">
                                 {{$item->nama_sektor}}
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -221,7 +190,6 @@
                                 </svg>
                             </button>
                             @endforeach
-
                         </div>
                     </div>
 
@@ -246,11 +214,13 @@
                     </div>
                 </div>
             </div>
+
         </section>
 
         <!-- Section: Sambutan Bupati -->
         <section>
-            <div class="relative w-full md:w-3/4 mx-auto py-16 px-7 md:px-0 bg-white flex flex-col lg:flex-row items-center">
+            <div
+                class="relative w-full md:w-3/4 mx-auto py-16 px-7 md:px-0 bg-white flex flex-col lg:flex-row items-center">
                 <div class="lg:w-1/2 lg:pr-16 z-10">
                     <div class="w-[40px] h-[4px] bg-AccentRed400 mb-5"></div>
                     <h2 class="text-4xl font-bold mb-4 text-Color121C22">Sambutan Bupati Kabupaten Cirebon</h2>
@@ -287,26 +257,30 @@
                     <div class="w-[44px] h-[4px] bg-Orange600"></div>
                     <h1 class="text-Ebony900 text-3xl lg:text-4xl font-bold mt-4">Kegiatan Terbaru</h1>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-7 p-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-12">
+                    <!-- Card 1 -->
                     @foreach($kegiatan as $item)
                     <a href="{{route('kegiatan.detailKegiatan', $item->id)}}">
-                        <div class="bg-white border border-Neutral300 overflow-hidden relative">
-                            <img class="w-full h-72 object-cover"
-                                src="{{ asset('storage/img/kegiatan/'. $item->gambar_kegiatan) }}" alt="Image 1">
-                            <span
-                                class="text-xs text-white bg-AccentRed900 px-4 py-2 rounded absolute top-5 left-5 z-20">{{$item->month}}
-                                {{$item->day}} {{$item->year}}</span>
-                            <div class="p-6">
-                                <h2 class="mt-2 text-xl font-bold text-Ebony900">{{$item->judul}}</h2>
-                                <p class="mt-2 text-Ebony100">{!!$item->deskripsi!!}</p>
+                        <div class="flex flex-col h-full">
+                            <div
+                                class="bg-white border border-Neutral300 overflow-hidden flex flex-col h-full relative">
+                                <img class="w-full h-64 object-cover"
+                                    src="{{ asset('storage/img/kegiatan/'. $item->gambar_kegiatan) }}" alt="Image 2">
+                                <!-- Date overlay -->
+                                <span
+                                    class="text-xs text-white bg-AccentRed900 px-4 py-2 rounded absolute top-5 left-5 z-20">{{$item->day}}
+                                    {{$item->month}} {{$item->year}}</span>
+                                <div class="p-6 flex flex-col flex-1">
+                                    <h2 class="mt-1 text-xl font-bold text-Ebony900">{{$item->judul}}</h2>
+                                    <p class="mt-2 text-Ebony100">{!! $item->deskripsi !!}</p>
+                                </div>
                             </div>
                         </div>
                     </a>
                     @endforeach
-
                 </div>
                 <a href="{{route('kegiatan.kegiatanPublik')}}"><button
-                        class="bg-white hover:bg-neutral-100 border border-Neutral300 font-semibold rounded-lg text-Ebony200 px-4 py-2 flex justify-center items-center my-7 mx-auto z-50">Lihat
+                        class="bg-white hover:bg-neutral-100 border border-Neutral300 font-semibold rounded-lg text-Ebony200 px-4 py-2 flex justify-center items-center mt-14 mx-auto">Lihat
                         semua kegiatan</button></a>
             </div>
         </section>
@@ -353,7 +327,6 @@
         <!-- FAQ Section -->
         <section class="bg-Gray900 text-white">
             <div class="relative md:w-3/4 w-full mx-auto px-7 md:px-0 py-24">
-                <img src="{{ asset('images/squares-5.png') }}" alt="squares-5" class="absolute bottom-0 right-0 h-36">
                 <div class="container mx-auto flex flex-col">
                     <div class="bg-red-500 h-1 w-12 mb-4 z-20"></div>
                     <h2 class="text-3xl md:text-4xl font-bold mb-6 z-10">Frequently Asked Question (FAQ)</h2>
@@ -424,7 +397,8 @@
         </section>
 
         {{-- Contact US Section --}}
-        <div class="w-full px-7 md:w-3/4 rounded-lg py-10 mx-auto flex flex-col md:flex-row space-y-10 md:space-y-0 md:space-x-10">
+        <div
+            class="w-full px-7 md:w-3/4 rounded-lg py-10 mx-auto flex flex-col md:flex-row space-y-10 md:space-y-0 md:space-x-10">
             <div class="flex flex-col w-full md:w-1/2">
                 <div class="w-[40px] h-[4px] bg-Orange600"></div>
                 <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-Ebony900 mt-5">Hubungi Kami</h2>
@@ -500,11 +474,11 @@
     </div>
 
     <script>
-        // Carousel Untuk Blue Overlay
         document.addEventListener('DOMContentLoaded', function () {
             const indicators = document.querySelectorAll('.carousel-indicator');
             const carouselItems = document.querySelectorAll('.carousel-item');
             let currentIndex = 0;
+            let isAnimating = false;
 
             function updateIndicators() {
                 indicators.forEach((indicator, index) => {
@@ -519,47 +493,70 @@
             }
 
             function showSlide(index) {
-                if (index === currentIndex) return;
+                if (index === currentIndex || isAnimating) return;
+                isAnimating = true;
+
                 const currentSlide = carouselItems[currentIndex];
                 const nextSlide = carouselItems[index];
 
-                // Animasi keluar
-                currentSlide.classList.add('opacity-0');
-                currentSlide.classList.remove('translate-x-0', 'opacity-100');
+                // Prepare next slide
+                nextSlide.classList.remove('hidden', 'opacity-0');
+                nextSlide.classList.add('absolute', 'top-0', 'w-full', 'h-full', 'opacity-0');
 
-                // Delay sebelum animasi masuk dimulai
+                // Tentukan posisi slide berikutnya berdasarkan arah
+                if (index > currentIndex) {
+                    nextSlide.style.left = '100%';
+                } else {
+                    nextSlide.style.left = '-100%';
+                }
+                nextSlide.style.zIndex = 10;
+
+                // Start slide-in and fade-in animation for next slide
                 setTimeout(() => {
-                    // Reset posisi dan opacity slide baru sebelum animasi masuk
-                    nextSlide.classList.remove('hidden');
-                    nextSlide.classList.add('opacity-0');
+                    nextSlide.classList.add('opacity-100');
+                    nextSlide.classList.remove('opacity-0');
+                    nextSlide.style.left = '0';
+                }, 20); // Small delay to ensure transition is triggered
 
-                    // Animasi masuk (slide dari kanan ke kiri dan fade in)
-                    setTimeout(() => {
-                        nextSlide.classList.remove('opacity-0');
-                        nextSlide.classList.add('translate-x-0', 'opacity-100');
-                    }, 50); // Tambahkan sedikit delay sebelum animasi masuk
+                // Start slide-out and fade-out animation for current slide
+                currentSlide.style.left = index > currentIndex ? '-100%' : '100%';
+                currentSlide.classList.add('opacity-0');
+                currentSlide.classList.remove('opacity-100');
 
-                }, 800); // Delay antara animasi keluar dan animasi masuk (300ms)
-
+                // After animation ends, hide current slide and update the carousel state
                 setTimeout(() => {
                     currentSlide.classList.add('hidden');
-                    currentSlide.classList.remove('block');
-                    nextSlide.classList.remove('hidden');
-                    nextSlide.classList.add('block');
-                }, 700); // Sesuaikan dengan durasi animasi (700ms)
+                    currentSlide.classList.remove('absolute', 'top-0', 'w-full', 'h-full', 'opacity-0');
+                    currentSlide.style.zIndex = '';
+                    currentSlide.style.left = '';
 
-                currentIndex = index;
-                updateIndicators();
+                    nextSlide.classList.remove('absolute');
+                    nextSlide.style.zIndex = '';
+                    nextSlide.style.left = '';
+
+                    currentIndex = index;
+                    updateIndicators();
+                    isAnimating = false;
+                }, 700); // Adjust according to transition duration
+
             }
 
-            // Auto-scroll carousel every 5 seconds
-            setInterval(function () {
+            // Initialize the carousel
+            showSlide(currentIndex);
+
+            // Auto-scroll carousel every 4 seconds
+            const autoScroll = setInterval(function () {
                 let nextIndex = (currentIndex + 1) % carouselItems.length;
                 showSlide(nextIndex);
             }, 4000);
 
-            // Initialize the carousel
-            showSlide(currentIndex);
+            // Handle manual indicator clicks
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    clearInterval(autoScroll); // Stop auto-scroll when manually navigating
+                    showSlide(index);
+                });
+            });
         });
 
 
@@ -578,6 +575,14 @@
             selectedButton.classList.remove('border-Neutral700', 'bg-none');
         }
 
+        // Mengaktifkan sektor pertama secara default
+        document.addEventListener("DOMContentLoaded", function () {
+            const firstSector = Object.keys(content)[0];
+            toggleActive('btn-' + firstSector);
+            changeContent(firstSector);
+        });
+
+
         // Untuk Button Section FAQ
         function toggleActive2(selectedId) {
             // Hapus kelas aktif dari semua tombol
@@ -593,21 +598,21 @@
         }
 
 
-        // Untuk Berubah Konten Pada Sektor CSR Section
+    // Untuk Berubah Konten Pada Sektor CSR Section
         const content = {
             @foreach($sektor as $item)
-        @php
-        $sektor_name = $item->nama_sektor;
-        $sektors = str_replace(' ', '_', $sektor_name); // Mengganti spasi dengan underscore
-    @endphp
-        {{$sektors}}: {
-            imgSrc: "background-image: url('{{ asset('storage/img/sektor/'. $item->gambar_sektor) }}');",
-            href: "{{route('sektor.detailSektor', $item->id)}}",
-            description: "{{$item->deskripsi_sektor}}"
+                @php
+                    $sektor_name = $item->nama_sektor;
+                    $sektors = str_replace(' ', '_', $sektor_name); // Mengganti spasi dengan underscore
+                @endphp
+            "{{ $sektors }}": {
+                imgSrc: "background-image: url('{{ asset('storage/img/sektor/'. $item->gambar_sektor) }}');",
+                href: "{{ route('sektor.detailSektor', $item->id) }}",
+                description: "{{ $item->deskripsi_sektor }}"
         },
         @endforeach
-
         };
+
 
         function changeContent(sektor) {
             document.getElementById('content-img').style = content[sektor].imgSrc;

@@ -1,6 +1,7 @@
 <x-app-layout>
     @include('components.navbar-admin')
-
+    
+    <main class="flex-grow">
     <div class="container w-full md:w-3/4 px-6 md:px-0 my-6 mx-auto p-5 flex items-center space-x-2">
         <div class="flex items-center space-x-2 mb-4">
             <a href="/dashboard" class="flex items-center text-Ebony100">
@@ -128,4 +129,9 @@
             </div>
         </div>
     </div>
+    </main>
+
+    <x-footer-admin></x-footer-admin>
+
 </x-app-layout>
+

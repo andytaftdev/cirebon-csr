@@ -30,6 +30,11 @@ class SektorController extends Controller
         $notification = Notification::orderBy('id', 'desc')->get();
         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
 
+        if($user->level === 'mitra')
+        {
+            return view('errors.404');
+        }
+
         $sektor = Sektor::withCount('programs')->paginate(5);
         foreach ($sektor as $item) {
             $item->tags = json_decode($item->tags);
@@ -68,6 +73,11 @@ class SektorController extends Controller
         $sektor = Sektor::find($id);
         $programs = $sektor->programs;
         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
+
+        if($user->level === 'mitra')
+        {
+            return view('errors.404');
+        }
      
 
         return view ('sektor.detail', compact('identity','user','notification','sektor','programs','jumlahNotifikasi'));
@@ -79,7 +89,7 @@ class SektorController extends Controller
 
        
 
-        $sektor = Sektor::orderBy('id', 'desc')->get();
+        $sektor = Sektor::orderBy('id', 'desc')->take(4)->get();
         foreach ($sektor as $item) {
 
 
@@ -90,7 +100,7 @@ class SektorController extends Controller
 
            
         }
-        $proyek = Proyek::orderBy('id', 'desc')->get();
+        $proyek = Proyek::orderBy('id', 'desc')->take(4)->get();
         foreach ($proyek as $item) {
 
             $date = $item->tanggal_akhir;
@@ -174,6 +184,10 @@ $programs = Program::where('id_sektor', $id)
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
                    $notification = Notification::orderBy('id', 'desc')->get();
         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
+        if($user->level === 'mitra')
+        {
+            return view('errors.404');
+        }
      
 
         return view ('sektor.create', compact('identity','user','notification','jumlahNotifikasi'));
@@ -281,6 +295,10 @@ return redirect()->route('sektor.index')->with('success', 'Data has been success
         $sektor = Sektor::find($id);
         $programs = $sektor->programs;
         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
+        if($user->level === 'mitra')
+        {
+            return view('errors.404');
+        }
      
 
         return view ('sektor.change', compact('identity','user','notification','sektor','programs','jumlahNotifikasi'));
@@ -360,6 +378,10 @@ return redirect()->route('sektor.index')->with('success', 'Data has been success
        $user = auth()->user();
         $identity = Identity::where('id_user', $user->id)->orderBy('id')->first();
         $notification = Notification::orderBy('id', 'desc')->get();
+        if($user->level === 'mitra')
+        {
+            return view('errors.404');
+        }
     
         $query = Sektor::query();
 

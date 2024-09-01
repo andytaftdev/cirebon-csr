@@ -67,14 +67,14 @@
 
     {{-- Mobile Menu --}}
     <div class="hidden mobile-menu lg:hidden border-t border-Neutral300">
-        <a href="#"
-            class="block text-sm px-7 py-4 text-AccentRed900 underline underline-AccentRed900 underline-offset-8 hover:bg-gray-200 font-semibold">Beranda</a>
-        <a href="#" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Tentang</a>
-        <a href="#" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Kegiatan</a>
-        <a href="#" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Statistik</a>
-        <a href="#" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Sektor</a>
-        <a href="#" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Laporan</a>
-        <a href="#" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Mitra</a>
+        <a href="/"
+            class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Beranda</a>
+        <a href="/tentang" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Tentang</a>
+        <a href="/publik/kegiatan" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Kegiatan</a>
+        <a href="/statistik" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Statistik</a>
+        <a href="/publik/sektor" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Sektor</a>
+        <a href="/publik/laporan" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Laporan</a>
+        <a href="/publik/mitra" class="block text-sm px-7 py-4 text-Ebony900 hover:bg-gray-200">Mitra</a>
         <div class="w-full block md:hidden p-5">
             <button
                 class=" text-white bg-AccentRed900 w-full h-auto py-2 rounded-lg text-sm hover:bg-red-700 cursor-pointer">

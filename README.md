@@ -2,7 +2,13 @@
 <p align="center">CSR adalah singkatan dari Corporate Social Responsibility, dalam bahasa Indonesia disebut sebagai Tanggung Jawab Sosial dan Lingkungan (TJSL) Perusahaan. Penyelenggaraan CSR merujuk pada upaya perusahaan untuk secara sukarela berkontribusi terhadap pembangunan berkelanjutan dan kesejahteraan masyarakat, di luar kewajiban hukum dan keuntungan ekonomi langsung perusahaan tersebut.</p>
 
 ## Requirement
-•⁠  ⁠"composer require maatwebsite/excel" untuk menginstal package bernama "Maatwebsite Excel" menggunakan Composer.
+•⁠  ⁠"Node.js" minimal v16 atau yang lebih baru.
+•⁠  ⁠"Composer" minimal v2.1.0 atau yang lebih baru.
+•⁠  ⁠"PHP" minimal versi 8.1, karena Laravel 10 membutuhkan PHP versi 8.1 atau yang lebih baru.
+•⁠  ⁠"npm install tailwind-scrollbar-hide" plugin untuk menyembunyikan scoll bar pada notification dropdown.
+•⁠  ⁠"composer update" composer update memperbarui dependensi proyek PHP ke versi terbaru yang sesuai dengan batasan di composer.json, dan memperbarui file composer.lock untuk mencerminkan versi terbaru.
 •⁠  ⁠"php artisan migrate" untuk migrasi database.
-•⁠  ⁠"npm run dev" untuk memulai proses pengembangan tampilan website (front-end). Ini akan membuat perubahan yang Anda lakukan pada file CSS (untuk tampilan) dan JavaScript (untuk interaksi) secara otomatis diterapkan dan terlihat di browser.
-•⁠  ⁠".env" duplicate file ".env.example" dan rename menjadi ".env" untuk menyeting enviroment nya, lalu sesuaikan port nya dengan port kalian dan ubah db_database nya menjadi "cireboncsr" lalu kalian generate api key nya dengan command "php artisan key:generate"
+•⁠  ⁠"npm install" berfungsi untuk menginstal semua dependensi frontend yang diperlukan, termasuk Tailwind CSS, dan menyiapkan alat build seperti Vite atau Laravel Mix.
+•⁠  ⁠"npm run dev" menjalankan proses build dalam mode pengembangan, yang mengompilasi dan memantau perubahan file frontend (seperti CSS dan JavaScript) secara otomatis, sehingga Anda bisa melihat hasil perubahan secara real-time selama pengembangan.
+•⁠  ⁠".env" ubah DB_PORT nya dan sesuaikan dengan port kita. 
+•⁠  ⁠"php artisan storage:link" untuk membuat symlink dari folder storage/app/public ke folder public/storage. Ini memungkinkan file yang disimpan dalam folder storage/app/public dapat diakses secara publik melalui URL di aplikasi kita.
