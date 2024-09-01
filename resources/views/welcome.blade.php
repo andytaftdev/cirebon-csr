@@ -25,9 +25,19 @@
             <div id="carousel"
                 class="absolute z-30 bottom-0 right-0 xl:right-20 bg-Gray900 backdrop-blur-lg bg-opacity-85 px-6 py-5 lg:px-12 lg:py-11 max-w-lg xl:max-w-xl">
                 <div class="relative overflow-hidden">
+                    @php
+                    $firstCarousel = $kegiatanCarousel->last();
+                    @endphp
+                    <div class="carousel-item block duration-700 ease-in-out transform translate-x-0 opacity-100">
+                        <h2 class="text-white text-xl lg:text-2xl font-semibold mb-4">{{$firstCarousel->judul}}</h2>
+                        <span class="text-white text-xs px-3 py-2 bg-AccentRed900 uppercase tracking-widest">{{$firstCarousel->day}} {{$firstCarousel->month}} {{$firstCarousel->year}}</span>
+                        <div class="text-white text-base leading-relaxed mt-4" style="color: white !important;">
+                       {!! $firstCarousel->deskripsi !!}
+                       </div>
+                    </div>
                     @foreach($kegiatanCarousel as $item)
 
-                    <div class="carousel-item block duration-700 ease-in-out transform translate-x-0 opacity-100">
+                    <div class="carousel-item block duration-700 ease-in-out transform translate-x-0 hidden">
                         <h2 class="text-white text-xl lg:text-2xl font-semibold mb-4">{{$item->judul}}</h2>
                         <span class="text-white text-xs px-3 py-2 bg-AccentRed900 uppercase tracking-widest">{{$item->day}} {{$item->month}} {{$item->year}}</span>
                         <div class="text-white text-base leading-relaxed mt-4" style="color: white !important;">
