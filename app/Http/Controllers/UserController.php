@@ -37,6 +37,6 @@ class UserController extends Controller
         // Optionally log in the user or redirect to a specific page
         auth()->login($user);
 
-        return redirect()->route('home'); // Adjust the route as needed
+        return redirect()->route('/dashboard'); // Adjust the route as needed
     }
 }

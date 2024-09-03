@@ -4,7 +4,7 @@
     <div class="w-full h-auto flex justify-center items-center relative">
         <div class="w-2/5 h-[300px] md:h-[400px] bg-AccentRed950"></div>
         <div class="w-3/5 h-[300px] md:h-[400px] bg-white"></div>
-        <img src="{{ asset('images/background.png') }}" alt="Image Dashboard"
+        <img src="{{ asset('images/umum-bg.png') }}" alt="Image Dashboard"
             class="absolute px-10 w-full h-[220px] md:h-[300px] object-cover z-10"
             style="transform: translateX(-50%); left: 50%;">
         <div class="absolute w-3/4 mx-auto inset-0 flex flex-col items-start justify-center text-start z-20 p-5 md:p-0">
@@ -38,19 +38,19 @@
             </form>
         {{-- Card Mitra Section --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-14">
-           @foreach($mitra as $item)
-           <a href="{{route('identity.mitraDetail', $item->id)}}">
-           <div class="bg-white relative">
-                <div class="w-full h-56 bg-gray-100 flex justify-center items-center overflow-hidden bg-cover" style="background-image: url('{{ asset('storage/img/profile/'. $item->mitra_logo) }}');"></div>
-                <div class="p-6 border border-Neutral300 overflow-hidden">
-                    <h2 class="mt-1 text-xl font-bold text-Ebony900">{{$item->nama_pt}}</h2>
-                </div>
+                @foreach($mitra as $item)
+                <a href="{{route('identity.mitraDetail', $item->id)}}">
+                    <div class="bg-white relative flex flex-col min-h-full">
+                        <div class="w-full h-56 bg-gray-100 flex justify-center items-center overflow-hidden bg-cover"
+                            style="background-image: url('{{ asset('storage/img/profile/'. $item->mitra_logo) }}');">
+                        </div>
+                        <div class="p-6 border border-Neutral300 overflow-hidden flex-grow">
+                            <h2 class="mt-1 text-xl font-bold text-Ebony900">{{$item->nama_pt}}</h2>
+                        </div>
+                    </div>
+                </a>
+                @endforeach
             </div>
-           </a>
-
-            @endforeach
-
-        </div>
         {{-- Contact US Section --}}
         <div class="w-full rounded-lg mt-28 mx-auto flex flex-col md:flex-row space-y-10 md:space-y-0 md:space-x-10">
             <div class="flex flex-col w-full md:w-1/2">

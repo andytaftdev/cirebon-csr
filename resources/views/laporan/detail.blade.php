@@ -137,11 +137,23 @@
             </div>
             <div class="p-4 space-y-2 border-l-4 border-l-AccentRed900 bg-AccentRed100 rounded-lg">
                 <h4 class="text-sm font-normal text-Gray900">Nama Proyek</h4>
-                <p class="text-base font-semibold text-gray-800">{{$laporan->proyek->nama_proyek}}</p>
+                <p class="text-base font-semibold text-gray-800">
+                @if($laporan->proyek === null)
+                            Tidak ada proyek
+                            @else
+                            {{$laporan->proyek->nama_proyek}}
+                            @endif
+                </p>
             </div>
             <div class="p-4 space-y-2 border-l-4 border-l-AccentRed900 bg-AccentRed100 rounded-lg">
                 <h4 class="text-sm font-normal text-Gray900">Kecamatan</h4>
-                <p class="text-md font-semibold text-Gray900">{{$laporan->proyek->kecamatan}}</p>
+                <p class="text-md font-semibold text-Gray900">
+                @if($laporan->proyek === null)
+                            Tidak ada kecamatan
+                            @else
+                            {{$laporan->proyek->kecamatan}}
+                            @endif
+                </p>
             </div>
             <div class="p-4 space-y-2 border-l-4 border-l-AccentRed900 bg-AccentRed100 rounded-lg">
                 <h4 class="text-sm font-normal text-Gray900">Tanggal Realisasi</h4>

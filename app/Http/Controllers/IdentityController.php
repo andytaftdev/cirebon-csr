@@ -42,10 +42,7 @@ class IdentityController extends Controller
 
         }
 
-        if($identity->message_non_aktif !== null)
-        {
-            return view('errors.mitra-non-aktif', compact('identity'));
-        }
+
 
      
 

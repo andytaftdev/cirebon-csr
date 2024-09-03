@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->integer('id_user')->unsigned();
             $table->integer('id_sektor')->unsigned();
-            $table->integer('id_proyek')->unsigned();
+            $table->integer('id_proyek')->unsigned()->nullable();
             $table->integer('id_program')->unsigned();
             $table->string('judul');
             $table->string('nama_proyek')->nullable();

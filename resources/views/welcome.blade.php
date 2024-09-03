@@ -273,7 +273,7 @@
                     <a href="{{route('kegiatan.detailKegiatan', $item->id)}}">
                         <div class="flex flex-col h-full">
                             <div
-                                class="bg-white border border-Neutral300 overflow-hidden flex flex-col h-full relative">
+                                class="bg-white border border-Neutral300 overflow-hidden flex flex-col h-full relative ">
                                 <img class="w-full h-64 object-cover"
                                     src="{{ asset('storage/img/kegiatan/'. $item->gambar_kegiatan) }}" alt="Image 2">
                                 <!-- Date overlay -->
@@ -282,7 +282,7 @@
                                     {{$item->month}} {{$item->year}}</span>
                                 <div class="p-6 flex flex-col flex-1">
                                     <h2 class="mt-1 text-xl font-bold text-Ebony900">{{$item->judul}}</h2>
-                                    <p class="mt-2 text-Ebony100">{!! $item->deskripsi !!}</p>
+                                    <p class="mt-2 text-Ebony100">{!! Str::limit($item->deskripsi, 100) !!}</p>
                                 </div>
                             </div>
                         </div>

@@ -108,7 +108,7 @@
 @include('components.navbar-mitra')
 
 <div class="relative w-full">
-    <img src="{{ asset('images/background.png') }}" alt="Image Dashboard"
+    <img src="{{ asset('images/dashboard-img.png') }}" alt="Image Dashboard"
         class="w-full h-60 md:h-64 lg:h-72 object-cover">
     <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4 lg:p-0">
         <h1 class="text-2xl sm:text-3xl lg:text-4xl text-white font-bold">Selamat Datang di Dashboard CSR Kabupaten
@@ -155,8 +155,10 @@
                     </select>
                 </div>
                 </form>
-                <button id="filterBtn" class="bg-AccentRed900 hover:bg-red-700 text-white px-4 py-2 rounded-lg lg:w-fit text-nowrap">Terapkan
-                    filter</button>
+                <div class="py-2">
+                <button id="filterBtn" class="bg-AccentRed900 hover:bg-red-700 text-white px-4 py-2 rounded-lg w-full lg:w-fit text-nowrap">Terapkan
+                filter</button>
+                </div>
             </div>
             <div
                 class="flex flex-col pt-3 md:pt-0 md:flex-row md:space-x-4 lg:pt-0 w-full md:w-auto lg:w-fit lg:ml-3.5 space-y-4 md:space-y-0 lg:justify-end">
@@ -325,7 +327,11 @@
                     {{$item->judul}}
                     </th>
                     <td class="px-6 py-4 font-normal text-Ebony200">
-                        {{$item->proyek->kecamatan}}
+                    @if($item->proyek === null)
+                                Tidak ada kecamatan
+                                @else
+                                {{$item->proyek->kecamatan}}
+                                @endif
                     </td>
                     <td class="px-6 py-4 font-normal text-Ebony200">
                     Rp.{{number_format($item->realisasi, 0, ',', ',')}}

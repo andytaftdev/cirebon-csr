@@ -9,7 +9,7 @@
             <div class="w-3/5 h-[300px] md:h-[400px] bg-white"></div>
 
             <!-- Image berada di tengah-tengah div merah dan abu-abu -->
-            <img src="{{ asset('images/background.png') }}" alt="Image Dashboard"
+            <img src="{{ asset('images/umum-bg.png') }}" alt="Image Dashboard"
                 class="absolute px-10 w-full h-[220px] md:h-[300px] object-cover z-10"
                 style="transform: translateX(-50%); left: 50%;">
 
@@ -115,7 +115,7 @@
                             </span>
                             <div class="p-6 flex flex-col flex-grow">
                                 <h2 class="mt-2 text-xl font-bold text-Ebony900">{{$item->judul}}</h2>
-                                <p class="mt-2 text-Ebony100 flex-grow">{{$item->deskripsi}}</p>
+                                <p class="mt-2 text-Ebony100 flex-grow">{{Str::limit($item->deskripsi, 100)}}</p>
                             </div>
                         </div>
                     </a>

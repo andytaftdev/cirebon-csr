@@ -29,7 +29,7 @@ class HomeController extends Controller
 
         $user = auth()->user();
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
-        $laporan = Laporan::with(['proyek'])->paginate(5);
+        $laporan = Laporan::with(['proyek'])->where('id_user', $user->id)->paginate(5);
 
         if ($user->level === 'admin')
         {
@@ -133,10 +133,13 @@ class HomeController extends Controller
     ->whereNotNull('email_verified_at')
     ->get();
 
-    if($identity->message_non_aktif !== null)
-    {
-        return view('errors.mitra-non-aktif', compact('identity'));
+    if($identity !== null){
+        if($identity->message_non_aktif !== null)
+        {
+            return view('errors.mitra-non-aktif', compact('identity'));
+        }
     }
+
 
 
 
@@ -148,10 +151,11 @@ class HomeController extends Controller
         $quarter = $request->input('kuartal'); // Quarter filter
         $sector = $request->input('sektor'); // Sector filter
         $partner = $request->input('mitra'); // Partner filter
+        
 
         $user = auth()->user();
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
-        $laporan = Laporan::with(['proyek'])->paginate(10);
+        $laporan = Laporan::with(['proyek'])->where('id_user', $user->id)->paginate(5);
 
 
         if ($user->level === 'admin')
@@ -398,6 +402,7 @@ $dana_mitra = Laporan::when($year, function ($query) use ($year) {
             {
                 return view('errors.mitra-non-aktif', compact('identity'));
             }
+
 
             return view('/dashboard', compact('user', 'notification', 'identity','laporan','data','data_realisasi','data_pt','data_kecamatan','jumlahNotifikasi','mitra','sektor'));
 
@@ -653,6 +658,7 @@ $dana_mitra = Laporan::when($year, function ($query) use ($year) {
                 'data_mitra' => $mitra_data,
                 'dana_mitra' => formatRupiah($dana_mitra),
             ];
+
 
             return view('publik.publik-statistik.index', compact('laporan','data','data_realisasi','data_pt','data_kecamatan','mitra','sektor'));
 

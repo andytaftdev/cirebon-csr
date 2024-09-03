@@ -20,6 +20,10 @@ class Laporan extends Model
     {
         return $this->belongsTo(Program::class, 'id_program');
     }
+    public function user()
+{
+    return $this->belongsTo(User::class, 'id_user');
+}
 
 
 

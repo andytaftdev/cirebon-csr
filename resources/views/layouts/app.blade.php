@@ -32,6 +32,9 @@
 
     </head>
     <body class="flex flex-col min-h-screen font-inter bg-[#f2f4f7]">
+
+
+
         
         {{$slot}}
     </body>

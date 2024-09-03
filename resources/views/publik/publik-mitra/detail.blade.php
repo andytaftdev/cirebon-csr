@@ -49,7 +49,7 @@
                 <span class="text-xs text-white bg-AccentRed900 px-4 py-2 rounded absolute top-5 left-5 z-20">{{$item->tanggal}} {{$item->bulan}} {{$item->tahun}}</span>
                 <div class="p-6">
                     <h2 class="mt-2 text-xl font-bold text-Ebony900">{{$item->judul}}</h2>
-                    <p class="mt-2 text-Ebony100">{{$item->deskripsi}}</p>
+                    <p class="mt-2 text-Ebony100">{{Str::limit($item->deskripsi, 50)}}</p>
                 </div>
             </div>
             @endforeach

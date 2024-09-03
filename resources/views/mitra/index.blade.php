@@ -55,46 +55,24 @@
 
 
                 <!-- Table -->
-                <div class="mt-6 bg-white shadow-lg rounded-lg overflow-auto">
-                    <table class="min-w-full bg-white">
-                        <thead class="bg-gray-50 border-b">
+                <div class="relative overflow-x-auto rounded-lg shadow-md mt-7">
+                    <table class="w-full text-sm text-left text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
                             <tr>
-                                <th
-                                    class="text-left px-6 py-3 text-xs font-semibold text-Ebony900 uppercase tracking-wider">
-                                    Foto
-                                </th>
-                                <th
-                                    class="text-left px-6 py-3 text-xs font-semibold text-Ebony900 uppercase tracking-wider">
-                                    Nama
-                                </th>
-                                <th
-                                    class="text-left px-6 py-3 text-xs font-semibold text-Ebony900 uppercase tracking-wider">
-                                    Nama PT
-                                </th>
-                                <th
-                                    class="text-left px-6 py-3 text-xs font-semibold text-Ebony900 uppercase tracking-wider">
-                                    Deskripsi
-                                </th>
-                                <th
-                                    class="text-left px-6 py-3 text-xs font-semibold text-Ebony900 uppercase tracking-wider">
-                                    Tanggal Terdaftar
-                                </th>
-                                <th
-                                    class="text-left px-6 py-3 text-xs font-semibold text-Ebony900 uppercase tracking-wider">
-                                    Status
-                                </th>
-                                <th
-                                    class="text-left px-6 py-3 text-xs font-semibold text-Ebony900 uppercase tracking-wider">
-                                    Aksi
-                                </th>
+                                <th scope="col" class="px-6 py-3 text-Ebony900 font-semibold">Foto</th>
+                                <th scope="col" class="px-6 py-3 text-Ebony900 font-semibold">Nama</th>
+                                <th scope="col" class="px-6 py-3 text-Ebony900 font-semibold">Nama PT</th>
+                                <th scope="col" class="px-6 py-3 text-Ebony900 font-semibold">Deskripsi</th>
+                                <th scope="col" class="px-6 py-3 text-Ebony900 font-semibold">Taggal Terdaftar</th>
+                                <th scope="col" class="px-6 py-3 text-Ebony900 font-semibold">Status</th>
+                                <th scope="col" class="px-6 py-3 text-Ebony900 font-semibold">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y">
-                            <!-- Row for Published Status -->
+                        <tbody>
                             @foreach($mitra as $item)
                             @php
                             $date = $item->created_at;
-                            if($date === null) {
+                            if ($date === null) {
                             $item->month = '-';
                             $item->day = '-';
                             $item->year = '-';
@@ -105,39 +83,30 @@
                             $item->year = $carbonDate->format('Y');
                             }
                             @endphp
-
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                                    <!-- Image Placeholder -->
+                            <tr class="bg-white border-b">
+                                <th scope="row" class="px-6 py-4 font-normal text-Ebony200 whitespace-nowrap">
                                     <div class="w-48 h-24 rounded-md"
-                                        style="background-image: url('{{ asset('storage/img/profile/'. $item->mitra_logo) }}');">
+                                        style="background-image: url('{{ asset('storage/img/profile/' . $item->mitra_logo) }}');">
                                     </div>
+                                </th>
+                                <td class="px-6 py-4 font-normal text-Ebony200">
+                                    {{ $item->nama_mitra }}
                                 </td>
-                                <td class="px-6 py-4 text-sm text-Ebony300 whitespace-normal break-words max-w-xs">
-                                    {{$item->nama_mitra}}
+                                <td class="px-6 py-4 font-normal text-Ebony200">
+                                    {{ $item->nama_pt }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-normal text-sm text-Ebony300 max-w-xs truncate">
-                                    {{$item->nama_pt}}
-
+                                <td class="px-6 py-4 font-normal text-Ebony200">
+                                    {{ $item->deskripsi }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
-                                {{ Str::words($item->deskripsi, 6, '...') }}
-
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-Ebony300">
+                                <td class="px-6 py-4 font-normal text-Ebony200">
                                     <div class="flex">
                                         <p class="mx-1">{{ $item->day }}</p>
                                         <p class="mx-1">{{ $item->month }}</p>
                                         <p class="mx-1">{{ $item->year }}</p>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    @if($item->user->email_verified_at === null)
-                                    <span
-                                        class="px-2 p-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-AccentRed100 text-AccentRed300">
-                                        Non-Aktif
-                                    </span>
-                                    @elseif(!is_null($item->message_non_aktif))
+                                <td class="px-6 py-4">
+                                    @if ($item->user->email_verified_at === null)
                                     <span
                                         class="px-2 p-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-AccentRed100 text-AccentRed300">
                                         Non-Aktif
@@ -149,10 +118,10 @@
                                     </span>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
-                                    <div class="flex items-center">
-                                        <a href="{{ route('identity.detailMitra', $item->id) }}"
-                                            class="text-Ebony300 hover:text-Ebony900">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-4">
+                                        <a href="{{ route('laporan.show', $item->id) }}"
+                                            class="text-Ebony200 hover:text-Ebony900">
                                             <!-- Eye Icon -->
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke-width="2" stroke="currentColor" class="w-5 h-5">
@@ -166,22 +135,16 @@
                                 </td>
                             </tr>
                             @endforeach
-                            <!-- Row for Draft Status -->
-
                         </tbody>
                     </table>
-                </div>
-
-                <!-- Pagination -->
-                <div class="flex items-center justify-between py-4 px-6 bg-white border-t">
-                    @if ($mitra->hasPages())
-                    <div class="flex items-center justify-between w-full">
-                        {{-- Pagination Links --}}
+                    <!-- Pagination -->
+                    <div class="flex items-center justify-between py-4 px-6 bg-white">
+                        @if ($mitra->hasPages())
                         <div class="w-full">
                             {{ $mitra->links() }}
                         </div>
+                        @endif
                     </div>
-                    @endif
                 </div>
             </div>
         </div>

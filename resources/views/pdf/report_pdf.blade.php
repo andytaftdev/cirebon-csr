@@ -94,7 +94,13 @@
                     @foreach($laporan as $item)
                     <tr>
                         <td>{{ $item->judul }}</td>
-                        <td>{{ $item->proyek->kecamatan }}</td>
+                        <td>
+                        @if($item->proyek === null)
+                            Tidak ada kecamatan
+                            @else
+                            {{$item->proyek->kecamatan}}
+                            @endif
+                        </td>
                         <td>Rp.{{number_format($item->realisasi, 0, ',', ',')}}</td>
                         <td>{{$item->releaseDay}} {{$item->releaseMonth}} {{$item->releaseYear}}</td>
                         <td>{{ $item->status }}</td>

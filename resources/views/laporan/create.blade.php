@@ -79,7 +79,7 @@
                         CSR</label>
                     <select id="nama-proyek-csr" name="id_proyek"
                         class="w-1/2 text-Neutral500 border border-Neutral200 rounded-lg px-3 py-2 focus:outline-none">
-                        <option>Pilih proyek CSR</option>
+                        <option value='' >Pilih proyek CSR</option>
 
                         @foreach($proyek as $item)
                         <option value="{{ $item->id }}">{{$item->nama_proyek}}</option>

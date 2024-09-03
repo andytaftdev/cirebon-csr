@@ -6,7 +6,7 @@
     <div class="w-full h-auto flex justify-center items-center relative">
         <div class="w-2/5 h-[300px] md:h-[400px] bg-AccentRed950"></div>
         <div class="w-3/5 h-[300px] md:h-[400px] bg-white"></div>
-        <img src="{{ asset('images/background.png') }}" alt="Image Dashboard"
+        <img src="{{ asset('images/umum-bg.png') }}" alt="Image Dashboard"
             class="absolute px-10 w-full h-[220px] md:h-[300px] object-cover z-10"
             style="transform: translateX(-50%); left: 50%;">
         <div class="absolute w-3/4 mx-auto inset-0 flex flex-col items-start justify-center text-start z-20 p-5 md:p-0">
@@ -24,7 +24,7 @@
             <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>Terbaru</option>
             <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>Terlama</option>
                </select>
-                <select id="mitra" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full sm:w-fit md:w-1/3 lg:w-1/4">
+                <select id="mitra" name="mitra" class="border border-Neutral300 text-Ebony900 rounded-lg p-2 bg-white w-full sm:w-fit md:w-1/3 lg:w-1/4">
                     <option value="semua">Semua Mitra</option>
                     @foreach($mitra as $item)
                     <option value="{{$item->id}}">{{$item->identity->nama_mitra}}</option>
@@ -60,31 +60,30 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-5">
             <!-- Card 1 -->
-             @foreach($laporan as $item)
-             @php
-             $gambarLaporan = json_decode($item['gambar_laporan'], true);
+            @foreach($laporan as $item)
+            @php
+            $gambarLaporan = json_decode($item['gambar_laporan'], true);
             @endphp
-            <a href="{{route('laporan.detailLaporan', $item->id)}}">
-            <div class="bg-white border border-Neutral300 overflow-hidden relative">
-                <img class="w-full h-58 object-cover" src="{{ asset('storage/img/laporan/'. $gambarLaporan[0]) }}" alt="Image 2">
-                <!-- Date overlay -->
-                <span class="text-xs text-white bg-AccentRed900 px-4 py-2 rounded absolute top-5 left-5 z-20">{{$item->tanggal}} {{$item->bulan}} {{$item->tahun}}</span>
-                <div class="p-6">
-                    <div class="flex items-center">
-                        <img class="w-10 h-10 rounded-full border-2 border-AccentRed900"
-                            src="{{ asset('storage/img/profile/'. $item->logo ) }}" alt="Profile Image">
-                        <div class="ml-3">
-                            <p class="text-sm font-semibold text-Ebony100">{{$item->user}}</p>
+            <a href="{{route('laporan.detailLaporan', $item->id)}}" class="block h-full">
+                <div class="bg-white border border-Neutral300 overflow-hidden flex flex-col h-full relative">
+                    <img class="w-full h-64 object-cover" src="{{ asset('storage/img/laporan/'. $gambarLaporan[0]) }}" alt="Image 2">
+                    <!-- Date overlay -->
+                    <span class="text-xs text-white bg-AccentRed900 px-4 py-2 rounded absolute top-5 left-5 z-20">
+                        {{$item->day}} {{$item->bulan}} {{$item->tahun}}
+                    </span>
+                    <div class="p-6 flex flex-col h-full">
+                        <div class="flex items-center">
+                            <img class="w-10 h-10 rounded-full border-2 border-AccentRed900" src="{{ asset('storage/img/profile/'. $item->logo ) }}" alt="Profile Image">
+                            <div class="ml-3">
+                                <p class="text-sm font-semibold text-Ebony100">{{$item->user}}</p>
+                            </div>
                         </div>
+                        <h2 class="mt-4 text-xl font-bold text-Ebony900">{{$item->judul}}</h2>
+                        <p class="mt-2 text-Ebony100 flex-grow">{{Str::limit($item->deskripsi, 100)}}</p>
                     </div>
-                    <h2 class="mt-4 text-xl font-bold text-Ebony900">{{$item->judul}}</h2>
-                    <p class="mt-2 text-Ebony100">{{$item->deskripsi}}</p>
                 </div>
-            </div>
             </a>
-
             @endforeach
-
         </div>
         {{-- Button Muat Lebih Banyak --}}
         <a href="{{route('laporan.laporanPublik')}}">

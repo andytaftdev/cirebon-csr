@@ -6,7 +6,7 @@
     <div class="w-full h-auto flex justify-center items-center relative">
         <div class="w-2/5 h-[300px] md:h-[400px] bg-AccentRed950"></div>
         <div class="w-3/5 h-[300px] md:h-[400px] bg-white"></div>
-        <img src="{{ asset('images/background.png') }}" alt="Image Dashboard"
+        <img src="{{ asset('images/umum-bg.png') }}" alt="Image Dashboard"
             class="absolute px-10 w-full h-[220px] md:h-[300px] object-cover z-10"
             style="transform: translateX(-50%); left: 50%;">
         <div class="absolute w-3/4 mx-auto inset-0 flex flex-col items-start justify-center text-start z-20 p-5 md:p-0">

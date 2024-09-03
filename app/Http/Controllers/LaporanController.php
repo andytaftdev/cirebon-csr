@@ -25,13 +25,18 @@ class LaporanController extends Controller
     {
         $user = auth()->user();
         $identity =  Identity::where('id_user', $user->id)->orderBy('id')->first();
-        $laporan = Laporan::with(['proyek'])->paginate(5);
+        
+
+
+        
 
 
         if ($user->level === 'admin')
         {
             $notification =  Notification::orderBy('id', 'desc')->get();
         $jumlahNotifikasi = Notification::where('terlihat_admin', 0)->where('status' , ['baru','tolak','terima'])->count();
+        $laporan = Laporan::with(['proyek'])->paginate(5);
+
 
         }else
         {
@@ -41,6 +46,7 @@ class LaporanController extends Controller
             $jumlahNotifikasi = Notification::where('terlihat', 0)
             ->where('id_user', $user->id)
             ->count();
+            $laporan = Laporan::with(['proyek'])->where('id_user', $user->id)->paginate(5);
 
         }
 
@@ -247,19 +253,34 @@ class LaporanController extends Controller
        
         $sortOrder = request()->get('sort', 'desc'); // Get the sorting order from the request, default is 'desc'
         $mitraFilter = request()->get('mitra'); // Get the "mitra" filter from the request
-        
-        $laporan = Laporan::where('status', 'terima')
-        ->when($mitraFilter, function ($query) use ($mitraFilter) {
-            return $query->whereHas('user.identity', function ($q) use ($mitraFilter) {
-                $q->where('nama_pt', $mitraFilter);
-            });
-        })
-        ->when($request->has('search') && $request->search != '', function ($query) use ($request) {
-            $search = $request->input('search');
-            return $query->where('judul', 'like', '%' . $search . '%');
-        })
-        ->orderBy('created_at', $sortOrder) // Use 'created_at' for sorting by date
-        ->get();
+  
+        if($mitraFilter === "semua")
+        {
+            $laporan = Laporan::where('status', 'terima')
+            ->orderBy('id', 'desc')
+            ->when($request->has('search') && $request->search != '', function ($query) use ($request) {
+                $search = $request->input('search');
+                return $query->where('judul', 'like', '%' . $search . '%');
+            })
+            ->orderBy('created_at', $sortOrder) // Use 'created_at' for sorting by date
+            ->get();
+
+        }else
+        {
+            $laporan = Laporan::where('status', 'terima')
+            ->when($mitraFilter, function ($query) use ($mitraFilter) {
+                return $query->whereHas('user', function ($q) use ($mitraFilter) {
+                    $q->where('id_user', $mitraFilter);
+                });
+            })
+            ->when($request->has('search') && $request->search != '', function ($query) use ($request) {
+                $search = $request->input('search');
+                return $query->where('judul', 'like', '%' . $search . '%');
+            })
+            ->orderBy('created_at', $sortOrder) // Use 'created_at' for sorting by date
+            ->get();
+        }
+
         
         foreach ($laporan as $item) {
             $user = User::with('identity')->find($item['id_user']);
@@ -285,7 +306,7 @@ class LaporanController extends Controller
         $program = Program::where('id_sektor', $sektor->id)->orderBy('id')->first();
         $imgName = json_decode($laporan->gambar_laporan, true);
         $laporanAll = Laporan::where('status', 'terima')
-        ->orderBy('id', 'desc')
+        ->orderBy('id', 'desc')->take(3)
         ->get();
 
                 $user = User::with('identity')->find($laporan['id_user']);
@@ -347,7 +368,6 @@ class LaporanController extends Controller
             ]);
         }
         
-
 
         if($request->input('id_proyek') !== null)
         {
